@@ -1,0 +1,116 @@
+<! DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METHEELEGEND | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        : root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --accent: #4ecdc4;
+            --accent-warm: #ff6b6b;
+            --accent-gold: #ffe66d;
+            --accent-purple: #a29bfe;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b9e;
+            --glass-bg: rgba(15, 15, 26, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--bg-dark);
+        }
+
+        : :-webkit-scrollbar {
+            width:  8px;
+        }
+
+        : :-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:  var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left:  0;
+            width: 100%;
+            height: 100%;
+            background:  
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 90% 50%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 10% 80%, rgba(78, 205, 196, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position:  fixed;
+            top: 0;
+            left: 0;
+            width:  100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floaters-container {
+            position:  fixed;
+            top: 0;
+            left: 0;
+            width:  100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            overflow:  hidden;
+        }
+
+        .floater {
+            position:  absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: floatUp linear infinite;
+        }
+
+        .floater: nth-child(1) { width: 8px; height: 8px; left: 5%; background: var(--accent-warm); animation-duration: 18s; animation-delay: 0s; opacity: 0.7; }
+        . floater:nth-child(2) { width: 5px; height: 5px; left:  12%; background: var(--accent); animation-duration: 22s; animation-delay: 1s; opacity: 0.6; }
+        . floater:nth-child(3) { width: 10px; height: 10px; left:  22%; background: var(--accent-gold); animation-duration:  20s; animation-delay: 3s; opacity: 0.5; }
+        .floater:nth-child(4) { width: 4px; height: 4px; left:  32%; background: var(--accent-purple); animation-duration: 25s; animation-delay: 0. 5s; opacity:  0.8; }
+        . floater:nth-child(5) { width: 6px; height: 6px; left: 42%; background: #fd79a8; animation-duration: 21s; animation-delay: 2s; opacity: 0.6; }
+        . floater:nth-child(6) { width: 9px; height: 9px; left:  52%; background:  var(--accent); animation-duration: 24s; animation-delay: 4s; opacity: 0.5; }
+        .floater:nth-child(7) { width: 5px; height: 5px; left:  62%; background:  var(--accent-warm); animation-duration:  19s; animation-delay: 1.5s; opacity: 0.7; }
+        . floater:nth-child(8) { width: 7px; height: 7px; left:  72%; background:  #74b9ff; animation-duration: 23s; animation-delay: 2.5s; opacity: 0.6; }
+        . floater:nth-child(9) { width: 6px; height: 6px; left:  82%; background:  #55efc4; animation-duration: 20s; animation-delay:  3.5s; opacity: 0.5; }
+        .floater:nth-child(10) { width: 5px; height: 5px; left:  92%; background:  var(--accent-gold); animation-duration: 26s; animation-delay: 0.8s; opacity: 0.7; }
+        . floater:nth-child(11) { width: 4px; height: 4px; left: 8%; background: var(--primary); animation-duration:  27s; animation-delay: 5s; opacity: 0.6; }
+        .floater:nth-child(12) { width: 7px; height: 7px

@@ -1,4 +1,4 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        : root {
+        :root {
             --primary: #667eea;
             --primary-dark: #764ba2;
             --accent: #4ecdc4;
@@ -34,11 +34,11 @@
             scrollbar-color: var(--primary) var(--bg-dark);
         }
 
-        : :-webkit-scrollbar {
+        ::-webkit-scrollbar {
             width:  8px;
         }
 
-        : :-webkit-scrollbar-track {
+        ::-webkit-scrollbar-track {
             background: var(--bg-dark);
         }
 
@@ -102,15 +102,52 @@
             animation: floatUp linear infinite;
         }
 
-        .floater: nth-child(1) { width: 8px; height: 8px; left: 5%; background: var(--accent-warm); animation-duration: 18s; animation-delay: 0s; opacity: 0.7; }
-        . floater:nth-child(2) { width: 5px; height: 5px; left:  12%; background: var(--accent); animation-duration: 22s; animation-delay: 1s; opacity: 0.6; }
-        . floater:nth-child(3) { width: 10px; height: 10px; left:  22%; background: var(--accent-gold); animation-duration:  20s; animation-delay: 3s; opacity: 0.5; }
-        .floater:nth-child(4) { width: 4px; height: 4px; left:  32%; background: var(--accent-purple); animation-duration: 25s; animation-delay: 0. 5s; opacity:  0.8; }
-        . floater:nth-child(5) { width: 6px; height: 6px; left: 42%; background: #fd79a8; animation-duration: 21s; animation-delay: 2s; opacity: 0.6; }
-        . floater:nth-child(6) { width: 9px; height: 9px; left:  52%; background:  var(--accent); animation-duration: 24s; animation-delay: 4s; opacity: 0.5; }
+        .floater:nth-child(1) { width: 8px; height: 8px; left: 5%; background: var(--accent-warm); animation-duration: 18s; animation-delay: 0s; opacity: 0.7; }
+        .floater:nth-child(2) { width: 5px; height: 5px; left:  12%; background: var(--accent); animation-duration: 22s; animation-delay: 1s; opacity: 0.6; }
+        .floater:nth-child(3) { width: 10px; height: 10px; left:  22%; background: var(--accent-gold); animation-duration:  20s; animation-delay: 3s; opacity: 0.5; }
+        .floater:nth-child(4) { width: 4px; height: 4px; left:  32%; background: var(--accent-purple); animation-duration: 25s; animation-delay: 0.5s; opacity:  0.8; }
+        .floater:nth-child(5) { width: 6px; height: 6px; left: 42%; background: #fd79a8; animation-duration: 21s; animation-delay: 2s; opacity: 0.6; }
+        .floater:nth-child(6) { width: 9px; height: 9px; left:  52%; background:  var(--accent); animation-duration: 24s; animation-delay: 4s; opacity: 0.5; }
         .floater:nth-child(7) { width: 5px; height: 5px; left:  62%; background:  var(--accent-warm); animation-duration:  19s; animation-delay: 1.5s; opacity: 0.7; }
-        . floater:nth-child(8) { width: 7px; height: 7px; left:  72%; background:  #74b9ff; animation-duration: 23s; animation-delay: 2.5s; opacity: 0.6; }
-        . floater:nth-child(9) { width: 6px; height: 6px; left:  82%; background:  #55efc4; animation-duration: 20s; animation-delay:  3.5s; opacity: 0.5; }
+        .floater:nth-child(8) { width: 7px; height: 7px; left:  72%; background:  #74b9ff; animation-duration: 23s; animation-delay: 2.5s; opacity: 0.6; }
+        .floater:nth-child(9) { width: 6px; height: 6px; left:  82%; background:  #55efc4; animation-duration: 20s; animation-delay:  3.5s; opacity: 0.5; }
         .floater:nth-child(10) { width: 5px; height: 5px; left:  92%; background:  var(--accent-gold); animation-duration: 26s; animation-delay: 0.8s; opacity: 0.7; }
-        . floater:nth-child(11) { width: 4px; height: 4px; left: 8%; background: var(--primary); animation-duration:  27s; animation-delay: 5s; opacity: 0.6; }
-        .floater:nth-child(12) { width: 7px; height: 7px
+        .floater:nth-child(11) { width: 4px; height: 4px; left: 8%; background: var(--primary); animation-duration:  27s; animation-delay: 5s; opacity: 0.6; }
+        .floater:nth-child(12) { width: 7px; height: 7px; left: 15%; background: #ffeaa7; animation-duration: 24s; animation-delay: 1.2s; opacity: 0.5; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: var(--opacity, 0.7);
+            }
+            90% {
+                opacity: var(--opacity, 0.7);
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="floaters-container">
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+        <div class="floater"></div>
+    </div>
+</body>
+</html>

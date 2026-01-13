@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Awesome Website</title>
+    <!-- Luffy-themed Animated Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+    <link rel="mask-icon" href="favicon.svg" color="#FFD700">
     <style>
         * {
             margin: 0;
@@ -374,12 +378,261 @@
                         drop-shadow(0 0 25px rgba(118,75,162,0.6));
             }
         }
+
+        /* Enhanced Mega Glitch for Title */
+        @keyframes megaGlitch {
+            0%, 100% { transform: translate(0); filter: none; text-shadow: none; }
+            10% { 
+                transform: translate(-10px, 5px) skew(2deg); 
+                filter: hue-rotate(90deg);
+                text-shadow: 3px 3px 0 #667eea, -3px -3px 0 #764ba2;
+            }
+            20% { 
+                transform: translate(10px, -5px) skew(-2deg); 
+                filter: hue-rotate(180deg);
+                text-shadow: -3px 3px 0 #764ba2, 3px -3px 0 #667eea;
+            }
+            30% { 
+                transform: translate(-5px, -10px); 
+                filter: contrast(200%);
+                text-shadow: 2px 2px 0 #f093fb;
+            }
+            40% { 
+                transform: translate(5px, 10px); 
+                filter: brightness(150%);
+                text-shadow: -2px -2px 0 #4facfe;
+            }
+            50% { 
+                transform: translate(-8px, 3px) skew(1deg); 
+                opacity: 0.8;
+                text-shadow: 4px 0 0 #667eea, -4px 0 0 #764ba2;
+            }
+            60% { 
+                transform: translate(8px, -3px); 
+                opacity: 1;
+                text-shadow: 0 4px 0 #764ba2, 0 -4px 0 #667eea;
+            }
+        }
+
+        h1.mega-glitch {
+            animation: megaGlitch 0.8s ease-in-out;
+        }
+
+        /* Enhanced Auto Showcase */
+        .card.auto-showcase {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(102,126,234,0.6),
+                        0 0 40px rgba(118,75,162,0.5);
+            border: 2px solid rgba(102,126,234,0.8);
+            z-index: 100;
+        }
+
+        /* Proximity Glow Effect */
+        .card.proximity-glow {
+            box-shadow: 0 0 40px rgba(102,126,234,0.7),
+                        0 0 60px rgba(118,75,162,0.5);
+            transform: scale(1.02);
+        }
+
+        /* Enhanced Scanlines */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 999;
+            animation: scanlineMove 8s linear infinite;
+        }
+
+        @keyframes scanlineMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        /* Pulsing Scanline Effect */
+        .scanline-pulse {
+            position: fixed;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(102,126,234,0.8) 50%, 
+                transparent 100%);
+            pointer-events: none;
+            z-index: 998;
+            opacity: 0;
+        }
+
+        .scanline-pulse.active {
+            animation: scanlinePulse 2s ease-in-out;
+        }
+
+        @keyframes scanlinePulse {
+            0% { top: -3px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Energy Wave Effect */
+        .energy-wave {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(102,126,234,0.2) 25%,
+                rgba(118,75,162,0.2) 50%,
+                rgba(240,147,251,0.2) 75%,
+                transparent 100%
+            );
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+        }
+
+        .energy-wave.active {
+            animation: energyWaveSweep 3s ease-in-out;
+        }
+
+        @keyframes energyWaveSweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Idle Mode Indicator */
+        .idle-mode-active {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(102,126,234,0.9);
+            color: white;
+            border-radius: 20px;
+            z-index: 1000;
+            font-size: 14px;
+            animation: pulseIndicator 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseIndicator {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Konami Code Legendary Mode */
+        body.legendary-mode {
+            animation: legendaryPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes legendaryPulse {
+            0%, 100% { 
+                filter: saturate(1); 
+            }
+            50% { 
+                filter: saturate(2) brightness(1.2); 
+            }
+        }
+
+        .legendary-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 40px 60px;
+            background: linear-gradient(135deg, rgba(102,126,234,0.95) 0%, rgba(118,75,162,0.95) 100%);
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            border-radius: 20px;
+            z-index: 10000;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(102,126,234,0.8),
+                        0 0 100px rgba(118,75,162,0.6);
+            animation: legendaryMessageAppear 1s ease-out;
+        }
+
+        @keyframes legendaryMessageAppear {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1) rotate(0); 
+            }
+        }
+
+        /* Burst Particle for enhanced effects */
+        .burst-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, rgba(102,126,234,1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            /* Reduce particle count and effects on mobile */
+            .particle-container {
+                display: none;
+            }
+            
+            body::before,
+            body::after {
+                animation-duration: 6s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .magnetic-zone {
+                display: none;
+            }
+        }
+
+        /* Accessibility: Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .particle-container,
+            .rainbow-wave,
+            .magnetic-zone,
+            .scanline-pulse,
+            .energy-wave {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="theme-blue">
     <div class="rainbow-wave"></div>
     <div class="particle-container"></div>
     <div class="magnetic-zone"></div>
+    <div class="scanline-pulse"></div>
+    <div class="energy-wave"></div>
 
     <div class="container">
         <header class="interactive-glow">
@@ -600,6 +853,272 @@
         setTimeout(triggerRainbowWave, 4000);
         setTimeout(showcaseAutoHover, 1000);
         setTimeout(activateMagneticZone, 5000);
+
+        // ===== NEW LEGENDARY ENHANCEMENTS =====
+
+        // Enhanced Title Glitch Effect (Every 10-15 seconds randomly)
+        function triggerTitleGlitch() {
+            const title = document.querySelector('h1');
+            if (title) {
+                title.classList.add('mega-glitch');
+                setTimeout(() => title.classList.remove('mega-glitch'), 800);
+            }
+            
+            const nextGlitch = 10000 + Math.random() * 5000;
+            setTimeout(triggerTitleGlitch, nextGlitch);
+        }
+
+        // Start title glitch after initial delay
+        setTimeout(triggerTitleGlitch, 5000);
+
+        // Pulsing Scanline Effect (Every 8 seconds)
+        function triggerScanlinePulse() {
+            const scanline = document.querySelector('.scanline-pulse');
+            if (scanline) {
+                scanline.classList.add('active');
+                setTimeout(() => scanline.classList.remove('active'), 2000);
+            }
+        }
+
+        setInterval(triggerScanlinePulse, 8000);
+        setTimeout(triggerScanlinePulse, 2000);
+
+        // Energy Wave Sweep (Every 12 seconds)
+        function triggerEnergyWave() {
+            const wave = document.querySelector('.energy-wave');
+            if (wave) {
+                wave.classList.add('active');
+                setTimeout(() => wave.classList.remove('active'), 3000);
+            }
+        }
+
+        setInterval(triggerEnergyWave, 12000);
+        setTimeout(triggerEnergyWave, 6000);
+
+        // Proximity Glow based on scroll position
+        function updateProximityGlow() {
+            const cards = document.querySelectorAll('.card');
+            const viewportCenter = window.innerHeight / 2 + window.scrollY;
+            
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.top + window.scrollY + rect.height / 2;
+                const distance = Math.abs(viewportCenter - cardCenter);
+                
+                // Cards within 300px of viewport center get proximity glow
+                if (distance < 300) {
+                    card.classList.add('proximity-glow');
+                } else {
+                    card.classList.remove('proximity-glow');
+                }
+            });
+        }
+
+        // Throttled scroll handler for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(updateProximityGlow, 50);
+        });
+
+        // Initial proximity glow check
+        updateProximityGlow();
+
+        // Enhanced Particle Burst with more particles
+        function createEnhancedParticleBurst() {
+            const container = document.querySelector('.particle-container');
+            if (!container) return;
+            
+            // Check if on mobile
+            const isMobile = window.innerWidth <= 768;
+            const particleCount = isMobile ? 15 : 40;
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'burst-particle';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 3 + Math.random() * 4;
+                const dx = Math.cos(angle) * velocity;
+                const dy = Math.sin(angle) * velocity;
+                
+                container.appendChild(particle);
+                
+                let x = centerX;
+                let y = centerY;
+                let opacity = 1;
+                let scale = 1;
+                
+                const animate = () => {
+                    x += dx;
+                    y += dy;
+                    opacity -= 0.015;
+                    scale += 0.02;
+                    
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `scale(${scale})`;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        container.removeChild(particle);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+
+        setInterval(createEnhancedParticleBurst, 6000);
+
+        // Idle Mode Demo (after 30 seconds of no interaction)
+        let idleTimer;
+        let isIdleMode = false;
+        let idleIndicator;
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            if (isIdleMode) {
+                exitIdleMode();
+            }
+            idleTimer = setTimeout(enterIdleMode, 30000);
+        }
+
+        function enterIdleMode() {
+            if (isIdleMode) return;
+            isIdleMode = true;
+            
+            // Show idle mode indicator
+            idleIndicator = document.createElement('div');
+            idleIndicator.className = 'idle-mode-active';
+            idleIndicator.textContent = '🎮 Demo Mode Active';
+            document.body.appendChild(idleIndicator);
+            
+            // Trigger showcase sequence
+            showcaseAllEffects();
+        }
+
+        function exitIdleMode() {
+            isIdleMode = false;
+            if (idleIndicator) {
+                document.body.removeChild(idleIndicator);
+                idleIndicator = null;
+            }
+        }
+
+        function showcaseAllEffects() {
+            if (!isIdleMode) return;
+            
+            // Sequence of effects
+            setTimeout(() => isIdleMode && triggerTitleGlitch(), 500);
+            setTimeout(() => isIdleMode && triggerNeonBurst(), 1500);
+            setTimeout(() => isIdleMode && triggerRainbowWave(), 2500);
+            setTimeout(() => isIdleMode && createEnhancedParticleBurst(), 3500);
+            setTimeout(() => isIdleMode && triggerEnergyWave(), 4500);
+            setTimeout(() => isIdleMode && triggerScanlinePulse(), 5500);
+            setTimeout(() => isIdleMode && triggerWavePulse(), 6500);
+            
+            // Repeat showcase every 10 seconds while in idle mode
+            setTimeout(() => {
+                if (isIdleMode) showcaseAllEffects();
+            }, 10000);
+        }
+
+        // Reset idle timer on user interaction
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+            document.addEventListener(event, resetIdleTimer, true);
+        });
+
+        // Start idle timer
+        resetIdleTimer();
+
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        let legendaryModeActive = false;
+
+        document.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase() === 'b' || e.key.toLowerCase() === 'a' ? e.key.toLowerCase() : e.key;
+            
+            if (key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                
+                if (konamiIndex === konamiCode.length) {
+                    activateLegendaryMode();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function activateLegendaryMode() {
+            if (legendaryModeActive) return;
+            legendaryModeActive = true;
+            
+            // Add legendary mode class
+            document.body.classList.add('legendary-mode');
+            
+            // Show legendary message
+            const message = document.createElement('div');
+            message.className = 'legendary-message';
+            message.innerHTML = '⚡ ULTIMATE LEGENDARY MODE ACTIVATED! ⚡<br><span style="font-size: 20px; margin-top: 10px; display: block;">You found the secret! 🎉</span>';
+            document.body.appendChild(message);
+            
+            // Trigger all effects simultaneously
+            triggerTitleGlitch();
+            triggerNeonBurst();
+            triggerRainbowWave();
+            createEnhancedParticleBurst();
+            triggerEnergyWave();
+            triggerScanlinePulse();
+            triggerWavePulse();
+            
+            // More intense particle bursts
+            setTimeout(() => createEnhancedParticleBurst(), 500);
+            setTimeout(() => createEnhancedParticleBurst(), 1000);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 5000);
+            
+            // Keep legendary mode active for 30 seconds
+            setTimeout(() => {
+                document.body.classList.remove('legendary-mode');
+                legendaryModeActive = false;
+            }, 30000);
+        }
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        if (prefersReducedMotion.matches) {
+            // Disable auto-animations if user prefers reduced motion
+            console.log('Reduced motion preference detected - animations minimized');
+        }
+
+        // Performance optimization: use requestAnimationFrame for smoother animations
+        let rafId;
+        function optimizedAnimationLoop() {
+            // This could be used for custom animations that need 60fps
+            rafId = requestAnimationFrame(optimizedAnimationLoop);
+        }
+        
+        // Start the loop (currently not needed but available for future enhancements)
+        // optimizedAnimationLoop();
+
+        console.log('🎮 Ultimate Legendary Portfolio Loaded!');
+        console.log('💡 Tip: Try the Konami Code (↑↑↓↓←→←→BA) for a surprise!');
     </script>
 </body>
 </html>

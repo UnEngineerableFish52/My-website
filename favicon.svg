@@ -6,6 +6,15 @@
       <stop offset="66%" style="stop-color:#8b00ff;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#39ff14;stop-opacity:1" />
     </linearGradient>
+    <linearGradient id="hatGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DC143C;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF0000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
+    </linearGradient>
     <filter id="glow">
       <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
       <feMerge>
@@ -21,45 +30,87 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <filter id="neonGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
   
-  <!-- Dark background -->
+  <!-- Dark background with subtle gradient -->
   <rect width="512" height="512" fill="#0a0a0f"/>
+  <circle cx="256" cy="256" r="240" fill="url(#neonGradient)" opacity="0.05"/>
   
-  <!-- Outer hexagon ring with gradient -->
-  <polygon points="256,64 384,144 384,304 256,384 128,304 128,144" 
-           fill="none" 
-           stroke="url(#neonGradient)" 
-           stroke-width="8" 
-           filter="url(#glow)"/>
+  <!-- Rotating outer ring -->
+  <circle cx="256" cy="256" r="230" fill="none" stroke="url(#neonGradient)" stroke-width="4" opacity="0.6" filter="url(#glow)">
+    <animateTransform attributeName="transform" type="rotate" from="0 256 256" to="360 256 256" dur="20s" repeatCount="indefinite"/>
+  </circle>
   
-  <!-- Inner hexagon -->
-  <polygon points="256,112 344,164 344,268 256,320 168,268 168,164" 
-           fill="none" 
-           stroke="#00f3ff" 
-           stroke-width="6" 
-           opacity="0.8"
-           filter="url(#glow)"/>
+  <!-- Counter-rotating inner ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#00f3ff" stroke-width="3" opacity="0.4" filter="url(#glow)">
+    <animateTransform attributeName="transform" type="rotate" from="360 256 256" to="0 256 256" dur="15s" repeatCount="indefinite"/>
+  </circle>
   
-  <!-- Center "M" for METHEELEGEND -->
-  <text x="256" y="300" 
+  <!-- Luffy's Straw Hat -->
+  <g id="strawHat" filter="url(#neonGlow)">
+    <!-- Hat top (yellow/gold) -->
+    <ellipse cx="256" cy="200" rx="120" ry="40" fill="url(#hatGradient)" stroke="#FFA500" stroke-width="3"/>
+    
+    <!-- Hat crown -->
+    <path d="M 136 200 Q 136 160, 256 140 Q 376 160, 376 200 L 340 220 Q 340 180, 256 165 Q 172 180, 172 220 Z" 
+          fill="url(#hatGradient)" stroke="#FFA500" stroke-width="2"/>
+    
+    <!-- Red band -->
+    <ellipse cx="256" cy="220" rx="125" ry="20" fill="url(#bandGradient)" stroke="#DC143C" stroke-width="2"/>
+    
+    <!-- Band shine effect -->
+    <ellipse cx="256" cy="218" rx="120" ry="8" fill="#FF6B6B" opacity="0.6"/>
+    
+    <!-- Hat brim -->
+    <ellipse cx="256" cy="230" rx="150" ry="25" fill="url(#hatGradient)" stroke="#FFA500" stroke-width="3"/>
+    <ellipse cx="256" cy="228" rx="145" ry="20" fill="#FFE55C" opacity="0.4"/>
+  </g>
+  
+  <!-- Pulsing glow animation on hat -->
+  <ellipse cx="256" cy="200" rx="160" ry="80" fill="none" stroke="#FFD700" stroke-width="2" opacity="0.3" filter="url(#strongGlow)">
+    <animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="rx" values="160;170;160" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="80;90;80" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <!-- Neon accent particles -->
+  <circle cx="150" cy="180" r="4" fill="#00f3ff" filter="url(#glow)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="362" cy="180" r="4" fill="#ff006e" filter="url(#glow)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="250" r="4" fill="#8b00ff" filter="url(#glow)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="312" cy="250" r="4" fill="#39ff14" filter="url(#glow)">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- "M" letter below hat with cyberpunk style -->
+  <text x="256" y="360" 
         font-family="Arial, sans-serif" 
-        font-size="200" 
+        font-size="140" 
         font-weight="bold" 
         text-anchor="middle" 
         fill="url(#neonGradient)"
         filter="url(#strongGlow)">M</text>
   
-  <!-- Decorative corner elements -->
-  <circle cx="256" cy="64" r="8" fill="#00f3ff" filter="url(#glow)"/>
-  <circle cx="384" cy="144" r="8" fill="#ff006e" filter="url(#glow)"/>
-  <circle cx="384" cy="304" r="8" fill="#8b00ff" filter="url(#glow)"/>
-  <circle cx="256" cy="384" r="8" fill="#39ff14" filter="url(#glow)"/>
-  <circle cx="128" cy="304" r="8" fill="#ff6600" filter="url(#glow)"/>
-  <circle cx="128" cy="144" r="8" fill="#00f3ff" filter="url(#glow)"/>
-  
-  <!-- Animated scan lines (simulated with thin lines) -->
-  <line x1="128" y1="180" x2="384" y2="180" stroke="#00f3ff" stroke-width="1" opacity="0.3"/>
-  <line x1="128" y1="220" x2="384" y2="220" stroke="#ff006e" stroke-width="1" opacity="0.3"/>
-  <line x1="128" y1="260" x2="384" y2="260" stroke="#8b00ff" stroke-width="1" opacity="0.3"/>
+  <!-- Animated scan lines -->
+  <line x1="100" y1="300" x2="412" y2="300" stroke="#00f3ff" stroke-width="1" opacity="0.2">
+    <animate attributeName="y1" values="300;340;300" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="300;340;300" dur="4s" repeatCount="indefinite"/>
+  </line>
+  <line x1="100" y1="320" x2="412" y2="320" stroke="#ff006e" stroke-width="1" opacity="0.2">
+    <animate attributeName="y1" values="320;360;320" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="320;360;320" dur="5s" repeatCount="indefinite"/>
+  </line>
 </svg>

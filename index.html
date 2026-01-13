@@ -1576,7 +1576,7 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-ring"></div>
-        <div class="loading-text">LOADING LEGENDARY...</div>
+        <div class="loading-text">LOADING LEGENDARY PORTFOLIO...</div>
     </div>
 
     <!-- Custom Cursor -->
@@ -2013,8 +2013,13 @@
                 rainbowWaveInterval: 12000,
                 autoHoverInterval: 7000,
                 magneticZoneInterval: 15000,
-                breathingGlowInterval: 2500
+                breathingGlowInterval: 2500,
+                maxBurstParticles: 100,
+                maxCursorTrailParticles: 50
             },
+
+            // Store original config values for performance mode
+            originalConfig: null,
 
             // State management
             state: {
@@ -2041,6 +2046,9 @@
             burstParticles: [],
             cursorTrailParticles: [],
 
+            // Active magnetic zones
+            activeMagneticZones: [],
+
             // Current theme index
             currentThemeIndex: 0,
 
@@ -2057,6 +2065,9 @@
              */
             init() {
                 try {
+                    // Store original config
+                    this.originalConfig = JSON.parse(JSON.stringify(this.config));
+                    
                     // Detect mobile
                     this.state.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                     
@@ -2212,8 +2223,12 @@
                         else this.stopInterval('rainbowWaves');
                         break;
                     case 'magneticZones':
-                        if (value && !this.state.isMobile) this.startMagneticZones();
-                        else this.stopInterval('magneticZones');
+                        if (value && !this.state.isMobile) {
+                            this.startMagneticZones();
+                        } else {
+                            this.stopInterval('magneticZones');
+                            this.cleanupMagneticZones();
+                        }
                         break;
                     case 'matrixRain':
                         if (value && !this.state.isMobile) {
@@ -2235,12 +2250,22 @@
                         }
                         break;
                     case 'performanceMode':
-                        // Adjust intervals
-                        Object.keys(this.config).forEach(key => {
-                            if (key.includes('Interval')) {
-                                this.config[key] = value ? this.config[key] * 1.5 : this.config[key] / 1.5;
-                            }
-                        });
+                        // Reset to original config first
+                        if (this.originalConfig) {
+                            Object.keys(this.originalConfig).forEach(key => {
+                                if (key.includes('Interval') || key.includes('max')) {
+                                    this.config[key] = this.originalConfig[key];
+                                }
+                            });
+                        }
+                        // Adjust intervals if performance mode enabled
+                        if (value) {
+                            Object.keys(this.config).forEach(key => {
+                                if (key.includes('Interval')) {
+                                    this.config[key] = Math.floor(this.config[key] * 1.5);
+                                }
+                            });
+                        }
                         // Restart effects with new timing
                         if (this.state.recurringEffects) {
                             this.stopAllEffects();
@@ -2451,7 +2476,7 @@
                         this.burstParticles.push(particle);
 
                         // Limit particles
-                        if (this.burstParticles.length > 100) {
+                        if (this.burstParticles.length > this.config.maxBurstParticles) {
                             const old = this.burstParticles.shift();
                             old?.remove();
                         }
@@ -2602,6 +2627,7 @@
                     zone.style.height = '200px';
                     
                     document.body.appendChild(zone);
+                    this.activeMagneticZones.push({ zone, originalPositions });
 
                     // Attract nearby elements
                     const cards = document.querySelectorAll('.card-3d, .skill-card, .project-card');
@@ -2625,16 +2651,37 @@
                         }
                     });
 
-                    // Remove zone and reset positions
-                    setTimeout(() => {
+                    // Remove zone and reset positions after duration
+                    const zoneData = { zone, originalPositions };
+                    const timeoutId = setTimeout(() => {
+                        const index = this.activeMagneticZones.indexOf(zoneData);
+                        if (index > -1) {
+                            this.activeMagneticZones.splice(index, 1);
+                        }
                         zone.remove();
                         originalPositions.forEach((transform, card) => {
                             card.style.transform = transform;
                         });
                     }, 5000);
+                    
+                    zoneData.timeoutId = timeoutId;
                 } catch (error) {
                     console.warn('Create magnetic zone error:', error);
                 }
+            },
+
+            /**
+             * Clean up active magnetic zones
+             */
+            cleanupMagneticZones() {
+                this.activeMagneticZones.forEach(({ zone, originalPositions, timeoutId }) => {
+                    if (timeoutId) clearTimeout(timeoutId);
+                    zone?.remove();
+                    originalPositions?.forEach((transform, card) => {
+                        card.style.transform = transform;
+                    });
+                });
+                this.activeMagneticZones = [];
             },
 
             /**
@@ -2707,7 +2754,7 @@
                         document.body.appendChild(particle);
                         this.cursorTrailParticles.push(particle);
 
-                        if (this.cursorTrailParticles.length > 50) {
+                        if (this.cursorTrailParticles.length > this.config.maxCursorTrailParticles) {
                             const old = this.cursorTrailParticles.shift();
                             old?.remove();
                         }
@@ -2779,7 +2826,7 @@
                     const taglineEl = document.querySelector('.tagline');
                     
                     if (taglineEl) {
-                        setInterval(() => {
+                        this.intervals.taglineRotation = setInterval(() => {
                             currentTagline = (currentTagline + 1) % taglines.length;
                             taglineEl.style.opacity = '0';
                             
@@ -2875,13 +2922,8 @@
                             }
                         }
                         
-                        // Stagger effect activations
-                        setTimeout(() => this.initFloatingBubbles(), 500);
-                        setTimeout(() => {
-                            if (this.state.matrixRain && !this.state.isMobile) {
-                                this.initMatrixRain();
-                            }
-                        }, 1000);
+                        // Note: Floating bubbles are initialized in main init()
+                        // Matrix rain is also initialized there if enabled
                     }, 2000);
                 } catch (error) {
                     console.warn('Loading sequence error:', error);

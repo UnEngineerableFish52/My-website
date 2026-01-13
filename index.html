@@ -856,6 +856,14 @@
 
         // ===== NEW LEGENDARY ENHANCEMENTS =====
 
+        // Configuration Constants
+        const ANIMATION_CONFIG = {
+            TITLE_GLITCH_MIN: 10000,
+            TITLE_GLITCH_VARIANCE: 5000,
+            PROXIMITY_THRESHOLD: 300,
+            IDLE_TIMEOUT: 30000
+        };
+
         // Enhanced Title Glitch Effect (Every 10-15 seconds randomly)
         function triggerTitleGlitch() {
             const title = document.querySelector('h1');
@@ -864,7 +872,7 @@
                 setTimeout(() => title.classList.remove('mega-glitch'), 800);
             }
             
-            const nextGlitch = 10000 + Math.random() * 5000;
+            const nextGlitch = ANIMATION_CONFIG.TITLE_GLITCH_MIN + Math.random() * ANIMATION_CONFIG.TITLE_GLITCH_VARIANCE;
             setTimeout(triggerTitleGlitch, nextGlitch);
         }
 
@@ -905,8 +913,8 @@
                 const cardCenter = rect.top + window.scrollY + rect.height / 2;
                 const distance = Math.abs(viewportCenter - cardCenter);
                 
-                // Cards within 300px of viewport center get proximity glow
-                if (distance < 300) {
+                // Cards within threshold of viewport center get proximity glow
+                if (distance < ANIMATION_CONFIG.PROXIMITY_THRESHOLD) {
                     card.classList.add('proximity-glow');
                 } else {
                     card.classList.remove('proximity-glow');
@@ -1039,7 +1047,7 @@
         });
 
         // Start idle timer
-        resetIdleTimer();
+        idleTimer = setTimeout(enterIdleMode, ANIMATION_CONFIG.IDLE_TIMEOUT);
 
         // Konami Code Easter Egg
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -1106,16 +1114,6 @@
             // Disable auto-animations if user prefers reduced motion
             console.log('Reduced motion preference detected - animations minimized');
         }
-
-        // Performance optimization: use requestAnimationFrame for smoother animations
-        let rafId;
-        function optimizedAnimationLoop() {
-            // This could be used for custom animations that need 60fps
-            rafId = requestAnimationFrame(optimizedAnimationLoop);
-        }
-        
-        // Start the loop (currently not needed but available for future enhancements)
-        // optimizedAnimationLoop();
 
         console.log('🎮 Ultimate Legendary Portfolio Loaded!');
         console.log('💡 Tip: Try the Konami Code (↑↑↓↓←→←→BA) for a surprise!');

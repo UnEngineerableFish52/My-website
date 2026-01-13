@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>METHEELEGEND | Legendary Portfolio</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTUVUSEVFTEVHRU5EIiwic2hvcnRfbmFtZSI6Ik1FVEwiLCJpY29ucyI6W3sic3JjIjoiZmF2aWNvbi5zdmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XSwidGhlbWVfY29sb3IiOiIjMGEwYTBmIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMGYiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSJ9">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="msapplication-TileColor" content="#0a0a0f">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -1142,9 +1152,543 @@
                 opacity: 0;
             }
         }
+
+        /* ==================== LEGENDARY ENHANCEMENTS ==================== */
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-container {
+            text-align: center;
+        }
+
+        .loader-ring {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+        }
+
+        .loader-ring::before,
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        .loader-ring::before {
+            border-top-color: var(--neon-blue);
+            border-right-color: var(--neon-pink);
+            animation-duration: 1.5s;
+        }
+
+        .loader-ring::after {
+            border-bottom-color: var(--cyber-purple);
+            border-left-color: var(--neon-green);
+            animation-duration: 2s;
+            animation-direction: reverse;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Neon Trail Cursor */
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            background: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Matrix Rain Effect */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #matrix-canvas.active {
+            opacity: 0.15;
+        }
+
+        /* Floating Action Bubbles */
+        .floating-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 243, 255, 0.3), rgba(139, 0, 255, 0.1));
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--neon-blue);
+            animation: floatBubble 15s linear infinite;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                bottom: -100px;
+                opacity: 0;
+                transform: translateX(0) scale(1);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                bottom: 110%;
+                opacity: 0;
+                transform: translateX(100px) scale(1.5);
+            }
+        }
+
+        /* 3D Card Transform Enhancement */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s ease;
+        }
+
+        .card-3d:hover {
+            transform: translateZ(20px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+        }
+
+        /* Magnetic Effect */
+        .magnetic {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Neon Pulse Effect */
+        @keyframes neonPulse {
+            0%, 100% {
+                box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue), 0 0 60px var(--neon-pink);
+            }
+        }
+
+        .neon-pulse {
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        /* Text Reveal Stagger */
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: textReveal 0.8s forwards;
+        }
+
+        @keyframes textReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-reveal:nth-child(1) { animation-delay: 0.1s; }
+        .text-reveal:nth-child(2) { animation-delay: 0.2s; }
+        .text-reveal:nth-child(3) { animation-delay: 0.3s; }
+        .text-reveal:nth-child(4) { animation-delay: 0.4s; }
+        .text-reveal:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Parallax Layers */
+        .parallax-layer {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Enhanced Glitch Effect */
+        .glitch-enhanced {
+            position: relative;
+        }
+
+        .glitch-enhanced::before,
+        .glitch-enhanced::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-enhanced::before {
+            color: var(--neon-blue);
+            animation: glitchBefore 3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .glitch-enhanced::after {
+            color: var(--neon-pink);
+            animation: glitchAfter 2s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitchBefore {
+            0%, 95%, 100% {
+                transform: translate(0);
+            }
+            96% {
+                transform: translate(-5px, -5px);
+            }
+            97% {
+                transform: translate(5px, 2px);
+            }
+            98% {
+                transform: translate(-2px, 3px);
+            }
+            99% {
+                transform: translate(3px, -2px);
+            }
+        }
+
+        @keyframes glitchAfter {
+            0%, 94%, 100% {
+                transform: translate(0);
+            }
+            95% {
+                transform: translate(5px, 5px);
+            }
+            96% {
+                transform: translate(-3px, -2px);
+            }
+            97% {
+                transform: translate(2px, -3px);
+            }
+            98% {
+                transform: translate(-5px, 2px);
+            }
+        }
+
+        /* Control Panel */
+        .control-panel {
+            position: fixed;
+            top: 100px;
+            right: -300px;
+            width: 280px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px 0 0 20px;
+            padding: 25px;
+            z-index: 1001;
+            transition: right 0.3s;
+            box-shadow: -5px 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .control-panel.active {
+            right: 0;
+        }
+
+        .control-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-blue);
+            cursor: pointer;
+            z-index: 1002;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .control-toggle:hover {
+            transform: rotate(90deg);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        .control-item {
+            margin-bottom: 20px;
+        }
+
+        .control-item label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        input[type="checkbox"]:checked + .toggle-switch {
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        input[type="checkbox"]:checked + .toggle-switch::before {
+            left: 26px;
+            background: white;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Legendary Mode Indicator */
+        .legendary-mode-active {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple), var(--neon-green));
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            z-index: 1003;
+            opacity: 0;
+            transition: all 0.5s;
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        .legendary-mode-active.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Scroll Snap */
+        .scroll-snap {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-snap section {
+            scroll-snap-align: start;
+        }
+
+        /* Smooth Section Transitions */
+        section {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: sectionFadeIn 1s forwards;
+        }
+
+        @keyframes sectionFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section:nth-child(1) { animation-delay: 0s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .preloader {
+                display: none;
+            }
+
+            .scanline,
+            .grid-overlay,
+            #matrix-canvas,
+            .floating-bubbles {
+                display: none;
+            }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .control-panel,
+            .control-toggle {
+                display: none;
+            }
+
+            .floating-bubbles {
+                display: none;
+            }
+
+            #matrix-canvas {
+                display: none;
+            }
+
+            .card-3d:hover {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-container">
+            <div class="loader-ring"></div>
+            <div class="loader-text">LOADING LEGENDARY EXPERIENCE...</div>
+        </div>
+    </div>
+
+    <!-- Control Panel Toggle -->
+    <div class="control-toggle" id="controlToggle">⚙️</div>
+
+    <!-- Control Panel -->
+    <div class="control-panel" id="controlPanel">
+        <h3 style="margin-bottom: 20px; color: var(--neon-blue); font-family: 'Orbitron', sans-serif;">CONTROLS</h3>
+        
+        <div class="control-item">
+            <label>
+                <span>Matrix Effect</span>
+                <input type="checkbox" id="matrixToggle">
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        
+        <div class="control-item">
+            <label>
+                <span>Floating Bubbles</span>
+                <input type="checkbox" id="bubblesToggle" checked>
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        
+        <div class="control-item">
+            <label>
+                <span>Cursor Trail</span>
+                <input type="checkbox" id="trailToggle" checked>
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        
+        <div class="control-item">
+            <label>
+                <span>Sound Effects</span>
+                <input type="checkbox" id="soundToggle">
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        
+        <div class="control-item">
+            <label>
+                <span>🔥 LEGENDARY MODE</span>
+                <input type="checkbox" id="legendaryToggle">
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--glass-border); font-size: 0.75rem; color: var(--text-secondary);">
+            <p>Easter Egg: Try the Konami Code!</p>
+            <p style="margin-top: 5px;">↑↑↓↓←→←→BA</p>
+        </div>
+    </div>
+
+    <!-- Legendary Mode Indicator -->
+    <div class="legendary-mode-active" id="legendaryIndicator">
+        🔥 LEGENDARY MODE ACTIVATED 🔥
+    </div>
+
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Floating Bubbles Container -->
+    <div class="floating-bubbles" id="floatingBubbles"></div>
+
+    <!-- Cursor Trail Elements -->
+    <div id="cursorTrailContainer"></div>
 
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
@@ -1189,13 +1733,13 @@
                 </div>
 
                 <!-- Hero Title -->
-                <h1 class="hero-title">METHEELEGEND</h1>
-                <p class="tagline">Full-Stack Developer • Cyberpunk Enthusiast • Digital Creator</p>
+                <h1 class="hero-title glitch-enhanced" data-text="METHEELEGEND">METHEELEGEND</h1>
+                <p class="tagline" id="tagline">Full-Stack Developer • Cyberpunk Enthusiast • Digital Creator</p>
 
                 <!-- CTA Buttons -->
                 <div class="cta-buttons">
-                    <a href="#projects" class="neon-btn">View Projects</a>
-                    <a href="#contact" class="neon-btn secondary">Get In Touch</a>
+                    <a href="#projects" class="neon-btn magnetic neon-pulse">View Projects</a>
+                    <a href="#contact" class="neon-btn secondary magnetic">Get In Touch</a>
                 </div>
             </div>
         </section>
@@ -1243,7 +1787,7 @@
                 <h2 class="section-title scroll-reveal">Technical Arsenal</h2>
                 <div class="skills-grid">
                     <!-- Skill 1 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">HTML5 & CSS3</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 95%"></div>
@@ -1252,7 +1796,7 @@
                     </div>
 
                     <!-- Skill 2 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">JavaScript & TypeScript</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 90%"></div>
@@ -1261,7 +1805,7 @@
                     </div>
 
                     <!-- Skill 3 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">React & Next.js</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 88%"></div>
@@ -1270,7 +1814,7 @@
                     </div>
 
                     <!-- Skill 4 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">Node.js & Express</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 85%"></div>
@@ -1279,7 +1823,7 @@
                     </div>
 
                     <!-- Skill 5 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">Python & Django</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 82%"></div>
@@ -1288,7 +1832,7 @@
                     </div>
 
                     <!-- Skill 6 -->
-                    <div class="skill-card scroll-reveal">
+                    <div class="skill-card scroll-reveal card-3d">
                         <div class="skill-name">UI/UX Design</div>
                         <div class="skill-bar-container">
                             <div class="skill-bar" style="width: 87%"></div>
@@ -1305,7 +1849,7 @@
                 <h2 class="section-title scroll-reveal">Featured Projects</h2>
                 <div class="projects-grid">
                     <!-- Project 1 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=1" alt="Project 1" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">Neon Dashboard</h3>
@@ -1317,12 +1861,12 @@
                                 <span class="tag">D3.js</span>
                                 <span class="tag">Node.js</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
 
                     <!-- Project 2 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=2" alt="Project 2" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">Holographic E-Commerce</h3>
@@ -1334,12 +1878,12 @@
                                 <span class="tag">Three.js</span>
                                 <span class="tag">WebGL</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
 
                     <!-- Project 3 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=3" alt="Project 3" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">Cyber Social Network</h3>
@@ -1351,12 +1895,12 @@
                                 <span class="tag">WebSockets</span>
                                 <span class="tag">MongoDB</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
 
                     <!-- Project 4 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=4" alt="Project 4" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">AI Art Generator</h3>
@@ -1368,12 +1912,12 @@
                                 <span class="tag">TensorFlow</span>
                                 <span class="tag">FastAPI</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
 
                     <!-- Project 5 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=5" alt="Project 5" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">Quantum Code Editor</h3>
@@ -1385,12 +1929,12 @@
                                 <span class="tag">Monaco Editor</span>
                                 <span class="tag">OpenAI</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
 
                     <!-- Project 6 -->
-                    <div class="project-card scroll-reveal">
+                    <div class="project-card scroll-reveal card-3d">
                         <img src="https://picsum.photos/400/300?random=6" alt="Project 6" class="project-image">
                         <div class="project-content">
                             <h3 class="project-title">Matrix Portfolio</h3>
@@ -1402,7 +1946,7 @@
                                 <span class="tag">CSS3</span>
                                 <span class="tag">Vanilla JS</span>
                             </div>
-                            <a href="#" class="project-link">View Project</a>
+                            <a href="#" class="project-link magnetic">View Project</a>
                         </div>
                     </div>
                 </div>
@@ -1792,6 +2336,389 @@
 
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
+
+        // ==================== LEGENDARY ENHANCEMENTS ====================
+
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Control Panel Toggle
+        const controlToggle = document.getElementById('controlToggle');
+        const controlPanel = document.getElementById('controlPanel');
+        
+        controlToggle.addEventListener('click', () => {
+            controlPanel.classList.toggle('active');
+        });
+
+        // Matrix Rain Effect
+        const matrixCanvas = document.getElementById('matrix-canvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+
+        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const fontSize = 14;
+        const columns = matrixCanvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        let matrixInterval;
+        let matrixActive = false;
+
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            matrixCtx.fillStyle = '#00f3ff';
+            matrixCtx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        document.getElementById('matrixToggle').addEventListener('change', function() {
+            matrixActive = this.checked;
+            if (matrixActive) {
+                matrixCanvas.classList.add('active');
+                matrixInterval = setInterval(drawMatrix, 33);
+            } else {
+                matrixCanvas.classList.remove('active');
+                clearInterval(matrixInterval);
+            }
+        });
+
+        // Floating Bubbles
+        const bubblesContainer = document.getElementById('floatingBubbles');
+        let bubblesActive = true;
+
+        function createBubble() {
+            if (!bubblesActive) return;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.width = (Math.random() * 40 + 20) + 'px';
+            bubble.style.height = bubble.style.width;
+            bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            bubble.style.animationDelay = Math.random() * 5 + 's';
+            
+            bubblesContainer.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 20000);
+        }
+
+        // Create initial bubbles
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => createBubble(), i * 1000);
+        }
+
+        // Keep creating bubbles
+        setInterval(() => {
+            if (bubblesActive) createBubble();
+        }, 2000);
+
+        document.getElementById('bubblesToggle').addEventListener('change', function() {
+            bubblesActive = this.checked;
+            if (!bubblesActive) {
+                bubblesContainer.innerHTML = '';
+            }
+        });
+
+        // Cursor Trail Effect
+        const trailContainer = document.getElementById('cursorTrailContainer');
+        let trailActive = true;
+        const trailElements = [];
+        const maxTrails = 20;
+
+        function createTrail(x, y) {
+            if (!trailActive || window.innerWidth < 768) return;
+            
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            trail.style.opacity = '1';
+            
+            trailContainer.appendChild(trail);
+            trailElements.push(trail);
+            
+            setTimeout(() => {
+                trail.style.opacity = '0';
+            }, 10);
+            
+            setTimeout(() => {
+                trail.remove();
+                trailElements.shift();
+            }, 500);
+            
+            if (trailElements.length > maxTrails) {
+                const oldest = trailElements.shift();
+                oldest.remove();
+            }
+        }
+
+        let trailTimeout;
+        document.addEventListener('mousemove', (e) => {
+            clearTimeout(trailTimeout);
+            trailTimeout = setTimeout(() => {
+                createTrail(e.clientX, e.clientY);
+            }, 30);
+        });
+
+        document.getElementById('trailToggle').addEventListener('change', function() {
+            trailActive = this.checked;
+            if (!trailActive) {
+                trailContainer.innerHTML = '';
+            }
+        });
+
+        // 3D Card Effect with Mouse
+        const card3dElements = document.querySelectorAll('.card-3d');
+        
+        card3dElements.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.setProperty('--rotate-x', rotateX + 'deg');
+                card.style.setProperty('--rotate-y', rotateY + 'deg');
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.setProperty('--rotate-x', '0deg');
+                card.style.setProperty('--rotate-y', '0deg');
+            });
+        });
+
+        // Magnetic Effect
+        const magneticElements = document.querySelectorAll('.magnetic');
+        
+        magneticElements.forEach(el => {
+            el.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                const distance = Math.sqrt(x * x + y * y);
+                const maxDistance = 100;
+                
+                if (distance < maxDistance) {
+                    const strength = (maxDistance - distance) / maxDistance;
+                    const moveX = x * strength * 0.3;
+                    const moveY = y * strength * 0.3;
+                    
+                    this.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                }
+            });
+            
+            el.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Rotating Typewriter Phrases
+        const tagline = document.getElementById('tagline');
+        const phrases = [
+            'Full-Stack Developer • Cyberpunk Enthusiast • Digital Creator',
+            'Code Architect • Neon Artist • Tech Visionary',
+            'Innovation Engineer • Design Wizard • Future Builder',
+            'Creative Developer • UI/UX Maestro • Problem Solver',
+            'JavaScript Ninja • CSS Magician • API Craftsman'
+        ];
+        let currentPhrase = 0;
+
+        function rotatePhrase() {
+            currentPhrase = (currentPhrase + 1) % phrases.length;
+            tagline.textContent = phrases[currentPhrase];
+            tagline.style.animation = 'none';
+            setTimeout(() => {
+                tagline.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
+            }, 100);
+        }
+
+        setInterval(rotatePhrase, 8000);
+
+        // Sound Effects (Optional)
+        let soundEnabled = false;
+        const sounds = {
+            hover: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUKXh8LdjHgU2j9XyzH0pBSh+zPDajkAKD1y16+ylVRQJQ5zd8sFuJAUuhM/z24k5CBpqvO/mnEsNCFCm4u+4YyQFNI/W88x9KgUoftHw2o9ACg9ctevsp1UUCUOYY2QAIQAB7AIA='),
+            click: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUKXh8LdjHgU2j9XyzH0pBSh+zPDajkAKD1y16+ylVRQJQ5zd8sFuJAUuhM/z24k5CBpqvO/mnEsNCFCm4u+4YyQFNI/W88x9KgUoftHw2o9ACg9ctevsp1UUCUOYY2QAIQAB7AIA=')
+        };
+
+        document.getElementById('soundToggle').addEventListener('change', function() {
+            soundEnabled = this.checked;
+        });
+
+        // Play sound on interactions
+        if (soundEnabled) {
+            document.querySelectorAll('.neon-btn, .project-link').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (soundEnabled && sounds.hover) {
+                        sounds.hover.currentTime = 0;
+                        sounds.hover.play().catch(() => {});
+                    }
+                });
+                
+                el.addEventListener('click', () => {
+                    if (soundEnabled && sounds.click) {
+                        sounds.click.currentTime = 0;
+                        sounds.click.play().catch(() => {});
+                    }
+                });
+            });
+        }
+
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    activateKonamiEasterEgg();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function activateKonamiEasterEgg() {
+            // Create spectacular effect
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
+                padding: 40px 60px;
+                border-radius: 20px;
+                font-family: 'Orbitron', sans-serif;
+                font-size: 2rem;
+                font-weight: 900;
+                z-index: 10001;
+                box-shadow: 0 0 100px var(--neon-blue);
+                animation: pulse 1s ease-in-out infinite;
+                text-align: center;
+            `;
+            message.innerHTML = '🎮 KONAMI CODE ACTIVATED! 🎮<br><span style="font-size: 1rem; display: block; margin-top: 10px;">YOU ARE NOW TRULY LEGENDARY!</span>';
+            document.body.appendChild(message);
+            
+            // Auto-enable legendary mode
+            document.getElementById('legendaryToggle').checked = true;
+            document.getElementById('legendaryToggle').dispatchEvent(new Event('change'));
+            
+            setTimeout(() => {
+                message.remove();
+            }, 4000);
+        }
+
+        // Legendary Mode
+        const legendaryToggle = document.getElementById('legendaryToggle');
+        const legendaryIndicator = document.getElementById('legendaryIndicator');
+        
+        legendaryToggle.addEventListener('change', function() {
+            if (this.checked) {
+                // Activate all effects
+                document.getElementById('matrixToggle').checked = true;
+                document.getElementById('matrixToggle').dispatchEvent(new Event('change'));
+                
+                document.getElementById('bubblesToggle').checked = true;
+                document.getElementById('trailToggle').checked = true;
+                
+                // Show indicator
+                legendaryIndicator.classList.add('show');
+                
+                // Add extra visual effects
+                document.body.style.animation = 'backgroundPulse 3s ease-in-out infinite alternate';
+                
+                // Create particle burst
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        createBubble();
+                    }, i * 50);
+                }
+                
+                console.log('%c🔥🔥🔥 LEGENDARY MODE ACTIVATED 🔥🔥🔥', 'color: #ff006e; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px #ff006e;');
+            } else {
+                // Deactivate
+                legendaryIndicator.classList.remove('show');
+                document.body.style.animation = '';
+            }
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-layer');
+            
+            parallaxElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.1;
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Enhanced resize handler for matrix and particles
+        window.addEventListener('resize', () => {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+        });
+
+        // Performance optimization: Reduce animations on low-end devices
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        if (prefersReducedMotion.matches) {
+            document.getElementById('matrixToggle').disabled = true;
+            document.getElementById('bubblesToggle').checked = false;
+            document.getElementById('trailToggle').checked = false;
+            bubblesActive = false;
+            trailActive = false;
+        }
+
+        // Smooth scroll snap (optional, can be toggled)
+        let scrollSnapEnabled = false;
+        
+        function toggleScrollSnap() {
+            if (scrollSnapEnabled) {
+                document.documentElement.classList.add('scroll-snap');
+            } else {
+                document.documentElement.classList.remove('scroll-snap');
+            }
+        }
+
+        // Initialize
+        console.log('%c✨ All legendary features loaded successfully!', 'color: #39ff14; font-size: 14px;');
+        console.log('%c💡 Tip: Try the Konami Code for a secret surprise!', 'color: #8b00ff; font-size: 12px;');
     </script>
 </body>
 </html>

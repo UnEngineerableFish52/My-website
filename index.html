@@ -2014,8 +2014,10 @@
                 autoHoverInterval: 7000,
                 magneticZoneInterval: 15000,
                 breathingGlowInterval: 2500,
-                maxBurstParticles: 100,
-                maxCursorTrailParticles: 50
+                // Particle limits for memory management and performance
+                // Adjust these values to balance visual quality with performance
+                maxBurstParticles: 100,  // Maximum burst particles before cleanup
+                maxCursorTrailParticles: 50  // Maximum cursor trail particles before cleanup
             },
 
             // Store original config values for performance mode
@@ -2626,9 +2628,6 @@
                     zone.style.width = '200px';
                     zone.style.height = '200px';
                     
-                    document.body.appendChild(zone);
-                    this.activeMagneticZones.push({ zone, originalPositions });
-
                     // Attract nearby elements
                     const cards = document.querySelectorAll('.card-3d, .skill-card, .project-card');
                     const originalPositions = new Map();
@@ -2651,8 +2650,13 @@
                         }
                     });
 
-                    // Remove zone and reset positions after duration
+                    document.body.appendChild(zone);
+
+                    // Track zone for cleanup
                     const zoneData = { zone, originalPositions };
+                    this.activeMagneticZones.push(zoneData);
+
+                    // Remove zone and reset positions after duration
                     const timeoutId = setTimeout(() => {
                         const index = this.activeMagneticZones.indexOf(zoneData);
                         if (index > -1) {

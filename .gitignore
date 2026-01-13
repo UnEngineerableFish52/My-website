@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Build artifacts
 dist/
@@ -10,9 +9,6 @@ build/
 *.tmp
 *.log
 .DS_Store
-
-# Generated files
-generate-favicons.js
 
 # IDE
 .vscode/

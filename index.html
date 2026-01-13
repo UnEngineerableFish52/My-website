@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>METHEELEGEND | Legendary Portfolio</title>
+    
+    <!-- Favicon Integration -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#00f3ff">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -36,6 +45,542 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* ========================================
+           LEGENDARY INTRO SYSTEM - PHASE 1-5
+           ======================================== */
+        
+        /* Intro Container */
+        .legendary-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0f;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 1s ease-out;
+        }
+
+        .legendary-intro.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .legendary-intro.complete {
+            display: none;
+        }
+
+        /* Intro Canvas for Particles */
+        #intro-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Intro Content Container */
+        .intro-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Phase 1: System Awakening */
+        .favicon-center {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+            transform: scale(0) rotate(0deg);
+            filter: blur(50px);
+            animation: faviconMaterialize 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes faviconMaterialize {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+                filter: blur(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(360deg);
+                filter: blur(0);
+            }
+        }
+
+        .favicon-center img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Floating Text */
+        .floating-text {
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .floating-text.top-left {
+            top: 10%;
+            left: 10%;
+            animation: floatTextFade 2s ease-in-out;
+        }
+
+        .floating-text.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: floatTextFade 2s 0.5s ease-in-out;
+        }
+
+        .floating-text.bottom-right {
+            bottom: 10%;
+            right: 10%;
+            animation: floatTextGlitch 2s 1s ease-in-out;
+        }
+
+        @keyframes floatTextFade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes floatTextGlitch {
+            0%, 100% { opacity: 0; transform: translate(0, 0); }
+            50% { opacity: 1; transform: translate(-2px, 2px); }
+            55% { opacity: 1; transform: translate(2px, -2px); }
+        }
+
+        /* Matrix Rain Background */
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        /* Phase 2: Identity Formation */
+        .pro-samking {
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 60px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-pink);
+            letter-spacing: 10px;
+            opacity: 0;
+        }
+
+        .pro-samking span {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .pro-samking span.materialize {
+            animation: letterMaterialize 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes letterMaterialize {
+            0% {
+                opacity: 0;
+                transform: scale(0) translateY(50px);
+            }
+            60% {
+                transform: scale(1.2) translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes letterPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Hexagonal Grid Overlay */
+        .hex-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            animation: hexPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes hexPulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Phase 3: METHEELEGEND Reveal */
+        .legendary-avatar {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+
+        .legendary-avatar.active {
+            animation: avatarIntro 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes avatarIntro {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(180deg);
+                filter: blur(50px);
+            }
+            60% {
+                transform: scale(1.3) rotate(-20deg);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Hexagonal Rings */
+        .hexagonal-rings {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hex-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .hex-ring.ring-outer {
+            width: 280px;
+            height: 280px;
+            border: 4px solid transparent;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple)) border-box;
+            animation: rotateRingCW 4s linear infinite;
+            filter: blur(2px);
+        }
+
+        .hex-ring.ring-middle {
+            width: 220px;
+            height: 220px;
+            border: 3px solid var(--neon-blue);
+            animation: rotateRingCCW 6s linear infinite;
+            filter: blur(1px);
+        }
+
+        .hex-ring.ring-inner {
+            width: 160px;
+            height: 160px;
+            border: 2px solid white;
+            animation: pulsRing 3s ease-in-out infinite;
+            box-shadow: 0 0 30px white;
+        }
+
+        @keyframes rotateRingCW {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes rotateRingCCW {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* M Logo Center */
+        .m-logo-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 120px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px var(--neon-blue);
+            filter: drop-shadow(0 0 30px var(--neon-pink));
+        }
+
+        /* METHEELEGEND Text */
+        .metheelegend-text {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple), var(--neon-green));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 3s linear infinite;
+            opacity: 0;
+        }
+
+        .metheelegend-text.active {
+            animation: textReveal 1s forwards, gradientFlow 3s linear infinite;
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Nebula Background */
+        .nebula-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 243, 255, 0.2), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255, 0, 110, 0.2), transparent 50%),
+                        radial-gradient(circle at 50% 80%, rgba(139, 0, 255, 0.2), transparent 50%);
+            animation: nebulaShift 8s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .nebula-bg.active {
+            opacity: 1;
+        }
+
+        @keyframes nebulaShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        /* Phase 4: Portal */
+        .hexagonal-portal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80vmin;
+            height: 80vmin;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border: 8px solid transparent;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple), var(--neon-green)) border-box;
+            backdrop-filter: blur(20px);
+            opacity: 0;
+        }
+
+        .hexagonal-portal.active {
+            animation: portalExpand 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes portalExpand {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .portal-inner {
+            position: absolute;
+            inset: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(30px);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* Reality Tear Effects */
+        .reality-tear {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        .reality-tear.active {
+            animation: chromatic 0.5s ease-in-out;
+        }
+
+        @keyframes chromatic {
+            0%, 100% { filter: none; }
+            25% { filter: drop-shadow(2px 0 0 red) drop-shadow(-2px 0 0 cyan); }
+            50% { filter: drop-shadow(-2px 0 0 red) drop-shadow(2px 0 0 cyan); }
+            75% { filter: drop-shadow(0 2px 0 red) drop-shadow(0 -2px 0 cyan); }
+        }
+
+        /* Phase 5: Shatter Effect */
+        .enter-legend-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px var(--neon-blue);
+            opacity: 0;
+            z-index: 100;
+        }
+
+        .enter-legend-text.active {
+            animation: enterTextReveal 1s forwards;
+        }
+
+        @keyframes enterTextReveal {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            70% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Skip Button */
+        .legendary-skip-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: rgba(15, 15, 26, 0.75);
+            backdrop-filter: blur(20px);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .legendary-skip-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple), var(--neon-green));
+            background-size: 300% 100%;
+            animation: gradientRotate 4s linear infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        @keyframes gradientRotate {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .legendary-skip-btn.show {
+            opacity: 1;
+            pointer-events: all;
+            animation: skipBtnBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes skipBtnBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .legendary-skip-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .legendary-intro * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .pro-samking {
+                font-size: 36px;
+                letter-spacing: 5px;
+            }
+            
+            .metheelegend-text {
+                font-size: 32px;
+            }
+            
+            .enter-legend-text {
+                font-size: 42px;
+            }
+            
+            .legendary-avatar {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .m-logo-center {
+                font-size: 80px;
+            }
+            
+            .legendary-skip-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* ========================================
+           END INTRO SYSTEM
+           ======================================== */
 
         html {
             scroll-behavior: smooth;
@@ -337,6 +882,26 @@
             object-fit: cover;
             position: relative;
             z-index: 1;
+        }
+
+        /* M Logo Portfolio Avatar */
+        .legendary-avatar-portfolio {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(139, 0, 255, 0.1));
+        }
+
+        .legendary-avatar-portfolio .m-logo-center {
+            position: absolute;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite, colorShift 8s linear infinite;
+        }
+
+        @keyframes colorShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         /* Holographic Effect on Hover */
@@ -1146,6 +1711,82 @@
 </head>
 <body>
 
+    <!-- ========================================
+         LEGENDARY INTRO SEQUENCE
+         ======================================== -->
+    <div class="legendary-intro" id="legendaryIntro">
+        <!-- Intro Canvas for Particles and Effects -->
+        <canvas id="intro-canvas"></canvas>
+        
+        <!-- Matrix Rain Background -->
+        <canvas class="matrix-rain" id="matrix-rain"></canvas>
+        
+        <!-- Nebula Background -->
+        <div class="nebula-bg" id="nebulaBg"></div>
+        
+        <!-- Hexagonal Grid Overlay -->
+        <svg class="hex-grid" id="hexGrid" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="hexPattern" patternUnits="userSpaceOnUse" width="80" height="69.28">
+                    <polygon points="40,0 80,23 80,69 40,92 0,69 0,23" fill="none" stroke="rgba(0,243,255,0.3)" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hexPattern)" />
+        </svg>
+        
+        <!-- Intro Content -->
+        <div class="intro-content" id="introContent">
+            <!-- Phase 1: Floating Text -->
+            <div class="floating-text top-left" id="text1">INITIATING...</div>
+            <div class="floating-text center" id="text2">LOADING LEGENDARY CORE...</div>
+            <div class="floating-text bottom-right" id="text3">CALIBRATING...</div>
+            
+            <!-- Phase 1: Favicon Center -->
+            <div class="favicon-center" id="faviconCenter">
+                <img src="favicon.svg" alt="METHEELEGEND Logo">
+            </div>
+            
+            <!-- Phase 2: PRO SAMKING Text -->
+            <div class="pro-samking" id="proSamking">
+                <span>P</span><span>R</span><span>O</span>
+                <span> </span>
+                <span>S</span><span>A</span><span>M</span><span>K</span><span>I</span><span>N</span><span>G</span>
+            </div>
+            
+            <!-- Phase 3: M Logo Avatar -->
+            <div class="legendary-avatar" id="legendaryAvatar">
+                <div class="hexagonal-rings">
+                    <div class="hex-ring ring-outer"></div>
+                    <div class="hex-ring ring-middle"></div>
+                    <div class="hex-ring ring-inner"></div>
+                </div>
+                <div class="m-logo-center">M</div>
+            </div>
+            
+            <!-- Phase 3: METHEELEGEND Text -->
+            <div class="metheelegend-text" id="metheelegendText">METHEELEGEND</div>
+            
+            <!-- Phase 4: Hexagonal Portal -->
+            <div class="hexagonal-portal" id="hexagonalPortal">
+                <div class="portal-inner"></div>
+            </div>
+            
+            <!-- Phase 4: Reality Tear Effect -->
+            <div class="reality-tear" id="realityTear"></div>
+            
+            <!-- Phase 5: Enter Legend Text -->
+            <div class="enter-legend-text" id="enterLegendText">ENTER THE LEGEND</div>
+        </div>
+    </div>
+    
+    <!-- Skip Button -->
+    <button class="legendary-skip-btn" id="skipIntroBtn">
+        ⏭ SKIP
+    </button>
+
+    <!-- ========================================
+         MAIN PORTFOLIO CONTENT
+         ======================================== -->
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
     <div class="cursor-dot"></div>
@@ -1178,12 +1819,19 @@
         <!-- Hero Section -->
         <section id="hero">
             <div class="container">
-                <!-- Animated Avatar -->
+                <!-- Animated M Logo Avatar with Hexagonal Rings -->
                 <div class="avatar-container">
                     <div class="avatar-wrapper">
                         <div class="neon-ring"></div>
-                        <div class="avatar-img">
-                            <img src="https://i.pravatar.cc/300?img=33" alt="METHEELEGEND Avatar">
+                        <div class="avatar-img legendary-avatar-portfolio">
+                            <!-- Hexagonal Rings -->
+                            <div class="hexagonal-rings">
+                                <div class="hex-ring ring-outer" style="border: 3px solid transparent; background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple)) border-box;"></div>
+                                <div class="hex-ring ring-middle" style="border: 2px solid var(--neon-blue);"></div>
+                                <div class="hex-ring ring-inner" style="border: 2px solid white;"></div>
+                            </div>
+                            <!-- M Logo Center -->
+                            <div class="m-logo-center" style="font-size: 140px;">M</div>
                         </div>
                     </div>
                 </div>
@@ -1478,6 +2126,447 @@
     </footer>
 
     <script>
+        // ========================================
+        // LEGENDARY INTRO SYSTEM
+        // ========================================
+        
+        (function() {
+            'use strict';
+            
+            // Check if intro has been seen
+            const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
+            const introContainer = document.getElementById('legendaryIntro');
+            const skipBtn = document.getElementById('skipIntroBtn');
+            
+            // Configuration
+            const config = {
+                introDuration: 13000, // 13 seconds
+                isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+                prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            };
+            
+            // Adjust for mobile and reduced motion
+            if (config.isMobile) {
+                config.introDuration = 10000; // 10 seconds for mobile
+                config.particleCount = 50;
+            } else {
+                config.particleCount = 200;
+            }
+            
+            if (config.prefersReducedMotion) {
+                config.introDuration = 1000; // 1 second for reduced motion
+            }
+            
+            // Skip intro if already seen (unless testing)
+            if (hasSeenIntro && !window.location.hash.includes('intro')) {
+                skipToPortfolio();
+                return;
+            }
+            
+            // Lock scroll during intro
+            document.body.style.overflow = 'hidden';
+            
+            // Legendary Sound System
+            class LegendarySoundSystem {
+                constructor() {
+                    this.context = null;
+                    this.sounds = {};
+                    this.isMuted = localStorage.getItem('introMuted') === 'true';
+                    this.masterVolume = 0.3;
+                    this.initialized = false;
+                }
+                
+                init() {
+                    if (this.initialized || !window.AudioContext && !window.webkitAudioContext) {
+                        return;
+                    }
+                    
+                    try {
+                        this.context = new (window.AudioContext || window.webkitAudioContext)();
+                        this.initialized = true;
+                    } catch (e) {
+                        console.log('Web Audio API not supported');
+                    }
+                }
+                
+                // Synthesize simple beep sounds
+                play(type, time = 0) {
+                    if (!this.initialized || this.isMuted || !this.context) return;
+                    
+                    try {
+                        const oscillator = this.context.createOscillator();
+                        const gainNode = this.context.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(this.context.destination);
+                        
+                        const now = this.context.currentTime + time / 1000;
+                        
+                        // Different sounds for different effects
+                        switch(type) {
+                            case 'bootBeep':
+                                oscillator.frequency.value = 800;
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                                oscillator.start(now);
+                                oscillator.stop(now + 0.1);
+                                break;
+                            case 'whoosh':
+                                oscillator.frequency.setValueAtTime(400, now);
+                                oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.3);
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.2, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                                oscillator.start(now);
+                                oscillator.stop(now + 0.3);
+                                break;
+                            case 'letterForm':
+                                oscillator.frequency.value = 600;
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.15, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                                oscillator.start(now);
+                                oscillator.stop(now + 0.15);
+                                break;
+                            case 'bassDrop':
+                                oscillator.frequency.value = 60;
+                                oscillator.type = 'sawtooth';
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.5, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                                oscillator.start(now);
+                                oscillator.stop(now + 0.5);
+                                break;
+                            case 'portalCharge':
+                                oscillator.frequency.setValueAtTime(100, now);
+                                oscillator.frequency.exponentialRampToValueAtTime(500, now + 1);
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1);
+                                oscillator.start(now);
+                                oscillator.stop(now + 1);
+                                break;
+                            case 'successChime':
+                                oscillator.frequency.value = 1200;
+                                gainNode.gain.setValueAtTime(this.masterVolume * 0.2, now);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                                oscillator.start(now);
+                                oscillator.stop(now + 0.2);
+                                break;
+                        }
+                    } catch (e) {
+                        console.log('Sound playback error:', e);
+                    }
+                }
+            }
+            
+            const soundSystem = new LegendarySoundSystem();
+            
+            // Particle System for Intro
+            class IntroParticle {
+                constructor(canvas, phase = 1) {
+                    this.canvas = canvas;
+                    this.phase = phase;
+                    this.reset();
+                }
+                
+                reset() {
+                    const centerX = this.canvas.width / 2;
+                    const centerY = this.canvas.height / 2;
+                    
+                    if (this.phase === 1) {
+                        // Spiral converging particles
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = Math.random() * 500 + 300;
+                        this.x = centerX + Math.cos(angle) * distance;
+                        this.y = centerY + Math.sin(angle) * distance;
+                        this.targetX = centerX;
+                        this.targetY = centerY;
+                        this.spiralSpeed = 0.02;
+                        this.angle = angle;
+                    } else if (this.phase === 3) {
+                        // Orbiting particles
+                        this.angle = Math.random() * Math.PI * 2;
+                        this.distance = 150 + Math.random() * 100;
+                        this.orbitSpeed = (Math.random() - 0.5) * 0.02;
+                        this.x = centerX + Math.cos(this.angle) * this.distance;
+                        this.y = centerY + Math.sin(this.angle) * this.distance;
+                    }
+                    
+                    this.size = Math.random() * 4 + 2;
+                    this.colors = ['#00f3ff', '#ff006e', '#ff0080', '#8b00ff'];
+                    this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    this.life = 1;
+                    this.decay = Math.random() * 0.005 + 0.002;
+                }
+                
+                update() {
+                    const centerX = this.canvas.width / 2;
+                    const centerY = this.canvas.height / 2;
+                    
+                    if (this.phase === 1) {
+                        // Spiral toward center
+                        const dx = this.targetX - this.x;
+                        const dy = this.targetY - this.y;
+                        this.angle += this.spiralSpeed;
+                        this.x += dx * 0.02 + Math.cos(this.angle) * 2;
+                        this.y += dy * 0.02 + Math.sin(this.angle) * 2;
+                        
+                        // Reset if reached center
+                        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+                            this.life -= this.decay * 3;
+                        }
+                    } else if (this.phase === 3) {
+                        // Orbit around center
+                        this.angle += this.orbitSpeed;
+                        this.x = centerX + Math.cos(this.angle) * this.distance;
+                        this.y = centerY + Math.sin(this.angle) * this.distance;
+                    }
+                    
+                    this.life -= this.decay;
+                    if (this.life <= 0) {
+                        this.reset();
+                    }
+                }
+                
+                draw(ctx) {
+                    ctx.save();
+                    ctx.globalAlpha = this.life;
+                    ctx.fillStyle = this.color;
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            
+            // Matrix Rain Effect
+            class MatrixRain {
+                constructor(canvas) {
+                    this.canvas = canvas;
+                    this.ctx = canvas.getContext('2d');
+                    this.columns = Math.floor(canvas.width / 20);
+                    this.drops = [];
+                    this.glyphs = '▓░▒█▄▀◆●';
+                    
+                    for (let i = 0; i < this.columns; i++) {
+                        this.drops.push(Math.random() * -100);
+                    }
+                }
+                
+                draw() {
+                    this.ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    this.ctx.fillStyle = '#00f3ff';
+                    this.ctx.font = '15px monospace';
+                    
+                    for (let i = 0; i < this.drops.length; i++) {
+                        const text = this.glyphs[Math.floor(Math.random() * this.glyphs.length)];
+                        const x = i * 20;
+                        const y = this.drops[i] * 20;
+                        
+                        this.ctx.globalAlpha = 0.8;
+                        this.ctx.fillText(text, x, y);
+                        
+                        this.drops[i]++;
+                        
+                        if (y > this.canvas.height && Math.random() > 0.95) {
+                            this.drops[i] = 0;
+                        }
+                    }
+                }
+            }
+            
+            // Initialize canvases
+            const introCanvas = document.getElementById('intro-canvas');
+            const matrixCanvas = document.getElementById('matrix-rain');
+            const ctx = introCanvas.getContext('2d');
+            
+            function resizeCanvases() {
+                introCanvas.width = window.innerWidth;
+                introCanvas.height = window.innerHeight;
+                matrixCanvas.width = window.innerWidth;
+                matrixCanvas.height = window.innerHeight;
+            }
+            resizeCanvases();
+            window.addEventListener('resize', resizeCanvases);
+            
+            // Initialize systems
+            const particles = [];
+            const matrixRain = new MatrixRain(matrixCanvas);
+            let currentPhase = 1;
+            let particlePhase = 1;
+            
+            // Create initial particles
+            for (let i = 0; i < config.particleCount; i++) {
+                particles.push(new IntroParticle(introCanvas, particlePhase));
+            }
+            
+            // Animation loop for particles and matrix
+            function animateIntro() {
+                // Clear canvas
+                ctx.clearRect(0, 0, introCanvas.width, introCanvas.height);
+                
+                // Update and draw particles
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw(ctx);
+                });
+                
+                // Draw matrix rain
+                matrixRain.draw();
+                
+                requestAnimationFrame(animateIntro);
+            }
+            animateIntro();
+            
+            // Intro Timeline
+            const timeline = [
+                // Phase 1: System Awakening (0-3s)
+                { time: 0, action: () => {
+                    soundSystem.init();
+                    soundSystem.play('bootBeep', 500);
+                    particlePhase = 1;
+                    particles.forEach(p => p.phase = 1);
+                }},
+                { time: 1000, action: () => soundSystem.play('whoosh') },
+                { time: 2000, action: () => soundSystem.play('whoosh') },
+                
+                // Phase 2: Identity Formation (3-6s)
+                { time: 3000, action: () => {
+                    // Show skip button
+                    skipBtn.classList.add('show');
+                    
+                    // Hide phase 1 elements
+                    document.getElementById('faviconCenter').style.display = 'none';
+                    document.getElementById('text1').style.display = 'none';
+                    document.getElementById('text2').style.display = 'none';
+                    document.getElementById('text3').style.display = 'none';
+                    
+                    // Materialize PRO SAMKING
+                    const proSamking = document.getElementById('proSamking');
+                    proSamking.style.opacity = '1';
+                    const letters = proSamking.querySelectorAll('span');
+                    letters.forEach((letter, index) => {
+                        setTimeout(() => {
+                            letter.classList.add('materialize');
+                            soundSystem.play('letterForm');
+                            setTimeout(() => {
+                                letter.style.animation = 'letterPulse 1s ease-in-out';
+                            }, 500);
+                        }, index * 100);
+                    });
+                    
+                    // Change background color
+                    introContainer.style.background = 'linear-gradient(135deg, #1a0a2e, #0f3057)';
+                    introContainer.style.transition = 'background 3s';
+                }},
+                
+                // Phase 3: METHEELEGEND Reveal (6-9s)
+                { time: 6000, action: () => {
+                    soundSystem.play('bassDrop');
+                    
+                    // Hide PRO SAMKING
+                    document.getElementById('proSamking').style.opacity = '0';
+                    document.getElementById('proSamking').style.transition = 'opacity 0.5s';
+                    
+                    // Show avatar and activate it
+                    const avatar = document.getElementById('legendaryAvatar');
+                    avatar.classList.add('active');
+                    avatar.style.opacity = '1';
+                    
+                    // Show METHEELEGEND text
+                    const metheelegend = document.getElementById('metheelegendText');
+                    metheelegend.classList.add('active');
+                    
+                    // Activate nebula background
+                    const nebula = document.getElementById('nebulaBg');
+                    nebula.classList.add('active');
+                    
+                    // Update particles to orbit
+                    particlePhase = 3;
+                    particles.forEach(p => {
+                        p.phase = 3;
+                        p.reset();
+                    });
+                }},
+                
+                // Phase 4: Portal Activation (9-11s)
+                { time: 9000, action: () => {
+                    soundSystem.play('portalCharge');
+                    
+                    // Hide avatar and text
+                    document.getElementById('legendaryAvatar').style.opacity = '0';
+                    document.getElementById('metheelegendText').style.opacity = '0';
+                    document.getElementById('nebulaBg').style.opacity = '0';
+                    
+                    // Show portal
+                    const portal = document.getElementById('hexagonalPortal');
+                    portal.classList.add('active');
+                    
+                    // Reality tear effect
+                    const tear = document.getElementById('realityTear');
+                    tear.classList.add('active');
+                }},
+                
+                // Phase 5: Dimensional Entry (11-13s)
+                { time: 11000, action: () => {
+                    // Show ENTER THE LEGEND
+                    const enterText = document.getElementById('enterLegendText');
+                    enterText.classList.add('active');
+                }},
+                
+                { time: 12000, action: () => {
+                    // Begin transition
+                    introContainer.style.opacity = '0';
+                }},
+                
+                { time: 13000, action: () => {
+                    soundSystem.play('successChime');
+                    completeIntro();
+                }}
+            ];
+            
+            // Execute timeline
+            timeline.forEach(event => {
+                setTimeout(event.action, event.time);
+            });
+            
+            // Skip button functionality
+            skipBtn.addEventListener('click', () => {
+                soundSystem.play('successChime');
+                skipToPortfolio();
+            });
+            
+            function skipToPortfolio() {
+                introContainer.classList.add('hidden');
+                skipBtn.style.display = 'none';
+                document.body.style.overflow = '';
+                localStorage.setItem('legendaryIntroSeen', 'true');
+                
+                setTimeout(() => {
+                    introContainer.classList.add('complete');
+                }, 1000);
+            }
+            
+            function completeIntro() {
+                skipToPortfolio();
+            }
+            
+            // Keyboard accessibility for skip button
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+                    if (skipBtn.classList.contains('show')) {
+                        skipToPortfolio();
+                    }
+                }
+            });
+            
+        })();
+        
+        // ========================================
+        // PORTFOLIO ANIMATIONS (Original Code)
+        // ========================================
+        
         // Custom Cursor
         const cursor = document.querySelector('.custom-cursor');
         const cursorDot = document.querySelector('.cursor-dot');

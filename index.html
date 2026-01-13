@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Awesome Website</title>
+    <!-- Luffy Favicon Meta Tags -->
+    <link rel="icon" type="image/x-icon" href="/luffy-favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/luffy-favicon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="/luffy-favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/luffy-favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/luffy-apple-touch-icon.png">
     <style>
         * {
             margin: 0;
@@ -374,6 +380,44 @@
                         drop-shadow(0 0 25px rgba(118,75,162,0.6));
             }
         }
+
+        /* ========== NEW AUTO-RECURRING ANIMATIONS ========== */
+        
+        /* Enhanced Glitch Burst */
+        .glitch-burst {
+            animation: glitchIntense 0.5s ease-in-out;
+        }
+
+        @keyframes glitchIntense {
+            0%, 100% { transform: translate(0); filter: none; }
+            10% { transform: translate(-5px, 2px); filter: hue-rotate(90deg); }
+            20% { transform: translate(5px, -2px); filter: hue-rotate(180deg); }
+            30% { transform: translate(-2px, -5px); filter: hue-rotate(270deg); }
+            40% { transform: translate(2px, 5px); filter: hue-rotate(0deg); }
+        }
+
+        /* Wave Pulse Effect */
+        .wave-pulse::before {
+            animation: wavePulseEffect 1s ease-out;
+        }
+
+        @keyframes wavePulseEffect {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 300px; height: 300px; opacity: 0; }
+        }
+
+        /* Auto Showcase Effect */
+        .auto-showcase {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 243, 255, 0.6);
+            z-index: 50;
+        }
+
+        /* CSS Variables for Neon Colors */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff006e;
+        }
     </style>
 </head>
 <body class="theme-blue">
@@ -383,7 +427,7 @@
 
     <div class="container">
         <header class="interactive-glow">
-            <h1>Welcome to My Awesome Website</h1>
+            <h1 class="hero-title">Welcome to My Awesome Website</h1>
             <p class="subtitle">Experience the Magic of Modern Web Design</p>
         </header>
 
@@ -525,10 +569,10 @@
         let autoHoverIndex = 0;
         function showcaseAutoHover() {
             const cards = document.querySelectorAll('.card');
-            cards.forEach(card => card.classList.remove('auto-hover'));
+            cards.forEach(card => card.classList.remove('auto-hover', 'auto-showcase'));
             
-            cards[autoHoverIndex].classList.add('auto-hover');
-            setTimeout(() => cards[autoHoverIndex].classList.remove('auto-hover'), 2000);
+            cards[autoHoverIndex].classList.add('auto-showcase');
+            setTimeout(() => cards[autoHoverIndex].classList.remove('auto-showcase'), 2000);
             
             autoHoverIndex = (autoHoverIndex + 1) % cards.length;
         }
@@ -600,6 +644,21 @@
         setTimeout(triggerRainbowWave, 4000);
         setTimeout(showcaseAutoHover, 1000);
         setTimeout(activateMagneticZone, 5000);
+
+        // ========== NEW AUTO-RECURRING ANIMATIONS ========== 
+        
+        // Periodic Glitch Bursts on Hero Title (Every 10-15 seconds randomly)
+        function triggerGlitchBurst() {
+            const title = document.querySelector('.hero-title');
+            if (title) {
+                title.classList.add('glitch-burst');
+                setTimeout(() => title.classList.remove('glitch-burst'), 500);
+            }
+            
+            const nextGlitch = 10000 + Math.random() * 5000;
+            setTimeout(triggerGlitchBurst, nextGlitch);
+        }
+        setTimeout(triggerGlitchBurst, 5000);
     </script>
 </body>
 </html>

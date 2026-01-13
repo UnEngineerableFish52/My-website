@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Awesome Website</title>
+    <link rel="icon" type="image/gif" href="https://www.gifcen.com/wp-content/uploads/2022/05/luffy-gif-125.gif">
     <style>
         * {
             margin: 0;
@@ -92,6 +93,43 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             pointer-events: none;
+        }
+
+        /* Cursor Glow Trail */
+        .cursor-glow {
+            position: fixed;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(118,75,162,0.4), rgba(102,126,234,0));
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(40px);
+            mix-blend-mode: screen;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s ease-out, opacity 0.3s ease-out;
+            z-index: 4;
+        }
+
+        .cursor-glow.active {
+            opacity: 0.7;
+        }
+
+        .click-pulse {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            transform: translate(-50%, -50%) scale(0.4);
+            animation: clickPulse 0.6s ease-out forwards;
+        }
+
+        @keyframes clickPulse {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); }
         }
 
         /* Magnetic Zone Indicator */
@@ -380,6 +418,7 @@
     <div class="rainbow-wave"></div>
     <div class="particle-container"></div>
     <div class="magnetic-zone"></div>
+    <div class="cursor-glow"></div>
 
     <div class="container">
         <header class="interactive-glow">
@@ -593,6 +632,53 @@
         }
 
         setInterval(activateMagneticZone, 15000);
+
+        // Cursor Glow Trail and Click Pulse Effects
+        const cursorGlow = document.querySelector('.cursor-glow');
+        const glowSize = 220;
+        const glowOffset = glowSize / 2;
+        const glowFadeDelay = 180;
+        const pulseDuration = 600;
+        const maxPulses = 12;
+        let activePulses = 0;
+        let glowFadeTimeout;
+        let glowRAF;
+        let glowX = 0;
+        let glowY = 0;
+
+        if (cursorGlow) {
+            document.addEventListener('mousemove', (e) => {
+                glowX = e.clientX - glowOffset;
+                glowY = e.clientY - glowOffset;
+                if (!glowRAF) {
+                    glowRAF = requestAnimationFrame(() => {
+                        cursorGlow.style.transform = `translate(${glowX}px, ${glowY}px)`;
+                        cursorGlow.classList.add('active');
+                        clearTimeout(glowFadeTimeout);
+                        glowFadeTimeout = setTimeout(() => cursorGlow.classList.remove('active'), glowFadeDelay);
+                        glowRAF = null;
+                    });
+                }
+            });
+
+            document.addEventListener('mouseleave', () => cursorGlow.classList.remove('active'));
+        }
+
+        document.addEventListener('click', (e) => {
+            if (activePulses >= maxPulses) {
+                return;
+            }
+            const pulse = document.createElement('span');
+            pulse.className = 'click-pulse';
+            pulse.style.left = `${e.clientX}px`;
+            pulse.style.top = `${e.clientY}px`;
+            document.body.appendChild(pulse);
+            activePulses += 1;
+            setTimeout(() => {
+                pulse.remove();
+                activePulses = Math.max(0, activePulses - 1);
+            }, pulseDuration);
+        });
 
         // Initial triggers with delays
         setTimeout(triggerNeonBurst, 2000);

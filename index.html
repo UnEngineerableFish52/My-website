@@ -3107,6 +3107,12 @@
         // ========================================
         class LegendaryMusicSystem {
             constructor() {
+                // Configuration constants
+                this.BACKGROUND_VOLUME = 0.3;
+                this.CROSSFADE_START_TIME = 11000; // Start crossfade 2s before intro ends
+                this.FADE_STEPS = 20;
+                this.FADE_INTERVAL = 100; // ms
+                
                 this.introTrack = new Audio('sounds/deaf-kev-invincible-pt2.mp3');
                 this.backgroundTrack = new Audio('sounds/elektronomia-sky-high.mp3');
                 
@@ -3145,7 +3151,7 @@
                     // CRITICAL: Start background music at 11 seconds (2s before intro ends)
                     setTimeout(() => {
                         this.startBackgroundMusic();
-                    }, 11000); // Start crossfade 2 seconds before intro ends
+                    }, this.CROSSFADE_START_TIME);
                     
                 } catch (error) {
                     console.warn('Music autoplay blocked:', error);
@@ -3165,26 +3171,24 @@
             }
             
             crossfade() {
-                const fadeSteps = 20; // 20 steps over 2 seconds = 100ms per step
-                const fadeInterval = 100;
                 let step = 0;
                 
                 const fade = setInterval(() => {
                     step++;
-                    const progress = step / fadeSteps;
+                    const progress = step / this.FADE_STEPS;
                     
                     // Fade intro OUT
                     this.introTrack.volume = Math.max(0, 1 - progress);
                     
-                    // Fade background IN to 30% volume
-                    this.backgroundTrack.volume = Math.min(0.3, progress * 0.3);
+                    // Fade background IN to target volume
+                    this.backgroundTrack.volume = Math.min(this.BACKGROUND_VOLUME, progress * this.BACKGROUND_VOLUME);
                     
-                    if (step >= fadeSteps) {
+                    if (step >= this.FADE_STEPS) {
                         clearInterval(fade);
                         this.introTrack.pause();
                         this.introTrack.currentTime = 0;
                     }
-                }, fadeInterval);
+                }, this.FADE_INTERVAL);
             }
             
             showUnmutePrompt() {
@@ -3488,6 +3492,11 @@
         // ========================================
         class EnhancedCreditTextShatter {
             constructor(textElement) {
+                // Configuration constants
+                this.PARTICLES_PER_LETTER = 30;
+                this.ANIMATION_REPEAT_DELAY = 8000; // ms
+                this.ORBIT_ROTATIONS = 4; // Number of rotations (2 full circles)
+                
                 this.element = textElement;
                 this.particles = [];
                 this.isAnimating = false;
@@ -3515,7 +3524,7 @@
                 this.isAnimating = false;
                 
                 // Repeat cycle
-                setTimeout(() => this.startAnimation(), 8000);
+                setTimeout(() => this.startAnimation(), this.ANIMATION_REPEAT_DELAY);
             }
             
             slideIn() {
@@ -3575,13 +3584,13 @@
                         const letterWidth = ctx.measureText(letter).width;
                         const letterCenterX = currentX + letterWidth / 2;
                         
-                        // Create 30 particles per letter
-                        for (let i = 0; i < 30; i++) {
+                        // Create particles per letter
+                        for (let i = 0; i < this.PARTICLES_PER_LETTER; i++) {
                             const particle = document.createElement('div');
                             particle.className = 'credit-particle-enhanced';
                             
                             // Random angle for explosion
-                            const angle = (Math.PI * 2 * i) / 30 + (Math.random() - 0.5) * 0.5;
+                            const angle = (Math.PI * 2 * i) / this.PARTICLES_PER_LETTER + (Math.random() - 0.5) * 0.5;
                             const speed = 2 + Math.random() * 4;
                             
                             particle.dataset.vx = (Math.cos(angle) * speed).toString();
@@ -3640,7 +3649,7 @@
                         }
                         
                         // Orbital motion
-                        const angle = progress * Math.PI * 4; // 2 full rotations
+                        const angle = progress * Math.PI * this.ORBIT_ROTATIONS;
                         const radius = 150 * (1 - progress * 0.5); // Spiral inward
                         
                         this.particles.forEach((particle, index) => {

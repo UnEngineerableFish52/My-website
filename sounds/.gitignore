@@ -1,0 +1,7 @@
+# Ignore actual music MP3 files (users must download separately from NCS)
+*.mp3
+*.wav
+*.ogg
+
+# But keep the README
+!README.md

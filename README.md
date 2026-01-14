@@ -15,11 +15,33 @@
 - **Phase 4 (9-11s)**: Portal Activation - Hexagonal portal expansion with reality tear effects
 - **Phase 5 (11-13s)**: Dimensional Entry - Hexagonal shatter effect and smooth transition to portfolio
 
-### 🎵 Legendary Sound System
-- Web Audio API synthesis for sound effects
-- Perfectly synchronized audio timeline (±50ms accuracy)
-- Sound effects: boot beep, whooshes, bass drop, portal charge, and more
-- Mute functionality with localStorage persistence
+### 🎵 Legendary Music System
+- **Intro Track**: "Invincible Pt. II" by DEAF KEV feat. Sendi Hoxha (NCS Release)
+- **Background Loop**: "Elektronomia - Sky High" (NCS Release)
+- Smooth crossfade between intro and background music
+- Background music continues while browsing at 30% volume
+- Mute/unmute control with localStorage persistence
+- Graceful degradation if music files not present
+
+### 🔊 Interactive Sound System
+- Web Audio API synthesis for all interactive sounds (no external files)
+- **Navigation**: Hover beeps and click sounds
+- **Buttons**: Rising whoosh on hover, cymbal+synth on click
+- **Cards**: Soft whoosh on hover, mechanical flip on click
+- **Special Elements**: Power-up sounds, rocket launch, notification beeps
+- All sounds respect mute settings
+- Volume balanced for pleasant UX
+
+### ✨ Animated Credits Section
+- 5 credit text lines with epic animations
+- 8-second animation cycle per text:
+  - Slide in from left
+  - Center hold with neon pulse
+  - Particle shatter effect (15 particles per letter)
+  - Orbital swirl motion
+  - Particle reformation
+- Staggered animations for visual interest
+- Full particle physics simulation
 
 ### 💫 M Logo Avatar System
 - Hexagonal armor design with 3 animated rings
@@ -110,12 +132,13 @@ This creates:
 - `favicon-16x16.png` (16x16)
 
 ### Testing
-See [docs/TESTING_CHECKLIST.md](docs/TESTING_CHECKLIST.md) for the complete testing checklist (92 test items).
+See [docs/TESTING_CHECKLIST.md](docs/TESTING_CHECKLIST.md) for the complete testing checklist (133 test items).
 
 To test the intro repeatedly:
 ```javascript
 // In browser console:
 localStorage.removeItem('legendaryIntroSeen');
+localStorage.removeItem('musicMuted');
 location.reload();
 ```
 
@@ -129,9 +152,13 @@ My-website/
 ├── favicon-32x32.png       # Standard favicon (32x32)
 ├── favicon-16x16.png       # Small favicon (16x16)
 ├── site.webmanifest        # PWA manifest
+├── sounds/
+│   ├── README.md          # Music download instructions
+│   ├── .gitignore         # Excludes MP3 files from repo
+│   ├── deaf-kev-invincible-pt2.mp3  # (User downloads from NCS)
+│   └── elektronomia-sky-high.mp3    # (User downloads from NCS)
 ├── docs/
-│   ├── CNAME              # Custom domain configuration
-│   └── TESTING_CHECKLIST.md # Complete testing checklist
+│   └── TESTING_CHECKLIST.md # Complete testing checklist (133 tests)
 ├── generate-favicons.js    # Favicon generation script
 ├── package.json           # NPM dependencies
 └── README.md              # This file
@@ -175,8 +202,47 @@ const config = {
 };
 ```
 
-## 🎵 Sound System
+## 🎵 Music & Sound System
 
+### Background Music
+The portfolio features epic background music from NoCopyrightSounds (NCS):
+
+**Intro Track** (13 seconds):
+- Song: "Invincible Pt. II" by DEAF KEV feat. Sendi Hoxha
+- Source: [NCS.io/Invincible2](https://ncs.io/Invincible2)
+- YouTube: [Watch](https://youtu.be/p7ZsBPK656s)
+
+**Background Loop** (continuous):
+- Song: "Elektronomia - Sky High"
+- Source: [NCS.io/SkyHigh](https://ncs.io/SkyHigh)
+- YouTube: [Watch](https://youtu.be/TW9d8vYrVFQ)
+
+**Download Instructions**:
+1. Visit the NCS.io links above
+2. Download the MP3 files (free, legal)
+3. Place them in the `sounds/` directory with exact names:
+   - `deaf-kev-invincible-pt2.mp3`
+   - `elektronomia-sky-high.mp3`
+4. Reload the page to enable music
+
+The site works perfectly without music files (graceful degradation).
+
+### Interactive Sounds
+All interactive sounds are synthesized using Web Audio API:
+- **Navigation Links**: Hover beep (200Hz), click sound (400Hz)
+- **Buttons**: Rising whoosh on hover, cymbal+synth on click
+- **Cards**: Soft whoosh on hover, mechanical flip on click
+- **Skip Button**: Power-up charge, success chime
+- **Back to Top**: Rocket launch sound
+- **Social Icons**: Notification beeps and pops
+
+All sounds are:
+- ✅ Generated in real-time (no external files)
+- ✅ Volume balanced for pleasant UX
+- ✅ Controlled by global mute button
+- ✅ Stored in localStorage (preference persists)
+
+### Sound Effects Intro
 The intro uses the Web Audio API to synthesize sound effects:
 - **Boot Beep** (0.5s): 800Hz sine wave
 - **Whoosh** (1s, 2s): 400Hz → 100Hz sweep
@@ -223,8 +289,17 @@ MIT License - feel free to use this for your own portfolio!
 
 ## 🙏 Credits
 
-- **Design & Development**: METHEELEGEND
-- **Font**: Orbitron (Google Fonts)
+### Design & Development
+- **METHEELEGEND** (PRO SAMKING)
+
+### Music
+- **Deaf Kev - Invincible Pt. II (feat. Sendi Hoxha)** [NCS10 Release]
+- **Elektronomia - Sky High** [NCS Release]
+- Provided by **NoCopyrightSounds** - [ncs.io](https://ncs.io)
+- Free Download/Stream: [ncs.io](https://ncs.io)
+
+### Fonts & Resources
+- **Font**: Orbitron, Poppins, Space Grotesk (Google Fonts)
 - **Icons**: Unicode glyphs
 - **Inspiration**: Cyberpunk aesthetics, The Matrix, sci-fi interfaces
 
@@ -240,11 +315,13 @@ If you encounter any issues, please open a GitHub issue.
 
 ## 📈 Future Enhancements
 
-- [ ] Add more sound effects with external audio files
+- [x] ~~Add music system with NCS tracks~~
+- [x] ~~Interactive sound effects for all elements~~
+- [x] ~~Animated credits section~~
 - [ ] WebGL shader effects for enhanced visuals
 - [ ] Custom particle shapes beyond circles
 - [ ] Multiple intro themes (user selectable)
-- [ ] Background music track integration
+- [ ] Additional sound effect variations
 
 ## 💬 Contact
 

@@ -1707,6 +1707,175 @@
                 opacity: 0;
             }
         }
+
+        /* ========================================
+           CREDITS SECTION
+           ======================================== */
+        .credits-section {
+            background: linear-gradient(135deg, #0a0a0f, #1a0a2e);
+            padding: 100px 20px;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .credits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .animated-credit-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .animated-credit-text.active {
+            animation: creditCycle 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        }
+
+        @keyframes creditCycle {
+            /* Slide in */
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            12.5% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            
+            /* Hold at center with pulse */
+            25% {
+                transform: translateX(0) scale(1);
+                filter: drop-shadow(0 0 10px var(--neon-blue));
+            }
+            37.5% {
+                transform: translateX(0) scale(1.05);
+                filter: drop-shadow(0 0 30px var(--neon-pink));
+            }
+            50% {
+                transform: translateX(0) scale(1);
+                filter: drop-shadow(0 0 10px var(--neon-blue));
+            }
+            
+            /* Prepare for particle effect */
+            62.5% {
+                opacity: 1;
+            }
+            
+            /* Fade during particle animation */
+            75% {
+                opacity: 0.3;
+            }
+            
+            /* Reform */
+            87.5% {
+                opacity: 0.8;
+            }
+            
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Credit Particles */
+        .credit-particle {
+            position: fixed;
+            pointer-events: none;
+            font-family: 'Orbitron', sans-serif;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        /* Audio Controls */
+        .audio-controls {
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+            z-index: 999;
+        }
+
+        .audio-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-blue);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 0 40px var(--neon-blue);
+            border-color: var(--neon-pink);
+        }
+
+        .audio-btn.muted {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        /* Music Credits in Footer */
+        .music-credits {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .music-credits p {
+            margin: 5px 0;
+        }
+
+        .music-credits a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .music-credits a:hover {
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        @media (max-width: 768px) {
+            .animated-credit-text {
+                font-size: 18px;
+                margin: 40px 0;
+            }
+
+            .audio-controls {
+                bottom: 100px;
+                right: 20px;
+            }
+
+            .audio-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1811,6 +1980,7 @@
             <li><a href="#skills" class="nav-link">Skills</a></li>
             <li><a href="#projects" class="nav-link">Projects</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="#credits" class="nav-link">Credits</a></li>
         </ul>
     </nav>
 
@@ -2116,13 +2286,52 @@
         </section>
     </main>
 
+    <!-- Credits Section -->
+    <section id="credits" class="credits-section">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Credits</h2>
+            <div class="credits-container">
+                <div class="animated-credit-text" id="creditText1">
+                    Music: Deaf Kev - Invincible Pt. II (feat. Sendi Hoxha) [NCS10 Release]
+                </div>
+                <div class="animated-credit-text" id="creditText2">
+                    Music: Elektronomia - Sky High [NCS Release]
+                </div>
+                <div class="animated-credit-text" id="creditText3">
+                    Provided by NoCopyrightSounds - ncs.io
+                </div>
+                <div class="animated-credit-text" id="creditText4">
+                    Design & Development: PRO SAMKING
+                </div>
+                <div class="animated-credit-text" id="creditText5">
+                    Brand: METHEELEGEND
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- Audio Control Panel -->
+    <div class="audio-controls" id="audioControls">
+        <button class="audio-btn" id="muteBtn" title="Mute/Unmute">
+            <span class="audio-icon audio-icon-unmuted">🔊</span>
+            <span class="audio-icon audio-icon-muted" style="display: none;">🔇</span>
+        </button>
+    </div>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 <span class="footer-glow">METHEELEGEND</span>. All rights reserved.</p>
         <p>Designed with 💜 and a whole lot of neon.</p>
+        <div class="music-credits">
+            <p><strong>Music:</strong></p>
+            <p>• Deaf Kev - Invincible Pt. II (feat. Sendi Hoxha) [NCS10 Release]</p>
+            <p>• Elektronomia - Sky High [NCS Release]</p>
+            <p>Music provided by <a href="https://ncs.io" target="_blank" rel="noopener noreferrer" class="footer-glow">NoCopyrightSounds</a></p>
+            <p>Free Download/Stream: <a href="https://ncs.io" target="_blank" rel="noopener noreferrer" class="footer-glow">ncs.io</a></p>
+        </div>
     </footer>
 
     <script>
@@ -2879,8 +3088,522 @@
             }
         }, 3000);
 
+        // ========================================
+        // LEGENDARY MUSIC SYSTEM
+        // ========================================
+        class LegendaryMusicSystem {
+            constructor() {
+                this.introTrack = null;
+                this.backgroundTrack = null;
+                this.isMuted = localStorage.getItem('musicMuted') === 'true';
+                this.initialized = false;
+                this.introPlayed = false;
+                
+                // Try to load audio files
+                this.loadTracks();
+            }
+            
+            loadTracks() {
+                try {
+                    this.introTrack = new Audio('sounds/deaf-kev-invincible-pt2.mp3');
+                    this.backgroundTrack = new Audio('sounds/elektronomia-sky-high.mp3');
+                    
+                    this.backgroundTrack.loop = true;
+                    this.backgroundTrack.volume = 0.3;
+                    this.introTrack.volume = 0.5;
+                    
+                    // Mute if previously muted
+                    if (this.isMuted) {
+                        this.introTrack.muted = true;
+                        this.backgroundTrack.muted = true;
+                    }
+                    
+                    this.initialized = true;
+                    
+                    // Error handling
+                    this.introTrack.addEventListener('error', () => {
+                        console.log('Intro track not found. Music files must be downloaded separately from NCS.');
+                    });
+                    
+                    this.backgroundTrack.addEventListener('error', () => {
+                        console.log('Background track not found. Music files must be downloaded separately from NCS.');
+                    });
+                } catch (e) {
+                    console.log('Music system initialization failed:', e);
+                }
+            }
+            
+            playIntro() {
+                if (!this.initialized || this.introPlayed) return;
+                
+                try {
+                    this.introTrack.play().then(() => {
+                        this.introPlayed = true;
+                        // After 13s, fade to background music
+                        setTimeout(() => {
+                            this.fadeToBackground();
+                        }, 13000);
+                    }).catch(e => {
+                        console.log('Intro playback requires user interaction');
+                    });
+                } catch (e) {
+                    console.log('Error playing intro:', e);
+                }
+            }
+            
+            fadeToBackground() {
+                if (!this.initialized) return;
+                
+                try {
+                    // Start background track
+                    this.backgroundTrack.volume = 0;
+                    this.backgroundTrack.play().catch(e => {
+                        console.log('Background playback error:', e);
+                    });
+                    
+                    // Crossfade: intro volume down, background volume up
+                    const fadeInterval = setInterval(() => {
+                        if (this.introTrack.volume > 0.05) {
+                            this.introTrack.volume -= 0.05;
+                            if (this.backgroundTrack.volume < 0.3) {
+                                this.backgroundTrack.volume += 0.03;
+                            }
+                        } else {
+                            clearInterval(fadeInterval);
+                            this.introTrack.pause();
+                            this.backgroundTrack.volume = 0.3;
+                        }
+                    }, 100);
+                } catch (e) {
+                    console.log('Crossfade error:', e);
+                }
+            }
+            
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                
+                if (this.initialized) {
+                    if (this.introTrack) this.introTrack.muted = this.isMuted;
+                    if (this.backgroundTrack) this.backgroundTrack.muted = this.isMuted;
+                }
+                
+                // Also mute interactive sounds
+                if (window.interactiveSounds) {
+                    window.interactiveSounds.isMuted = this.isMuted;
+                }
+                
+                localStorage.setItem('musicMuted', this.isMuted);
+                return this.isMuted;
+            }
+        }
+        
+        // Initialize music system
+        const musicSystem = new LegendaryMusicSystem();
+        
+        // Play intro music when intro starts (if not already seen)
+        if (!localStorage.getItem('legendaryIntroSeen')) {
+            setTimeout(() => {
+                musicSystem.playIntro();
+            }, 500);
+        } else {
+            // Start background music directly if intro was skipped
+            setTimeout(() => {
+                if (musicSystem.initialized) {
+                    musicSystem.backgroundTrack.play().catch(e => {
+                        console.log('Background music requires user interaction');
+                    });
+                }
+            }, 1000);
+        }
+
+        // ========================================
+        // INTERACTIVE SOUND SYSTEM
+        // ========================================
+        class InteractiveSoundSystem {
+            constructor() {
+                this.context = null;
+                this.isMuted = localStorage.getItem('musicMuted') === 'true';
+                this.masterVolume = 0.5;
+                this.initialized = false;
+                this.init();
+            }
+            
+            init() {
+                if (!window.AudioContext && !window.webkitAudioContext) {
+                    return;
+                }
+                
+                try {
+                    this.context = new (window.AudioContext || window.webkitAudioContext)();
+                    this.initialized = true;
+                } catch (e) {
+                    console.log('Web Audio API not supported');
+                }
+            }
+            
+            // Synthesize various sound effects
+            play(type, delay = 0) {
+                if (!this.initialized || this.isMuted || !this.context) return;
+                
+                try {
+                    const oscillator = this.context.createOscillator();
+                    const gainNode = this.context.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(this.context.destination);
+                    
+                    const now = this.context.currentTime + delay / 1000;
+                    
+                    switch(type) {
+                        case 'hover': // Navigation link hover
+                            oscillator.frequency.value = 200;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.2, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.05);
+                            break;
+                            
+                        case 'click': // Navigation link click
+                            oscillator.frequency.value = 400;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.1);
+                            break;
+                            
+                        case 'buttonHover': // Button hover - rising whoosh
+                            oscillator.frequency.setValueAtTime(200, now);
+                            oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.25, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.15);
+                            break;
+                            
+                        case 'buttonClick': // Button click - cymbal + synth
+                            oscillator.frequency.value = 800;
+                            oscillator.type = 'triangle';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.4, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.1);
+                            break;
+                            
+                        case 'cardHover': // Card hover - soft whoosh
+                            oscillator.frequency.setValueAtTime(150, now);
+                            oscillator.frequency.exponentialRampToValueAtTime(300, now + 0.2);
+                            oscillator.type = 'sine';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.15, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.2);
+                            break;
+                            
+                        case 'cardClick': // Card click - mechanical flip
+                            oscillator.frequency.value = 300;
+                            oscillator.type = 'square';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.25, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.08);
+                            break;
+                            
+                        case 'toggleOn': // Toggle on - switch up + beep
+                            oscillator.frequency.value = 1000;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.1);
+                            break;
+                            
+                        case 'toggleOff': // Toggle off - switch down
+                            oscillator.frequency.value = 500;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.1);
+                            break;
+                            
+                        case 'skipHover': // Skip button hover - power-up charge
+                            oscillator.frequency.setValueAtTime(300, now);
+                            oscillator.frequency.exponentialRampToValueAtTime(800, now + 0.2);
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.25, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.2);
+                            break;
+                            
+                        case 'skipClick': // Skip button click - success chime
+                            oscillator.frequency.value = 1200;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.2);
+                            break;
+                            
+                        case 'legendaryActivate': // Legendary mode - epic power-up
+                            oscillator.frequency.setValueAtTime(100, now);
+                            oscillator.frequency.exponentialRampToValueAtTime(1000, now + 0.5);
+                            oscillator.type = 'sawtooth';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.5, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.5);
+                            break;
+                            
+                        case 'rocketLaunch': // Back to top - rocket launch
+                            oscillator.frequency.setValueAtTime(50, now);
+                            oscillator.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+                            oscillator.type = 'sawtooth';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.35, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.4);
+                            break;
+                            
+                        case 'notificationBeep': // Social icon hover
+                            oscillator.frequency.value = 600;
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.2, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.05);
+                            break;
+                            
+                        case 'pop': // Social icon click
+                            oscillator.frequency.value = 1000;
+                            oscillator.type = 'sine';
+                            gainNode.gain.setValueAtTime(this.masterVolume * 0.3, now);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                            oscillator.start(now);
+                            oscillator.stop(now + 0.05);
+                            break;
+                    }
+                } catch (e) {
+                    console.log('Sound playback error:', e);
+                }
+            }
+        }
+        
+        // Initialize interactive sounds
+        const interactiveSounds = new InteractiveSoundSystem();
+        window.interactiveSounds = interactiveSounds;
+        
+        // Attach sounds to navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', () => interactiveSounds.play('hover'));
+            link.addEventListener('click', () => interactiveSounds.play('click'));
+        });
+        
+        // Attach sounds to buttons
+        document.querySelectorAll('.neon-btn, .submit-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => interactiveSounds.play('buttonHover'));
+            btn.addEventListener('click', () => interactiveSounds.play('buttonClick'));
+        });
+        
+        // Attach sounds to cards
+        document.querySelectorAll('.skill-card, .project-card, .stat-card').forEach(card => {
+            card.addEventListener('mouseenter', () => interactiveSounds.play('cardHover'));
+            card.addEventListener('click', () => interactiveSounds.play('cardClick'));
+        });
+        
+        // Attach sounds to skip button
+        const skipIntroBtn = document.getElementById('skipIntroBtn');
+        if (skipIntroBtn) {
+            skipIntroBtn.addEventListener('mouseenter', () => interactiveSounds.play('skipHover'));
+            skipIntroBtn.addEventListener('click', () => interactiveSounds.play('skipClick'));
+        }
+        
+        // Attach sounds to back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => interactiveSounds.play('rocketLaunch'));
+        }
+        
+        // Attach sounds to social icons
+        document.querySelectorAll('.social-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => interactiveSounds.play('notificationBeep'));
+            icon.addEventListener('click', () => interactiveSounds.play('pop'));
+        });
+        
+        // Mute button functionality
+        const muteBtn = document.getElementById('muteBtn');
+        const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
+        const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
+        
+        // Set initial state
+        if (musicSystem.isMuted) {
+            muteBtn.classList.add('muted');
+            unmutedIcon.style.display = 'none';
+            mutedIcon.style.display = 'block';
+        }
+        
+        muteBtn.addEventListener('click', () => {
+            const isMuted = musicSystem.toggleMute();
+            
+            if (isMuted) {
+                muteBtn.classList.add('muted');
+                unmutedIcon.style.display = 'none';
+                mutedIcon.style.display = 'block';
+            } else {
+                muteBtn.classList.remove('muted');
+                unmutedIcon.style.display = 'block';
+                mutedIcon.style.display = 'none';
+            }
+            
+            interactiveSounds.play('toggleOn');
+        });
+
+        // ========================================
+        // ANIMATED CREDITS SYSTEM
+        // ========================================
+        class CreditTextShatter {
+            constructor(textElement) {
+                this.element = textElement;
+                this.particles = [];
+                this.isAnimating = false;
+            }
+            
+            shatter() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+                
+                const text = this.element.textContent;
+                const letters = text.split('');
+                const rect = this.element.getBoundingClientRect();
+                
+                // Hide original text
+                this.element.style.opacity = '0';
+                
+                // Create particles for each letter
+                letters.forEach((letter, index) => {
+                    if (letter === ' ') return;
+                    
+                    const letterWidth = rect.width / letters.length;
+                    const letterX = rect.left + (letterWidth * index) + (letterWidth / 2);
+                    const letterY = rect.top + (rect.height / 2);
+                    
+                    const particlesPerLetter = 15;
+                    
+                    for (let i = 0; i < particlesPerLetter; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'credit-particle';
+                        particle.textContent = letter;
+                        
+                        // Random velocity
+                        const angle = (Math.PI * 2 * i) / particlesPerLetter;
+                        const speed = 2 + Math.random() * 3;
+                        const vx = Math.cos(angle) * speed;
+                        const vy = Math.sin(angle) * speed;
+                        
+                        const hue = Math.random() * 360;
+                        
+                        particle.style.cssText = `
+                            left: ${letterX}px;
+                            top: ${letterY}px;
+                            font-size: 8px;
+                            color: hsl(${hue}, 100%, 60%);
+                        `;
+                        
+                        document.body.appendChild(particle);
+                        this.particles.push({
+                            element: particle,
+                            vx, vy,
+                            x: letterX,
+                            y: letterY,
+                            originalX: letterX,
+                            originalY: letterY,
+                            angle: angle,
+                            letter
+                        });
+                    }
+                });
+                
+                // Animate particles
+                this.animateParticles();
+            }
+            
+            animateParticles() {
+                const duration = 4000; // 4 seconds
+                const startTime = Date.now();
+                
+                const animate = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    if (progress < 0.25) {
+                        // Explode outward
+                        this.particles.forEach(p => {
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            p.element.style.left = p.x + 'px';
+                            p.element.style.top = p.y + 'px';
+                        });
+                    } else if (progress < 0.75) {
+                        // Swirl/orbit
+                        const swirl = (progress - 0.25) * Math.PI * 4; // 2 rotations
+                        const radius = 100 * (1 - (progress - 0.25) * 2);
+                        
+                        this.particles.forEach((p, i) => {
+                            const offset = (Math.PI * 2 * i) / this.particles.length;
+                            p.x = p.originalX + Math.cos(swirl + offset) * radius;
+                            p.y = p.originalY + Math.sin(swirl + offset) * radius;
+                            p.element.style.left = p.x + 'px';
+                            p.element.style.top = p.y + 'px';
+                        });
+                    } else {
+                        // Converge back to original positions
+                        const convergeFactor = (progress - 0.75) * 4;
+                        
+                        this.particles.forEach(p => {
+                            p.x = p.x + (p.originalX - p.x) * convergeFactor;
+                            p.y = p.y + (p.originalY - p.y) * convergeFactor;
+                            p.element.style.left = p.x + 'px';
+                            p.element.style.top = p.y + 'px';
+                        });
+                    }
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Clean up particles and show text
+                        this.particles.forEach(p => p.element.remove());
+                        this.particles = [];
+                        this.element.style.opacity = '1';
+                        this.isAnimating = false;
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // Initialize credit text animations
+        const creditTexts = document.querySelectorAll('.animated-credit-text');
+        const creditShatterers = [];
+        
+        creditTexts.forEach((text, index) => {
+            const shatterer = new CreditTextShatter(text);
+            creditShatterers.push(shatterer);
+            
+            // Activate CSS animation
+            setTimeout(() => {
+                text.classList.add('active');
+            }, index * 200);
+            
+            // Trigger shatter animation every 8 seconds (staggered)
+            setInterval(() => {
+                shatterer.shatter();
+            }, 8000 + index * 1000);
+            
+            // First shatter at 4s mark
+            setTimeout(() => {
+                shatterer.shatter();
+            }, 4000 + index * 1000);
+        });
+
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
+        console.log('%c🎵 Music System Ready! Toggle sound with the button in bottom-right corner.', 'color: #39ff14; font-size: 12px;');
     </script>
 </body>
 </html>

@@ -2146,10 +2146,10 @@
             <div class="hex-ring ring-inner"></div>
             
             <!-- Avatar Image/GIF -->
-            <div class="avatar-image-wrapper">
+            <div class="avatar-image-wrapper" aria-label="Animated avatar">
                 <img src="images/avatar.gif" alt="METHEELEGEND Avatar" class="avatar-gif" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="avatar-fallback-m" style="display: none;">M</div>
+                <div class="avatar-fallback-m" style="display: none;" role="img" aria-label="METHEELEGEND Logo">M</div>
             </div>
         </div>
     </div>
@@ -3300,6 +3300,8 @@
                 this.ctx = null;
                 this.masterGain = null;
                 this.isPlaying = false;
+                this.INTRO_DURATION = 13000; // Default intro duration
+                this.NOTE_INTERVAL = 325; // ms between notes
             }
             
             init() {
@@ -3311,11 +3313,12 @@
                 }
             }
             
-            playIntro() {
+            playIntro(introDuration = this.INTRO_DURATION) {
                 this.init();
-                // Simple ascending arpeggio for 13 seconds
+                // Simple ascending arpeggio
                 const notes = [261.63, 329.63, 392.00, 523.25]; // C, E, G, C
                 let noteIndex = 0;
+                const maxNotes = Math.floor(introDuration / this.NOTE_INTERVAL);
                 
                 const playNote = () => {
                     const osc = this.ctx.createOscillator();
@@ -3334,8 +3337,8 @@
                     osc.stop(this.ctx.currentTime + 0.5);
                     
                     noteIndex++;
-                    if (noteIndex < 40) { // ~13 seconds at 325ms per note
-                        setTimeout(playNote, 325);
+                    if (noteIndex < maxNotes) {
+                        setTimeout(playNote, this.NOTE_INTERVAL);
                     }
                 };
                 
@@ -3459,13 +3462,13 @@
             
             playSynthIntro() {
                 if (!this.isMuted) {
-                    this.synthEngine.playIntro();
+                    this.synthEngine.playIntro(this.CROSSFADE_START_TIME + 2000); // Match intro duration
                     // Start background loop after intro
                     setTimeout(() => {
                         if (!this.isMuted) {
                             this.synthEngine.playBackgroundLoop();
                         }
-                    }, 13000);
+                    }, this.CROSSFADE_START_TIME + 2000); // Use configurable duration
                 }
             }
             
@@ -3579,6 +3582,13 @@
         // ========================================
         class ScrollFollowingAvatar {
             constructor() {
+                // Configuration constants
+                this.INTRO_DURATION = 13000; // Match intro system duration
+                this.AVATAR_SIZE = 250; // Viewport offset for avatar
+                this.SCROLL_SENSITIVITY = 10; // Scroll speed multiplier divisor
+                this.SPRING_STRENGTH = 0.1;
+                this.DAMPING = 0.8;
+                
                 this.avatar = document.getElementById('scrollAvatar');
                 this.targetY = -300; // Start above viewport
                 this.currentY = -300;
@@ -3591,7 +3601,7 @@
             
             init() {
                 // Wait for intro to complete before showing avatar
-                setTimeout(() => this.dropAvatar(), 13000); // After intro
+                setTimeout(() => this.dropAvatar(), this.INTRO_DURATION);
                 
                 // Track scroll
                 window.addEventListener('scroll', () => this.onScroll(), { passive: true });
@@ -3647,11 +3657,11 @@
                 
                 // Calculate target position (parallax effect)
                 const scrollProgress = scrollY / (document.body.scrollHeight - window.innerHeight);
-                const maxY = window.innerHeight - 250; // Stay in viewport
+                const maxY = window.innerHeight - this.AVATAR_SIZE;
                 this.targetY = 100 + scrollProgress * (maxY - 100);
                 
                 // If user scrolls fast, avatar moves faster
-                const speedMultiplier = Math.abs(this.scrollVelocity) / 10;
+                const speedMultiplier = Math.abs(this.scrollVelocity) / this.SCROLL_SENSITIVITY;
                 this.targetY += this.scrollVelocity * speedMultiplier;
                 
                 // Clamp to viewport
@@ -3663,9 +3673,9 @@
                 
                 // Smooth following with spring physics
                 const diff = this.targetY - this.currentY;
-                const spring = 0.1; // Spring strength
-                const damping = 0.8; // Damping (friction)
                 
+                this.velocity += diff * this.SPRING_STRENGTH;
+                this.velocity *= this.DAMPING;
                 this.velocity += diff * spring;
                 this.velocity *= damping;
                 this.currentY += this.velocity;

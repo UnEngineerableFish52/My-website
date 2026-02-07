@@ -582,6 +582,174 @@
            END INTRO SYSTEM
            ======================================== */
 
+        /* ========================================
+           SCROLL-FOLLOWING AVATAR
+           ======================================== */
+        .legendary-avatar-container {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            pointer-events: none;
+            transition: none;
+            will-change: top;
+            display: none; /* Hidden until after intro */
+        }
+        
+        .legendary-avatar-container.active {
+            display: block;
+        }
+
+        .hexagonal-vessel {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+            background: rgba(0, 243, 255, 0.1);
+            border: 3px solid var(--neon-blue);
+            animation: vesselPulse 3s ease-in-out infinite;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes vesselPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px rgba(0, 243, 255, 0.1);
+                filter: brightness(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px var(--neon-pink), inset 0 0 30px rgba(255, 0, 110, 0.2);
+                filter: brightness(1.2);
+            }
+        }
+
+        /* Rotating rings for vessel (similar to intro avatar) */
+        .hexagonal-vessel .hex-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .hexagonal-vessel .ring-outer {
+            width: 220px;
+            height: 220px;
+            clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+            border: 2px solid var(--neon-blue);
+            animation: rotateRingCW 4s linear infinite;
+            filter: blur(4px);
+            transform: translate(-50%, -50%);
+        }
+
+        .hexagonal-vessel .ring-middle {
+            width: 210px;
+            height: 210px;
+            clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+            border: 2px solid var(--neon-pink);
+            animation: rotateRingCCW 6s linear infinite;
+            filter: blur(3px);
+            transform: translate(-50%, -50%);
+        }
+
+        .hexagonal-vessel .ring-inner {
+            width: 200px;
+            height: 200px;
+            clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+            border: 1px solid var(--neon-green);
+            animation: pulseRing 2s ease-in-out infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { 
+                opacity: 0.6; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.05); 
+            }
+        }
+
+        /* Avatar GIF inside vessel */
+        .avatar-image-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+            overflow: hidden;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fallback M logo if GIF not present */
+        .avatar-fallback-m {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 80px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* Bounce animation */
+        .legendary-avatar-container.bouncing {
+            animation: avatarBounce 0.6s cubic-bezier(0.28, 0.84, 0.42, 1);
+        }
+
+        @keyframes avatarBounce {
+            0% { transform: translateX(-50%) translateY(0); }
+            25% { transform: translateX(-50%) translateY(-20px); }
+            50% { transform: translateX(-50%) translateY(0); }
+            75% { transform: translateX(-50%) translateY(-10px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .hexagonal-vessel {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .hexagonal-vessel .ring-outer {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .hexagonal-vessel .ring-middle {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .hexagonal-vessel .ring-inner {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .avatar-image-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .avatar-fallback-m {
+                font-size: 50px;
+            }
+        }
+
+        /* ========================================
+           END SCROLL-FOLLOWING AVATAR
+           ======================================== */
+
         html {
             scroll-behavior: smooth;
             scrollbar-width: thin;
@@ -1968,6 +2136,25 @@
     </button>
 
     <!-- ========================================
+         SCROLL-FOLLOWING AVATAR
+         ======================================== -->
+    <div class="legendary-avatar-container" id="scrollAvatar">
+        <div class="hexagonal-vessel">
+            <!-- 3 Rotating Rings -->
+            <div class="hex-ring ring-outer"></div>
+            <div class="hex-ring ring-middle"></div>
+            <div class="hex-ring ring-inner"></div>
+            
+            <!-- Avatar Image/GIF -->
+            <div class="avatar-image-wrapper">
+                <img src="images/avatar.gif" alt="METHEELEGEND Avatar" class="avatar-gif" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="avatar-fallback-m" style="display: none;">M</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
          MAIN PORTFOLIO CONTENT
          ======================================== -->
     <!-- Custom Cursor -->
@@ -3103,6 +3290,106 @@
         }, 3000);
 
         // ========================================
+        // SYNTHESIZED MUSIC ENGINE (FALLBACK)
+        // ========================================
+        class SynthMusicEngine {
+            constructor() {
+                this.ctx = null;
+                this.masterGain = null;
+                this.isPlaying = false;
+            }
+            
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    this.masterGain = this.ctx.createGain();
+                    this.masterGain.gain.value = 0.3;
+                    this.masterGain.connect(this.ctx.destination);
+                }
+            }
+            
+            playIntro() {
+                this.init();
+                // Simple ascending arpeggio for 13 seconds
+                const notes = [261.63, 329.63, 392.00, 523.25]; // C, E, G, C
+                let noteIndex = 0;
+                
+                const playNote = () => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    
+                    osc.frequency.value = notes[noteIndex % notes.length];
+                    osc.type = 'sine';
+                    
+                    gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 0.5);
+                    
+                    noteIndex++;
+                    if (noteIndex < 40) { // ~13 seconds at 325ms per note
+                        setTimeout(playNote, 325);
+                    }
+                };
+                
+                playNote();
+            }
+            
+            playBackgroundLoop() {
+                this.init();
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                
+                // Epic synth pad progression
+                const chords = [
+                    [261.63, 329.63, 392.00], // C major
+                    [349.23, 440.00, 523.25], // F major
+                    [392.00, 493.88, 587.33], // G major
+                    [220.00, 261.63, 329.63]  // A minor
+                ];
+                
+                let chordIndex = 0;
+                
+                const playChord = () => {
+                    if (!this.isPlaying) return;
+                    
+                    const chord = chords[chordIndex];
+                    
+                    chord.forEach((freq, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        
+                        gain.gain.setValueAtTime(0, this.ctx.currentTime);
+                        gain.gain.linearRampToValueAtTime(0.15, this.ctx.currentTime + 0.5);
+                        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 3.5);
+                        
+                        osc.connect(gain);
+                        gain.connect(this.masterGain);
+                        
+                        osc.start(this.ctx.currentTime);
+                        osc.stop(this.ctx.currentTime + 4);
+                    });
+                    
+                    chordIndex = (chordIndex + 1) % chords.length;
+                    setTimeout(playChord, 4000); // Next chord in 4 seconds
+                };
+                
+                playChord();
+            }
+            
+            stop() {
+                this.isPlaying = false;
+            }
+        }
+
+        // ========================================
         // LEGENDARY MUSIC SYSTEM
         // ========================================
         class LegendaryMusicSystem {
@@ -3115,6 +3402,8 @@
                 
                 this.introTrack = new Audio('sounds/deaf-kev-invincible-pt2.mp3');
                 this.backgroundTrack = new Audio('sounds/elektronomia-sky-high.mp3');
+                this.synthEngine = new SynthMusicEngine();
+                this.isUsingFiles = true;
                 
                 // CRITICAL: Set loop BEFORE playing
                 this.backgroundTrack.loop = true;
@@ -3130,19 +3419,23 @@
                     this.backgroundTrack.muted = true;
                 }
                 
-                // Error handling
+                // Error handling - switch to synthesized audio on error
                 this.introTrack.addEventListener('error', () => {
-                    console.log('Intro track not found. Music files must be downloaded separately from NCS.');
+                    console.log('Intro track not found. Using synthesized audio fallback.');
+                    this.isUsingFiles = false;
                 });
                 
                 this.backgroundTrack.addEventListener('error', () => {
-                    console.log('Background track not found. Music files must be downloaded separately from NCS.');
+                    console.log('Background track not found. Using synthesized audio fallback.');
+                    this.isUsingFiles = false;
                 });
             }
             
             async playIntro() {
+                if (this.isMuted) return;
+                
                 try {
-                    // Play intro music
+                    // Try playing audio files first
                     await this.introTrack.play();
                     
                     // CRITICAL: Preload background track
@@ -3154,19 +3447,39 @@
                     }, this.CROSSFADE_START_TIME);
                     
                 } catch (error) {
-                    console.warn('Music autoplay blocked:', error);
-                    // Show unmute prompt if blocked by browser
-                    this.showUnmutePrompt();
+                    console.warn('Music autoplay blocked or files missing:', error);
+                    // Fallback to synthesized audio
+                    this.isUsingFiles = false;
+                    this.playSynthIntro();
+                }
+            }
+            
+            playSynthIntro() {
+                if (!this.isMuted) {
+                    this.synthEngine.playIntro();
+                    // Start background loop after intro
+                    setTimeout(() => {
+                        if (!this.isMuted) {
+                            this.synthEngine.playBackgroundLoop();
+                        }
+                    }, 13000);
                 }
             }
             
             startBackgroundMusic() {
+                if (!this.isUsingFiles) {
+                    // Already using synth engine
+                    return;
+                }
+                
                 // CRITICAL: Start background track playing (silent)
                 this.backgroundTrack.play().then(() => {
                     // Crossfade over 2 seconds
                     this.crossfade();
                 }).catch(error => {
-                    console.warn('Background music failed to start:', error);
+                    console.warn('Background music failed to start, using synth fallback:', error);
+                    this.isUsingFiles = false;
+                    this.synthEngine.playBackgroundLoop();
                 });
             }
             
@@ -3227,6 +3540,14 @@
                 if (this.initialized) {
                     if (this.introTrack) this.introTrack.muted = this.isMuted;
                     if (this.backgroundTrack) this.backgroundTrack.muted = this.isMuted;
+                    
+                    // Handle synth engine
+                    if (this.isMuted && this.synthEngine) {
+                        this.synthEngine.stop();
+                    } else if (!this.isMuted && !this.isUsingFiles && this.hasStarted && this.synthEngine) {
+                        // Resume synth if it was muted
+                        this.synthEngine.playBackgroundLoop();
+                    }
                 }
                 
                 // Also mute interactive sounds
@@ -3249,6 +3570,119 @@
                 musicSystem.hasStarted = true;
             }
         }, { once: true });
+
+        // ========================================
+        // SCROLL-FOLLOWING AVATAR SYSTEM
+        // ========================================
+        class ScrollFollowingAvatar {
+            constructor() {
+                this.avatar = document.getElementById('scrollAvatar');
+                this.targetY = -300; // Start above viewport
+                this.currentY = -300;
+                this.velocity = 0;
+                this.lastScrollY = 0;
+                this.scrollVelocity = 0;
+                this.isAnimating = false;
+                this.animationFrame = null;
+            }
+            
+            init() {
+                // Wait for intro to complete before showing avatar
+                setTimeout(() => this.dropAvatar(), 13000); // After intro
+                
+                // Track scroll
+                window.addEventListener('scroll', () => this.onScroll(), { passive: true });
+            }
+            
+            dropAvatar() {
+                // Make avatar visible
+                this.avatar.classList.add('active');
+                
+                // Fall from top with gravity
+                const startY = -300;
+                const landingY = 100; // Land 100px from top
+                const duration = 1500;
+                const startTime = Date.now();
+                
+                const drop = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Ease-in (gravity acceleration)
+                    const easeProgress = progress * progress;
+                    this.currentY = startY + (landingY - startY) * easeProgress;
+                    
+                    this.avatar.style.top = this.currentY + 'px';
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(drop);
+                    } else {
+                        // Bounce on landing
+                        this.bounce();
+                        // Start animation loop for scroll following
+                        this.isAnimating = true;
+                        this.animate();
+                    }
+                };
+                
+                drop();
+            }
+            
+            bounce() {
+                this.avatar.classList.add('bouncing');
+                setTimeout(() => {
+                    this.avatar.classList.remove('bouncing');
+                }, 600);
+            }
+            
+            onScroll() {
+                if (!this.isAnimating) return;
+                
+                const scrollY = window.scrollY;
+                this.scrollVelocity = scrollY - this.lastScrollY;
+                this.lastScrollY = scrollY;
+                
+                // Calculate target position (parallax effect)
+                const scrollProgress = scrollY / (document.body.scrollHeight - window.innerHeight);
+                const maxY = window.innerHeight - 250; // Stay in viewport
+                this.targetY = 100 + scrollProgress * (maxY - 100);
+                
+                // If user scrolls fast, avatar moves faster
+                const speedMultiplier = Math.abs(this.scrollVelocity) / 10;
+                this.targetY += this.scrollVelocity * speedMultiplier;
+                
+                // Clamp to viewport
+                this.targetY = Math.max(50, Math.min(maxY, this.targetY));
+            }
+            
+            animate() {
+                if (!this.isAnimating) return;
+                
+                // Smooth following with spring physics
+                const diff = this.targetY - this.currentY;
+                const spring = 0.1; // Spring strength
+                const damping = 0.8; // Damping (friction)
+                
+                this.velocity += diff * spring;
+                this.velocity *= damping;
+                this.currentY += this.velocity;
+                
+                this.avatar.style.top = this.currentY + 'px';
+                
+                // Bounce when scroll stops (velocity near zero)
+                if (Math.abs(this.velocity) > 0.5 && Math.abs(this.velocity) < 1 && Math.abs(diff) < 5) {
+                    if (!this.avatar.classList.contains('bouncing')) {
+                        this.bounce();
+                    }
+                }
+                
+                this.animationFrame = requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize scroll-following avatar
+        const scrollAvatar = new ScrollFollowingAvatar();
+        scrollAvatar.init();
 
         // ========================================
         // INTERACTIVE SOUND SYSTEM

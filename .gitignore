@@ -19,3 +19,7 @@ generate-favicons.js
 .idea/
 *.swp
 *.swo
+
+# Old backup files
+index-old.html
+README-old.md

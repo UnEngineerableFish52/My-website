@@ -2552,6 +2552,7 @@
             const config = {
                 introDuration: 13000, // 13 seconds
                 isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+                isLowEnd: navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4,
                 prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
             };
             
@@ -2559,6 +2560,8 @@
             if (config.isMobile) {
                 config.introDuration = 10000; // 10 seconds for mobile
                 config.particleCount = 50;
+            } else if (config.isLowEnd) {
+                config.particleCount = 100; // Reduced for low-end devices
             } else {
                 config.particleCount = 200;
             }

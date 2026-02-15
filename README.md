@@ -15,16 +15,21 @@
 - **Smooth transitions** - Page entries and scroll reveal animations
 
 ### 🎬 Visual Effects
+- **Epic 13-second intro** - Legendary sequence on homepage (5 animated phases)
+- **Scroll-following avatar** - Hexagonal vessel with physics-based movement
 - **Background video** - Sci-fi themed looping video (customizable)
 - **Mouse tracking** - Interactive radial gradient follows cursor
 - **Scroll reveal** - Elements smoothly animate into view
 - **Hover glows** - Cards and buttons glow with neon colors on hover
 - **Animated progress bars** - Skill levels animate when scrolled into view
+- **Particle effects** - Matrix rain, burst animations, and more
 
-### 🔊 Interactive Sound
+### 🔊 Interactive Sound & Music
+- **Epic intro music** - 13-second legendary sequence with synthesized soundtrack
+- **Background music system** - Loops after intro with MP3 or Web Audio fallback
 - **Click sounds** - Clean Web Audio API synthesized click feedback
-- **No background music** - Performance-optimized, no heavy audio files
-- **Lightweight** - Minimal JavaScript for maximum speed
+- **Audio controls** - Easy toggle button for music on/off
+- **Smart fallback** - Works without MP3 files using synthesized audio
 
 ### 📱 Responsive Design
 - **Mobile-first approach** - Optimized for all screen sizes
@@ -34,9 +39,12 @@
 ## 📄 Pages
 
 ### 🏠 Home (index.html)
+- **Epic intro sequence** - 13-second legendary animation (skippable)
+- **Scroll-following avatar** - Interactive hexagonal vessel with physics
 - Hero section with call-to-action buttons
 - Featured projects preview (3 cards)
 - Statistics section
+- Background music system
 - 3-4 full scrolls of content
 
 ### 👤 About (about.html)
@@ -77,14 +85,29 @@ git clone https://github.com/UnEngineerableFish52/My-website.git
 cd My-website
 ```
 
-2. Download a background video:
+2. Download a background video (optional):
    - Visit https://www.pexels.com/videos/
    - Search for "sci-fi digital" or "particles space"
    - Download a video (1920x1080, ~2-5MB recommended)
    - Rename to `scifi-background.mp4`
    - Place in `videos/` directory
 
-3. Open `index.html` in your browser or deploy to any static hosting service.
+3. Download music files (optional - synthesized fallback works without these):
+   - **Intro**: "Invincible Pt. II" by DEAF KEV from NCS
+     - Download: https://ncs.io/Invincible2
+     - Rename to: `deaf-kev-invincible-pt2.mp3`
+   - **Background**: "Sky High" by Elektronomia from NCS
+     - Download: https://ncs.io/SkyHigh
+     - Rename to: `elektronomia-sky-high.mp3`
+   - Place both files in `sounds/` directory
+   - **Note**: If files are missing, the site will use Web Audio API to generate music
+
+4. Add avatar GIF (optional - fallback "M" logo works without this):
+   - Create or find an animated GIF (recommended: 160x160px)
+   - Rename to `avatar.gif`
+   - Place in `images/` directory
+
+5. Open `index.html` in your browser or deploy to any static hosting service.
 
 ### Customization
 
@@ -116,12 +139,19 @@ Edit CSS variables in `css/styles.css`:
 ```
 My-website/
 ├── css/
-│   └── styles.css          # Main stylesheet
+│   └── styles.css          # Main stylesheet (2,373 lines - includes legendary styles)
 ├── js/
+│   ├── legendary.js        # Legendary intro & music systems (1,683 lines)
 │   └── main.js             # Main JavaScript file
+├── images/
+│   ├── avatar.gif          # Optional: Scroll-following avatar
+│   └── README.md           # Avatar instructions
+├── sounds/
+│   ├── *.mp3               # Optional: NCS music files
+│   └── README.md           # Music download instructions
 ├── videos/
 │   └── scifi-background.mp4  # Background video
-├── index.html              # Home page
+├── index.html              # Home page (with legendary intro)
 ├── about.html              # About page
 ├── projects.html           # Projects page
 ├── skills.html             # Skills page
@@ -141,10 +171,12 @@ My-website/
 ## 🛠️ Technologies Used
 
 - **HTML5** - Semantic markup
-- **CSS3** - Modern styling with animations
-- **JavaScript (ES6+)** - Interactive features
-- **Web Audio API** - Click sound effects
+- **CSS3** - Modern styling with animations, GPU-accelerated transforms
+- **JavaScript (ES6+)** - Interactive features, intro system, music player
+- **Web Audio API** - Click sounds & synthesized music fallback
 - **Intersection Observer** - Scroll reveal animations
+- **Canvas API** - Particle effects and matrix rain
+- **localStorage** - Mute state persistence
 
 ## 📝 License
 
@@ -155,6 +187,42 @@ This project is licensed under the MIT License.
 - **Design & Development**: METHEELEGEND (PRO SAMKING)
 - **Fonts**: Google Fonts (Orbitron, Poppins)
 - **Icons**: Unicode Emoji
+- **Music** (optional): 
+  - "Invincible Pt. II" by DEAF KEV (NCS Release)
+  - "Sky High" by Elektronomia (NCS Release)
+  - Web Audio API synthesized fallback
+
+## 🎵 Legendary Features
+
+The METHEELEGEND portfolio includes special legendary features on the homepage:
+
+### Epic Intro Sequence (13 seconds)
+- **Phase 1**: System awakening with floating text
+- **Phase 2**: PRO SAMKING text formation
+- **Phase 3**: M logo reveal with 3 rotating hexagonal rings
+- **Phase 4**: Portal activation effect
+- **Phase 5**: Hexagonal shatter transition
+- **Skippable**: Press the skip button to jump to content
+
+### Music System
+- **Intro Music**: Epic 13-second soundtrack
+- **Background Loop**: Continuous music after intro
+- **Smart Fallback**: Works with MP3 files OR synthesized Web Audio
+- **Audio Control**: Click button (bottom-right) to toggle music on/off
+- **Persistent State**: Your mute preference is saved
+
+### Scroll-Following Avatar
+- **Physics-Based**: Smooth spring physics movement
+- **Interactive**: Follows your scroll position
+- **Bounces**: Animation when you stop scrolling
+- **Hexagonal Vessel**: 3 rotating neon rings
+- **Customizable**: Use your own avatar.gif or fallback "M" logo
+
+### Performance
+- **Adaptive**: Reduces particle count on mobile/low-end devices (50/100/200)
+- **GPU Accelerated**: All animations use transform3d
+- **Optimized**: Intro only on homepage, not on other pages
+- **Accessible**: ARIA labels, keyboard navigation, reduced motion support
 - **Background Video**: Pexels (Free to use)
 
 ## 📞 Contact

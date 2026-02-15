@@ -1137,8 +1137,6 @@
                 
                 this.velocity += diff * this.SPRING_STRENGTH;
                 this.velocity *= this.DAMPING;
-                this.velocity += diff * spring;
-                this.velocity *= damping;
                 this.currentY += this.velocity;
                 
                 this.avatar.style.top = this.currentY + 'px';

@@ -642,14 +642,16 @@ footer p {
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Orbitron', sans-serif;
-            font-size: 120px;
+            font-size: clamp(66px, 9.5vmin, 92px);
             font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.01em;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 50px var(--neon-blue);
-            filter: drop-shadow(0 0 30px var(--neon-pink));
+            text-shadow: 0 0 28px var(--neon-blue);
+            filter: drop-shadow(0 0 16px var(--neon-pink));
         }
 
         /* METHEELEGEND Text */
@@ -879,7 +881,7 @@ footer p {
             }
             
             .m-logo-center {
-                font-size: 80px;
+                font-size: 64px;
             }
             
             .legendary-skip-btn {

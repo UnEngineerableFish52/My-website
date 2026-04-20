@@ -134,12 +134,44 @@ Edit CSS variables in `css/styles.css`:
 - Adjust opacity in CSS (currently 0.3)
 - Can be disabled by removing video element
 
+## ✅ Verifying CSS Changes Locally & in Deployment
+
+### Confirm changes locally
+
+1. **Open the file directly** — open `index.html` in your browser (no server needed for a static site).
+2. **Hard-reload to bust cache** — press `Ctrl + Shift + R` (Windows/Linux) or `Cmd + Shift + R` (macOS) to force a full reload that ignores cached files.
+3. **Check DevTools** — open DevTools (F12) → Network tab → tick "Disable cache" → reload.  Confirm `css/styles.css` is fetched with a `200` status and the file size matches what's on disk.
+4. **Inspect the element** — in the Elements panel, select the element you styled and confirm the expected rule appears under the Styles pane (not crossed out).
+
+### Ensure deployment picks up CSS changes
+
+This is a **static site** hosted via GitHub Pages (or similar).  
+GitHub Pages serves files directly from the `main` branch — no build step is needed.
+
+| Step | What to do |
+|------|-----------|
+| 1 | Commit **and push** your CSS/HTML edits to `main` |
+| 2 | Wait ~1-2 min for GitHub Pages to rebuild |
+| 3 | Hard-reload the live URL (`Ctrl+Shift+R`) in the browser |
+| 4 | If changes still don't appear, open DevTools → Application → Storage → Clear site data (clears any Service Worker cache) |
+
+> **Why changes sometimes don't appear after a push:**  
+> Browsers aggressively cache CSS files. If the filename (`styles.css`) doesn't change, the browser serves the cached copy. A hard-reload (`Ctrl+Shift+R`) always fetches fresh files, bypassing the cache.
+
+### Diagnosing "changes not reflected"
+
+- Open DevTools → Sources → find `css/styles.css` → check that the content matches your latest edits.
+- If the file looks stale, look at the Network tab response headers for `Cache-Control` / `ETag`.
+- A Service Worker (`site.webmanifest` / any registered SW) may also cache assets — clear it under DevTools → Application → Service Workers → Unregister.
+
+---
+
 ## 📁 Project Structure
 
 ```
 My-website/
 ├── css/
-│   └── styles.css          # Main stylesheet (2,373 lines - includes legendary styles)
+│   └── styles.css          # Main stylesheet (~1,300 lines - includes legendary styles)
 ├── js/
 │   ├── legendary.js        # Legendary intro & music systems (1,683 lines)
 │   └── main.js             # Main JavaScript file

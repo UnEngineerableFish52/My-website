@@ -1472,33 +1472,35 @@
             icon.addEventListener('click', () => interactiveSounds.play('pop'));
         });
         
-        // Mute button functionality
+        // Mute button functionality (legacy markup support)
         const muteBtn = document.getElementById('muteBtn');
-        const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
-        const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
-        
-        // Set initial state
-        if (musicSystem.isMuted) {
-            muteBtn.classList.add('muted');
-            unmutedIcon.style.display = 'none';
-            mutedIcon.style.display = 'block';
-        }
-        
-        muteBtn.addEventListener('click', () => {
-            const isMuted = musicSystem.toggleMute();
-            
-            if (isMuted) {
+        if (muteBtn) {
+            const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
+            const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
+
+            // Set initial state
+            if (musicSystem.isMuted) {
                 muteBtn.classList.add('muted');
-                unmutedIcon.style.display = 'none';
-                mutedIcon.style.display = 'block';
-            } else {
-                muteBtn.classList.remove('muted');
-                unmutedIcon.style.display = 'block';
-                mutedIcon.style.display = 'none';
+                if (unmutedIcon) unmutedIcon.style.display = 'none';
+                if (mutedIcon) mutedIcon.style.display = 'block';
             }
-            
-            interactiveSounds.play('toggleOn');
-        });
+
+            muteBtn.addEventListener('click', () => {
+                const isMuted = musicSystem.toggleMute();
+
+                if (isMuted) {
+                    muteBtn.classList.add('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'none';
+                    if (mutedIcon) mutedIcon.style.display = 'block';
+                } else {
+                    muteBtn.classList.remove('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'block';
+                    if (mutedIcon) mutedIcon.style.display = 'none';
+                }
+
+                interactiveSounds.play('toggleOn');
+            });
+        }
 
         // ========================================
         // ANIMATED CREDITS SYSTEM

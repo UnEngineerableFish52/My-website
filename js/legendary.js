@@ -8,6 +8,9 @@
             const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
             const introContainer = document.getElementById('legendaryIntro');
             const skipBtn = document.getElementById('skipIntroBtn');
+            let introAnimationFrame = null;
+            let introAnimationRunning = false;
+            let resizeHandlerBound = false;
             
             // Configuration
             const config = {
@@ -16,6 +19,20 @@
                 isLowEnd: navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4,
                 prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
             };
+
+            function stopIntroRuntime() {
+                introAnimationRunning = false;
+
+                if (introAnimationFrame !== null) {
+                    cancelAnimationFrame(introAnimationFrame);
+                    introAnimationFrame = null;
+                }
+
+                if (resizeHandlerBound) {
+                    window.removeEventListener('resize', resizeCanvases);
+                    resizeHandlerBound = false;
+                }
+            }
             
             // Adjust for mobile and reduced motion
             if (config.isMobile) {
@@ -286,6 +303,7 @@
             }
             resizeCanvases();
             window.addEventListener('resize', resizeCanvases);
+            resizeHandlerBound = true;
             
             // Initialize systems
             const particles = [];
@@ -300,6 +318,10 @@
             
             // Animation loop for particles and matrix
             function animateIntro() {
+                if (!introAnimationRunning) {
+                    return;
+                }
+
                 // Clear canvas
                 ctx.clearRect(0, 0, introCanvas.width, introCanvas.height);
                 
@@ -312,8 +334,9 @@
                 // Draw matrix rain
                 matrixRain.draw();
                 
-                requestAnimationFrame(animateIntro);
+                introAnimationFrame = requestAnimationFrame(animateIntro);
             }
+            introAnimationRunning = true;
             animateIntro();
             
             const timelineDuration = 13000;
@@ -480,6 +503,7 @@
             });
             
             function skipToPortfolio() {
+                stopIntroRuntime();
                 introContainer.classList.add('hidden');
                 skipBtn.style.display = 'none';
                 document.body.style.overflow = '';

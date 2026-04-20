@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | METHEELEGEND</title>
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#00f3ff">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .contact-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--neon-blue);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.5);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .info-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateX(10px);
+            border-color: var(--neon-blue);
+        }
+        
+        .info-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .info-item h3 {
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+        }
+        
+        .info-item p {
+            color: var(--text-secondary);
+        }
+        
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .social-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .social-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 243, 255, 0.3);
+        }
+        
+        .social-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .social-card h3 {
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 10px;
+        }
+        
+        .social-handle {
+            color: var(--text-secondary);
+        }
+        
+        .availability-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="videos/scifi-background.mp4" type="video/mp4">
+            <source src="videos/scifi-background.webm" type="video/webm">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav class="main-nav">
+        <div style="display: flex; align-items: center; gap: 40px;">
+            <div class="logo">METHEELEGEND</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="contact-container">
+            <div class="contact-header reveal-element">
+                <h1 class="section-title">Get In Touch</h1>
+                <p class="hero-subtitle">Let's work together on your next project</p>
+            </div>
+
+            <div class="availability-card reveal-element">
+                <h2 style="color: var(--neon-blue); font-family: 'Orbitron', sans-serif; margin-bottom: 15px;">
+                    <span class="status-indicator"></span>
+                    Available for Projects
+                </h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                    Based in UTC+0 | Typically responds within 24 hours
+                </p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-form reveal-element">
+                    <h2 style="font-family: 'Orbitron', sans-serif; color: var(--neon-blue); margin-bottom: 30px;">Send a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn clickable">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-info reveal-element">
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>contact@metheelegend.com</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <h3>Location</h3>
+                        <p>Remote / Worldwide</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">⏰</div>
+                        <h3>Working Hours</h3>
+                        <p>Mon - Fri: 9AM - 6PM UTC</p>
+                        <p>Available for urgent projects 24/7</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📄</div>
+                        <h3>Resume</h3>
+                        <p><a href="#" style="color: var(--neon-blue); text-decoration: none;">Download CV (PDF)</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="reveal-element">
+                <h2 class="section-title">Connect With Me</h2>
+                <div class="social-links">
+                    <a href="#" class="social-card clickable">
+                        <div class="social-icon">💻</div>
+                        <h3>GitHub</h3>
+                        <p class="social-handle">@metheelegend</p>
+                    </a>
+                    
+                    <a href="#" class="social-card clickable">
+                        <div class="social-icon">💼</div>
+                        <h3>LinkedIn</h3>
+                        <p class="social-handle">METHEELEGEND</p>
+                    </a>
+                    
+                    <a href="#" class="social-card clickable">
+                        <div class="social-icon">🐦</div>
+                        <h3>Twitter</h3>
+                        <p class="social-handle">@pro_samking</p>
+                    </a>
+                    
+                    <a href="#" class="social-card clickable">
+                        <div class="social-icon">📱</div>
+                        <h3>Discord</h3>
+                        <p class="social-handle">metheelegend#1234</p>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 METHEELEGEND. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = '✓ Message Sent!';
+                submitBtn.style.background = 'var(--neon-green)';
+                
+                this.reset();
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = 'var(--neon-blue)';
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

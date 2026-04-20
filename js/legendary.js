@@ -11,6 +11,8 @@
             let introAnimationFrame = null;
             let introAnimationRunning = false;
             let resizeHandlerBound = false;
+            let introHasCompleted = false;
+            let introFailsafeTimer = null;
             
             // Configuration
             const config = {
@@ -495,6 +497,13 @@
             timeline.forEach(event => {
                 setTimeout(event.action, event.time);
             });
+
+            // Failsafe: never allow intro overlay to block the site indefinitely
+            introFailsafeTimer = setTimeout(() => {
+                if (!introHasCompleted) {
+                    skipToPortfolio();
+                }
+            }, config.introDuration + 3000);
             
             // Skip button functionality
             skipBtn.addEventListener('click', () => {
@@ -503,7 +512,15 @@
             });
             
             function skipToPortfolio() {
+                if (introHasCompleted) {
+                    return;
+                }
+                introHasCompleted = true;
                 stopIntroRuntime();
+                if (introFailsafeTimer) {
+                    clearTimeout(introFailsafeTimer);
+                    introFailsafeTimer = null;
+                }
                 introContainer.classList.add('hidden');
                 skipBtn.style.display = 'none';
                 document.body.style.overflow = '';

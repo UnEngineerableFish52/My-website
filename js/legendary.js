@@ -317,16 +317,16 @@
             animateIntro();
             
             const timelineDuration = 13000;
-            const at = (ratio) => Math.round(timelineDuration * ratio);
+            const getTimelinePosition = (ratio) => Math.round(timelineDuration * ratio);
             const timing = {
-                whooshA: at(0.08),
-                whooshB: at(0.16),
-                phase2Start: at(0.24),
-                phase3Start: at(0.46),
-                spinSurge: at(0.57),
-                phase4Start: at(0.68),
-                phase5Start: at(0.82),
-                fadeStart: at(0.93),
+                whooshA: getTimelinePosition(0.08),
+                whooshB: getTimelinePosition(0.16),
+                phase2Start: getTimelinePosition(0.24),
+                phase3Start: getTimelinePosition(0.46),
+                spinSurge: getTimelinePosition(0.57),
+                phase4Start: getTimelinePosition(0.68),
+                phase5Start: getTimelinePosition(0.82),
+                fadeStart: getTimelinePosition(0.93),
                 complete: timelineDuration
             };
 

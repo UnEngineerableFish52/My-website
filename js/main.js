@@ -26,9 +26,12 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 if (prefersReducedMotion) {
     revealElements.forEach((el) => el.classList.add('visible'));
 } else {
-    revealElements
-        .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
-        .forEach((el, index) => {
+    const revealElementsByTop = revealElements
+        .map((el) => ({ el, top: el.getBoundingClientRect().top }))
+        .sort((a, b) => a.top - b.top)
+        .map(({ el }) => el);
+
+    revealElementsByTop.forEach((el, index) => {
             el.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
             // Reset stagger every 6 items so long pages keep a tight, energetic cadence.
             el.style.setProperty('--reveal-delay', `${(index % 6) * 70}ms`);

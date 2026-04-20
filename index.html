@@ -1494,6 +1494,11 @@
             pointer-events: none;
         }
 
+        .loading-overlay.hidden .loading-logo,
+        .loading-overlay.hidden .loading-logo * {
+            animation-play-state: paused !important;
+        }
+
         .loading-logo {
             position: relative;
             width: 200px;

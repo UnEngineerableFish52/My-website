@@ -1557,7 +1557,7 @@
             animation: mSpinAura 5s linear infinite, mPulse 2.4s ease-in-out infinite;
         }
 
-        .loading-haki-aura {
+        .loading-glow-aura {
             position: absolute;
             width: 112px;
             height: 112px;
@@ -1567,7 +1567,7 @@
                 radial-gradient(circle at 70% 70%, rgba(255, 0, 110, 0.45), transparent 60%);
             filter: blur(8px);
             mix-blend-mode: screen;
-            animation: hakiFlare 1.8s ease-in-out infinite alternate;
+            animation: glowFlare 1.8s ease-in-out infinite alternate;
             z-index: 1;
         }
 
@@ -1606,7 +1606,7 @@
             50% { filter: brightness(1.25); }
         }
 
-        @keyframes hakiFlare {
+        @keyframes glowFlare {
             0% { transform: scale(0.88); opacity: 0.72; }
             100% { transform: scale(1.25); opacity: 1; }
         }
@@ -1676,7 +1676,7 @@
             <div class="loading-hex-ring outer"></div>
             <div class="loading-hex-ring middle"></div>
             <div class="loading-hex-ring inner"></div>
-            <div class="loading-haki-aura"></div>
+            <div class="loading-glow-aura"></div>
             <div class="loading-m-logo">M</div>
         </div>
         <div class="loading-text">LOADING LEGENDARY PORTFOLIO...</div>

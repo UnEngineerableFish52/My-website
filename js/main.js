@@ -30,6 +30,7 @@ if (prefersReducedMotion) {
         .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top)
         .forEach((el, index) => {
             el.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
+            // Reset stagger every 6 items so long pages keep a tight, energetic cadence.
             el.style.setProperty('--reveal-delay', `${(index % 6) * 70}ms`);
         });
 

@@ -642,10 +642,12 @@ footer p {
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(66px, 9.5vmin, 92px);
+            font-size: clamp(46px, 6.8vmin, 72px);
             font-weight: 900;
             line-height: 1;
             letter-spacing: 0.01em;
+            max-width: 72%;
+            text-align: center;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -881,7 +883,7 @@ footer p {
             }
             
             .m-logo-center {
-                font-size: 64px;
+                font-size: 52px;
             }
             
             .legendary-skip-btn {
@@ -921,7 +923,7 @@ footer p {
             clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
             background: rgba(0, 243, 255, 0.1);
             border: 3px solid var(--neon-blue);
-            animation: vesselPulse 3s ease-in-out infinite;
+            animation: vesselPulse 3s ease-in-out infinite, avatarIdleFloat 4.8s ease-in-out infinite;
             backdrop-filter: blur(5px);
         }
 
@@ -933,6 +935,15 @@ footer p {
             50% { 
                 box-shadow: 0 0 40px var(--neon-pink), inset 0 0 30px rgba(255, 0, 110, 0.2);
                 filter: brightness(1.2);
+            }
+        }
+
+        @keyframes avatarIdleFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
             }
         }
 
@@ -1320,6 +1331,10 @@ footer p {
     .legendary-avatar.spin-boost .ring-outer,
     .legendary-avatar.spin-boost .ring-middle,
     .legendary-avatar.spin-boost .ring-inner {
+        animation: none;
+    }
+
+    .legendary-avatar-container.active .hexagonal-vessel {
         animation: none;
     }
 }

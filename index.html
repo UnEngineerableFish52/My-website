@@ -2099,6 +2099,8 @@
     </footer>
 
     <script>
+        const LOADING_INTRO_DURATION_MS = 11000;
+
         /**
          * Recurring Effects System
          * Manages all periodic auto-triggering visual effects
@@ -3012,7 +3014,6 @@
                 try {
                     const overlay = document.getElementById('loadingOverlay');
                     const avatar = document.querySelector('.avatar-container');
-                    const loadingDuration = 11000;
                     
                     // Hide loading after delay
                     setTimeout(() => {
@@ -3032,7 +3033,7 @@
                         
                         // Note: Floating bubbles are initialized in main init()
                         // Matrix rain is also initialized there if enabled
-                    }, loadingDuration);
+                    }, LOADING_INTRO_DURATION_MS);
                 } catch (error) {
                     console.warn('Loading sequence error:', error);
                 }

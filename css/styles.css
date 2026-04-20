@@ -2510,15 +2510,15 @@ footer p {
     .intro-side-cascade,
     .legendary-avatar.spin-boost .m-logo-center,
     .logo-link:hover .logo-mark-svg {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-        opacity: 1 !important;
+        animation: none;
+        transition: none;
+        transform: none;
+        opacity: 1;
     }
 
     .legendary-avatar.spin-boost .ring-outer,
     .legendary-avatar.spin-boost .ring-middle,
     .legendary-avatar.spin-boost .ring-inner {
-        animation: none !important;
+        animation: none;
     }
 }

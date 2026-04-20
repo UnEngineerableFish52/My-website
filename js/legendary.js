@@ -338,12 +338,6 @@
                 ].forEach((item, index) => {
                     const node = document.getElementById(item.id);
                     if (!node) return;
-                    if (config.prefersReducedMotion) {
-                        node.style.opacity = '1';
-                        node.style.transform = 'none';
-                        node.style.animationDelay = '0ms';
-                        return;
-                    }
                     node.style.setProperty('--intro-side-offset', item.offset);
                     node.style.animationDelay = `${index * 160}ms`;
                     node.classList.add('intro-side-cascade');

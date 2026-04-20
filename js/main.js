@@ -20,34 +20,15 @@ document.addEventListener('click', (e) => {
     }
 });
 
-const revealElements = Array.from(document.querySelectorAll('.reveal-element'));
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
-if (prefersReducedMotion) {
-    revealElements.forEach((el) => el.classList.add('visible'));
-} else {
-    const revealElementsByTop = revealElements
-        .map((el) => ({ el, top: el.getBoundingClientRect().top }))
-        .sort((a, b) => a.top - b.top)
-        .map(({ el }) => el);
-
-    revealElementsByTop.forEach((el, index) => {
-            el.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
-            // Reset stagger every 6 items so long pages keep a tight, energetic cadence.
-            el.style.setProperty('--reveal-delay', `${(index % 6) * 70}ms`);
-        });
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-    revealElements.forEach((el) => observer.observe(el));
-}
+document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
 
 document.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth) * 100;

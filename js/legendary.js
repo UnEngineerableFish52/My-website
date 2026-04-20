@@ -324,6 +324,7 @@
                 phase2Start: getTimelinePosition(0.24),
                 phase3Start: getTimelinePosition(0.46),
                 spinSurge: getTimelinePosition(0.57),
+                spinSurgeFollowThrough: getTimelinePosition(0.63),
                 phase4Start: getTimelinePosition(0.68),
                 phase5Start: getTimelinePosition(0.82),
                 fadeStart: getTimelinePosition(0.93),
@@ -370,11 +371,14 @@
                     proSamking.style.opacity = '1';
                     const letters = proSamking.querySelectorAll('span');
                     letters.forEach((letter, index) => {
+                        const sideOffset = index % 2 === 0 ? '-30px' : '30px';
+                        letter.style.setProperty('--letter-side-offset', sideOffset);
+                        letter.style.setProperty('--letter-drop-offset', `${18 + (index * 1.4)}px`);
                         setTimeout(() => {
                             letter.classList.add('materialize');
                             soundSystem.play('letterForm');
                             setTimeout(() => {
-                                letter.style.animation = 'letterPulse 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+                                letter.style.animation = 'letterPulseRefined 0.75s cubic-bezier(0.22, 1, 0.36, 1)';
                             }, 450);
                         }, index * 75);
                     });
@@ -394,6 +398,7 @@
                     const avatar = document.getElementById('legendaryAvatar');
                     avatar.classList.add('active', 'spin-boost');
                     avatar.style.opacity = '1';
+                    avatar.style.willChange = 'transform, opacity';
 
                     const metheelegend = document.getElementById('metheelegendText');
                     metheelegend.classList.add('active');
@@ -417,13 +422,26 @@
                     }, 260);
                 }},
 
+                { time: timing.spinSurgeFollowThrough, action: () => {
+                    const avatar = document.getElementById('legendaryAvatar');
+                    avatar.style.transition = 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)';
+                    avatar.style.transform = 'scale(1.04)';
+                    setTimeout(() => {
+                        avatar.style.transform = 'scale(1)';
+                    }, 220);
+                }},
+
                 // Phase 4: Portal Activation
                 { time: timing.phase4Start, action: () => {
                     soundSystem.play('portalCharge');
 
                     const avatar = document.getElementById('legendaryAvatar');
-                    avatar.classList.remove('spin-boost');
+                    avatar.style.transition = 'opacity 260ms linear, transform 260ms cubic-bezier(0.22, 1, 0.36, 1)';
+                    avatar.style.transform = 'scale(0.98)';
                     avatar.style.opacity = '0';
+                    setTimeout(() => {
+                        avatar.classList.remove('spin-boost');
+                    }, 280);
                     document.getElementById('metheelegendText').style.opacity = '0';
                     document.getElementById('nebulaBg').style.opacity = '0';
 

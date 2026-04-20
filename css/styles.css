@@ -621,7 +621,7 @@ footer p {
             width: 160px;
             height: 160px;
             border: 2px solid white;
-            animation: pulsRing 3s ease-in-out infinite;
+            animation: pulseRing 3s ease-in-out infinite;
             box-shadow: 0 0 30px white;
         }
 
@@ -1322,7 +1322,7 @@ footer p {
             width: 160px;
             height: 160px;
             border: 2px solid white;
-            animation: pulsRing 3s ease-in-out infinite;
+            animation: pulseRing 3s ease-in-out infinite;
             box-shadow: 0 0 30px white;
         }
 
@@ -1856,7 +1856,7 @@ footer p {
             width: 160px;
             height: 160px;
             border: 2px solid white;
-            animation: pulsRing 3s ease-in-out infinite;
+            animation: pulseRing 3s ease-in-out infinite;
             box-shadow: 0 0 30px white;
         }
 
@@ -2379,6 +2379,7 @@ footer p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex: 0 0 44px;
     width: 44px;
     height: 44px;
     border-radius: 12px;
@@ -2395,8 +2396,11 @@ footer p {
 }
 
 .logo-mark-svg {
+    display: block;
     width: 100%;
     height: 100%;
+    shape-rendering: geometricPrecision;
+    transform: translateZ(0);
     filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.55)) drop-shadow(0 0 14px rgba(255, 0, 110, 0.35));
 }
 
@@ -2439,6 +2443,22 @@ footer p {
     will-change: transform, opacity;
 }
 
+.pro-samking span.materialize {
+    animation: letterMaterializeFast 460ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes letterMaterializeFast {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--letter-side-offset, 0), var(--letter-drop-offset, 22px), 0) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
 @keyframes introSideCascade {
     from {
         opacity: 0;
@@ -2451,15 +2471,15 @@ footer p {
 }
 
 .legendary-avatar.spin-boost .ring-outer {
-    animation-duration: 2.8s;
+    animation-duration: 2.35s;
 }
 
 .legendary-avatar.spin-boost .ring-middle {
-    animation-duration: 4.4s;
+    animation-duration: 3.7s;
 }
 
 .legendary-avatar.spin-boost .ring-inner {
-    animation-duration: 1.8s;
+    animation-duration: 1.55s;
 }
 
 .legendary-avatar.spin-boost .m-logo-center {
@@ -2474,6 +2494,17 @@ footer p {
     50% {
         transform: translate(-50%, -50%) scale(1.06);
         opacity: 1;
+    }
+}
+
+@keyframes letterPulseRefined {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.045);
+        opacity: 0.9;
     }
 }
 
@@ -2508,6 +2539,7 @@ footer p {
     .reveal-element,
     .reveal-element.visible,
     .intro-side-cascade,
+    .pro-samking span.materialize,
     .legendary-avatar.spin-boost .m-logo-center,
     .logo-link:hover .logo-mark-svg {
         animation: none;

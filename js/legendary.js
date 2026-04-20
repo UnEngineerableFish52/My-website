@@ -540,50 +540,54 @@
         let cursorX = 0, cursorY = 0;
         let dotX = 0, dotY = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        if (cursor && cursorDot) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
 
-        function animateCursor() {
-            const diffX = mouseX - cursorX;
-            const diffY = mouseY - cursorY;
-            cursorX += diffX * 0.1;
-            cursorY += diffY * 0.1;
+            function animateCursor() {
+                const diffX = mouseX - cursorX;
+                const diffY = mouseY - cursorY;
+                cursorX += diffX * 0.1;
+                cursorY += diffY * 0.1;
 
-            const diffDotX = mouseX - dotX;
-            const diffDotY = mouseY - dotY;
-            dotX += diffDotX * 0.2;
-            dotY += diffDotY * 0.2;
+                const diffDotX = mouseX - dotX;
+                const diffDotY = mouseY - dotY;
+                dotX += diffDotX * 0.2;
+                dotY += diffDotY * 0.2;
 
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            cursorDot.style.left = dotX + 'px';
-            cursorDot.style.top = dotY + 'px';
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                cursorDot.style.left = dotX + 'px';
+                cursorDot.style.top = dotY + 'px';
 
-            requestAnimationFrame(animateCursor);
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Cursor hover effects
+            const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.borderColor = 'var(--neon-pink)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.borderColor = 'var(--neon-blue)';
+                });
+            });
         }
-        animateCursor();
-
-        // Cursor hover effects
-        const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                cursor.style.borderColor = 'var(--neon-pink)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = 'var(--neon-blue)';
-            });
-        });
 
         // Scroll Progress
         window.addEventListener('scroll', () => {
             const scrollProgress = document.querySelector('.scroll-progress');
             const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercentage = (window.pageYOffset / scrollTotal) * 100;
-            scrollProgress.style.width = scrollPercentage + '%';
+            if (scrollProgress) {
+                scrollProgress.style.width = scrollPercentage + '%';
+            }
         });
 
         // Navigation Active State
@@ -659,7 +663,7 @@
 
         window.addEventListener('scroll', () => {
             const aboutSection = document.querySelector('#about');
-            if (!hasAnimated && elementInView(aboutSection, 70)) {
+            if (aboutSection && !hasAnimated && elementInView(aboutSection, 70)) {
                 animateCounters();
                 hasAnimated = true;
             }
@@ -669,6 +673,7 @@
         const backToTop = document.getElementById('backToTop');
 
         window.addEventListener('scroll', () => {
+            if (!backToTop) return;
             if (window.pageYOffset > 300) {
                 backToTop.classList.add('show');
             } else {
@@ -676,12 +681,14 @@
             }
         });
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        if (backToTop) {
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
-        });
+        }
 
         // Ripple Effect on Buttons
         document.querySelectorAll('.neon-btn').forEach(button => {
@@ -705,6 +712,7 @@
 
         // Enhanced Particle System
         const canvas = document.getElementById('particles-canvas');
+        if (canvas) {
         const ctx = canvas.getContext('2d');
         
         canvas.width = window.innerWidth;
@@ -811,9 +819,12 @@
         }
 
         animateParticles();
+        }
 
         // Form Submission Handler
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
             const submitBtn = document.querySelector('.submit-btn');
@@ -833,17 +844,20 @@
                 }, 2000);
             }, 1500);
         });
+        }
 
         // Add glitch effect randomly to title
         const heroTitle = document.querySelector('.hero-title');
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                heroTitle.style.animation = 'none';
-                setTimeout(() => {
-                    heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
-                }, 10);
-            }
-        }, 3000);
+        if (heroTitle) {
+            setInterval(() => {
+                if (Math.random() > 0.95) {
+                    heroTitle.style.animation = 'none';
+                    setTimeout(() => {
+                        heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
+                    }, 10);
+                }
+            }, 3000);
+        }
 
         // ========================================
         // SYNTHESIZED MUSIC ENGINE (FALLBACK)

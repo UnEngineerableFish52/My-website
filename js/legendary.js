@@ -28,7 +28,7 @@
             }
             
             if (config.prefersReducedMotion) {
-                config.introDuration = 1000; // 1 second for reduced motion
+                config.introDuration = 900;
             }
             
             // Skip intro if already seen (unless testing)
@@ -39,6 +39,29 @@
             
             // Lock scroll during intro
             document.body.style.overflow = 'hidden';
+
+            if (config.prefersReducedMotion) {
+                introContainer.classList.add('reduced-motion');
+                const minimalLogo = document.getElementById('faviconCenter');
+                const minimalText = document.getElementById('enterLegendText');
+
+                if (minimalLogo) {
+                    minimalLogo.style.opacity = '1';
+                    minimalLogo.style.transform = 'scale(1)';
+                    minimalLogo.style.filter = 'none';
+                }
+
+                if (minimalText) {
+                    minimalText.style.opacity = '1';
+                    minimalText.style.transform = 'translate(-50%, -50%)';
+                }
+
+                setTimeout(() => {
+                    completeIntro();
+                }, config.introDuration);
+
+                return;
+            }
             
             // Legendary Sound System
             class LegendarySoundSystem {
@@ -293,30 +316,56 @@
             }
             animateIntro();
             
+            const timelineDuration = 13000;
+            const getTimelinePosition = (ratio) => Math.round(timelineDuration * ratio);
+            const timing = {
+                whooshA: getTimelinePosition(0.08),
+                whooshB: getTimelinePosition(0.16),
+                phase2Start: getTimelinePosition(0.24),
+                phase3Start: getTimelinePosition(0.46),
+                spinSurge: getTimelinePosition(0.57),
+                phase4Start: getTimelinePosition(0.68),
+                phase5Start: getTimelinePosition(0.82),
+                fadeStart: getTimelinePosition(0.93),
+                complete: timelineDuration
+            };
+
+            const applySideCascade = () => {
+                [
+                    { id: 'text1', offset: '-90px' },
+                    { id: 'text2', offset: '90px' },
+                    { id: 'text3', offset: '-90px' }
+                ].forEach((item, index) => {
+                    const node = document.getElementById(item.id);
+                    if (!node) return;
+                    node.style.setProperty('--intro-side-offset', item.offset);
+                    node.style.animationDelay = `${index * 160}ms`;
+                    node.classList.add('intro-side-cascade');
+                });
+            };
+
             // Intro Timeline
             const timeline = [
-                // Phase 1: System Awakening (0-3s)
+                // Phase 1: System Awakening
                 { time: 0, action: () => {
                     soundSystem.init();
-                    soundSystem.play('bootBeep', 500);
+                    soundSystem.play('bootBeep', 240);
                     particlePhase = 1;
                     particles.forEach(p => p.phase = 1);
+                    applySideCascade();
                 }},
-                { time: 1000, action: () => soundSystem.play('whoosh') },
-                { time: 2000, action: () => soundSystem.play('whoosh') },
-                
-                // Phase 2: Identity Formation (3-6s)
-                { time: 3000, action: () => {
-                    // Show skip button
+                { time: timing.whooshA, action: () => soundSystem.play('whoosh') },
+                { time: timing.whooshB, action: () => soundSystem.play('whoosh') },
+
+                // Phase 2: Identity Formation
+                { time: timing.phase2Start, action: () => {
                     skipBtn.classList.add('show');
-                    
-                    // Hide phase 1 elements
+
                     document.getElementById('faviconCenter').style.display = 'none';
                     document.getElementById('text1').style.display = 'none';
                     document.getElementById('text2').style.display = 'none';
                     document.getElementById('text3').style.display = 'none';
-                    
-                    // Materialize PRO SAMKING
+
                     const proSamking = document.getElementById('proSamking');
                     proSamking.style.opacity = '1';
                     const letters = proSamking.querySelectorAll('span');
@@ -325,76 +374,77 @@
                             letter.classList.add('materialize');
                             soundSystem.play('letterForm');
                             setTimeout(() => {
-                                letter.style.animation = 'letterPulse 1s ease-in-out';
-                            }, 500);
-                        }, index * 100);
+                                letter.style.animation = 'letterPulse 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+                            }, 450);
+                        }, index * 75);
                     });
-                    
-                    // Change background color
+
                     introContainer.style.background = 'linear-gradient(135deg, #1a0a2e, #0f3057)';
-                    introContainer.style.transition = 'background 3s';
+                    introContainer.style.transition = 'background 1200ms cubic-bezier(0.22, 1, 0.36, 1)';
                 }},
-                
-                // Phase 3: METHEELEGEND Reveal (6-9s)
-                { time: 6000, action: () => {
+
+                // Phase 3: METHEELEGEND Reveal
+                { time: timing.phase3Start, action: () => {
                     soundSystem.play('bassDrop');
-                    
-                    // Hide PRO SAMKING
-                    document.getElementById('proSamking').style.opacity = '0';
-                    document.getElementById('proSamking').style.transition = 'opacity 0.5s';
-                    
-                    // Show avatar and activate it
+
+                    const proSamking = document.getElementById('proSamking');
+                    proSamking.style.opacity = '0';
+                    proSamking.style.transition = 'opacity 350ms linear';
+
                     const avatar = document.getElementById('legendaryAvatar');
-                    avatar.classList.add('active');
+                    avatar.classList.add('active', 'spin-boost');
                     avatar.style.opacity = '1';
-                    
-                    // Show METHEELEGEND text
+
                     const metheelegend = document.getElementById('metheelegendText');
                     metheelegend.classList.add('active');
-                    
-                    // Activate nebula background
+
                     const nebula = document.getElementById('nebulaBg');
                     nebula.classList.add('active');
-                    
-                    // Update particles to orbit
+
                     particlePhase = 3;
                     particles.forEach(p => {
                         p.phase = 3;
                         p.reset();
                     });
                 }},
-                
-                // Phase 4: Portal Activation (9-11s)
-                { time: 9000, action: () => {
+
+                { time: timing.spinSurge, action: () => {
+                    const avatar = document.getElementById('legendaryAvatar');
+                    avatar.style.transition = 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)';
+                    avatar.style.transform = 'scale(1.07)';
+                    setTimeout(() => {
+                        avatar.style.transform = 'scale(1)';
+                    }, 260);
+                }},
+
+                // Phase 4: Portal Activation
+                { time: timing.phase4Start, action: () => {
                     soundSystem.play('portalCharge');
-                    
-                    // Hide avatar and text
-                    document.getElementById('legendaryAvatar').style.opacity = '0';
+
+                    const avatar = document.getElementById('legendaryAvatar');
+                    avatar.classList.remove('spin-boost');
+                    avatar.style.opacity = '0';
                     document.getElementById('metheelegendText').style.opacity = '0';
                     document.getElementById('nebulaBg').style.opacity = '0';
-                    
-                    // Show portal
+
                     const portal = document.getElementById('hexagonalPortal');
                     portal.classList.add('active');
-                    
-                    // Reality tear effect
+
                     const tear = document.getElementById('realityTear');
                     tear.classList.add('active');
                 }},
-                
-                // Phase 5: Dimensional Entry (11-13s)
-                { time: 11000, action: () => {
-                    // Show ENTER THE LEGEND
+
+                // Phase 5: Dimensional Entry
+                { time: timing.phase5Start, action: () => {
                     const enterText = document.getElementById('enterLegendText');
                     enterText.classList.add('active');
                 }},
-                
-                { time: 12000, action: () => {
-                    // Begin transition
+
+                { time: timing.fadeStart, action: () => {
                     introContainer.style.opacity = '0';
                 }},
-                
-                { time: 13000, action: () => {
+
+                { time: timing.complete, action: () => {
                     soundSystem.play('successChime');
                     completeIntro();
                 }}

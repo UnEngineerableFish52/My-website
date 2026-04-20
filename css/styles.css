@@ -2371,3 +2371,154 @@ footer p {
         /* ========================================
            END AUDIO CONTROL PANEL
            ======================================== */
+
+/* ========================================
+   TARGETED ENHANCEMENTS: LOGO + TRANSITIONS
+   ======================================== */
+.logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    text-decoration: none;
+    outline: none;
+}
+
+.logo-mark {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-mark-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.55)) drop-shadow(0 0 14px rgba(255, 0, 110, 0.35));
+}
+
+.logo-link:hover .logo-mark-svg {
+    transform: translateZ(0) scale(1.04);
+    transition: transform 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.logo-link:focus-visible {
+    box-shadow: 0 0 0 2px rgba(10, 10, 15, 0.95), 0 0 0 4px rgba(0, 243, 255, 0.95);
+}
+
+.reveal-element {
+    opacity: 0;
+    transform: translate3d(var(--reveal-x, 0), 34px, 0);
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: transform, opacity;
+}
+
+.reveal-element.reveal-left {
+    --reveal-x: -44px;
+}
+
+.reveal-element.reveal-right {
+    --reveal-x: 44px;
+}
+
+.reveal-element.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.intro-side-cascade {
+    opacity: 0;
+    transform: translate3d(var(--intro-side-offset, 0), 26px, 0);
+    animation: introSideCascade 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes introSideCascade {
+    from {
+        opacity: 0;
+        transform: translate3d(var(--intro-side-offset, 0), 26px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.legendary-avatar.spin-boost .ring-outer {
+    animation-duration: 2.8s;
+}
+
+.legendary-avatar.spin-boost .ring-middle {
+    animation-duration: 4.4s;
+}
+
+.legendary-avatar.spin-boost .ring-inner {
+    animation-duration: 1.8s;
+}
+
+.legendary-avatar.spin-boost .m-logo-center {
+    animation: logoCorePulse 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes logoCorePulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.92;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.06);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-link {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .logo-mark {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.legendary-intro.reduced-motion #intro-canvas,
+.legendary-intro.reduced-motion #matrix-rain,
+.legendary-intro.reduced-motion #hexGrid,
+.legendary-intro.reduced-motion #nebulaBg,
+.legendary-intro.reduced-motion #legendaryAvatar,
+.legendary-intro.reduced-motion #hexagonalPortal,
+.legendary-intro.reduced-motion #realityTear,
+.legendary-intro.reduced-motion #proSamking,
+.legendary-intro.reduced-motion #text1,
+.legendary-intro.reduced-motion #text2,
+.legendary-intro.reduced-motion #text3 {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-element,
+    .reveal-element.visible,
+    .intro-side-cascade,
+    .legendary-avatar.spin-boost .m-logo-center,
+    .logo-link:hover .logo-mark-svg {
+        animation: none;
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+
+    .legendary-avatar.spin-boost .ring-outer,
+    .legendary-avatar.spin-boost .ring-middle,
+    .legendary-avatar.spin-boost .ring-inner {
+        animation: none;
+    }
+}

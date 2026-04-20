@@ -8,11 +8,6 @@
             const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
             const introContainer = document.getElementById('legendaryIntro');
             const skipBtn = document.getElementById('skipIntroBtn');
-            let introAnimationFrame = null;
-            let introAnimationRunning = false;
-            let resizeHandlerBound = false;
-            let introHasCompleted = false;
-            let introFailsafeTimer = null;
             
             // Configuration
             const config = {
@@ -21,20 +16,6 @@
                 isLowEnd: navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4,
                 prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
             };
-
-            function stopIntroRuntime() {
-                introAnimationRunning = false;
-
-                if (introAnimationFrame !== null) {
-                    cancelAnimationFrame(introAnimationFrame);
-                    introAnimationFrame = null;
-                }
-
-                if (resizeHandlerBound) {
-                    window.removeEventListener('resize', resizeCanvases);
-                    resizeHandlerBound = false;
-                }
-            }
             
             // Adjust for mobile and reduced motion
             if (config.isMobile) {
@@ -47,7 +28,7 @@
             }
             
             if (config.prefersReducedMotion) {
-                config.introDuration = 900;
+                config.introDuration = 1000; // 1 second for reduced motion
             }
             
             // Skip intro if already seen (unless testing)
@@ -58,29 +39,6 @@
             
             // Lock scroll during intro
             document.body.style.overflow = 'hidden';
-
-            if (config.prefersReducedMotion) {
-                introContainer.classList.add('reduced-motion');
-                const minimalLogo = document.getElementById('faviconCenter');
-                const minimalText = document.getElementById('enterLegendText');
-
-                if (minimalLogo) {
-                    minimalLogo.style.opacity = '1';
-                    minimalLogo.style.transform = 'scale(1)';
-                    minimalLogo.style.filter = 'none';
-                }
-
-                if (minimalText) {
-                    minimalText.style.opacity = '1';
-                    minimalText.style.transform = 'translate(-50%, -50%)';
-                }
-
-                setTimeout(() => {
-                    completeIntro();
-                }, config.introDuration);
-
-                return;
-            }
             
             // Legendary Sound System
             class LegendarySoundSystem {
@@ -305,7 +263,6 @@
             }
             resizeCanvases();
             window.addEventListener('resize', resizeCanvases);
-            resizeHandlerBound = true;
             
             // Initialize systems
             const particles = [];
@@ -320,10 +277,6 @@
             
             // Animation loop for particles and matrix
             function animateIntro() {
-                if (!introAnimationRunning) {
-                    return;
-                }
-
                 // Clear canvas
                 ctx.clearRect(0, 0, introCanvas.width, introCanvas.height);
                 
@@ -336,158 +289,112 @@
                 // Draw matrix rain
                 matrixRain.draw();
                 
-                introAnimationFrame = requestAnimationFrame(animateIntro);
+                requestAnimationFrame(animateIntro);
             }
-            introAnimationRunning = true;
             animateIntro();
             
-            const timelineDuration = 13000;
-            const getTimelinePosition = (ratio) => Math.round(timelineDuration * ratio);
-            const timing = {
-                whooshA: getTimelinePosition(0.08),
-                whooshB: getTimelinePosition(0.16),
-                phase2Start: getTimelinePosition(0.24),
-                phase3Start: getTimelinePosition(0.46),
-                spinSurge: getTimelinePosition(0.57),
-                spinSurgeFollowThrough: getTimelinePosition(0.63),
-                phase4Start: getTimelinePosition(0.68),
-                phase5Start: getTimelinePosition(0.82),
-                fadeStart: getTimelinePosition(0.93),
-                complete: timelineDuration
-            };
-
-            const applySideCascade = () => {
-                [
-                    { id: 'text1', offset: '-90px' },
-                    { id: 'text2', offset: '90px' },
-                    { id: 'text3', offset: '-90px' }
-                ].forEach((item, index) => {
-                    const node = document.getElementById(item.id);
-                    if (!node) return;
-                    node.style.setProperty('--intro-side-offset', item.offset);
-                    node.style.animationDelay = `${index * 160}ms`;
-                    node.classList.add('intro-side-cascade');
-                });
-            };
-
             // Intro Timeline
             const timeline = [
-                // Phase 1: System Awakening
+                // Phase 1: System Awakening (0-3s)
                 { time: 0, action: () => {
                     soundSystem.init();
-                    soundSystem.play('bootBeep', 240);
+                    soundSystem.play('bootBeep', 500);
                     particlePhase = 1;
                     particles.forEach(p => p.phase = 1);
-                    applySideCascade();
                 }},
-                { time: timing.whooshA, action: () => soundSystem.play('whoosh') },
-                { time: timing.whooshB, action: () => soundSystem.play('whoosh') },
-
-                // Phase 2: Identity Formation
-                { time: timing.phase2Start, action: () => {
+                { time: 1000, action: () => soundSystem.play('whoosh') },
+                { time: 2000, action: () => soundSystem.play('whoosh') },
+                
+                // Phase 2: Identity Formation (3-6s)
+                { time: 3000, action: () => {
+                    // Show skip button
                     skipBtn.classList.add('show');
-
+                    
+                    // Hide phase 1 elements
                     document.getElementById('faviconCenter').style.display = 'none';
                     document.getElementById('text1').style.display = 'none';
                     document.getElementById('text2').style.display = 'none';
                     document.getElementById('text3').style.display = 'none';
-
+                    
+                    // Materialize PRO SAMKING
                     const proSamking = document.getElementById('proSamking');
                     proSamking.style.opacity = '1';
                     const letters = proSamking.querySelectorAll('span');
                     letters.forEach((letter, index) => {
-                        const sideOffset = index % 2 === 0 ? '-30px' : '30px';
-                        letter.style.setProperty('--letter-side-offset', sideOffset);
-                        letter.style.setProperty('--letter-drop-offset', `${18 + (index * 1.4)}px`);
                         setTimeout(() => {
                             letter.classList.add('materialize');
                             soundSystem.play('letterForm');
                             setTimeout(() => {
-                                letter.style.animation = 'letterPulseRefined 0.75s cubic-bezier(0.22, 1, 0.36, 1)';
-                            }, 450);
-                        }, index * 75);
+                                letter.style.animation = 'letterPulse 1s ease-in-out';
+                            }, 500);
+                        }, index * 100);
                     });
-
+                    
+                    // Change background color
                     introContainer.style.background = 'linear-gradient(135deg, #1a0a2e, #0f3057)';
-                    introContainer.style.transition = 'background 1200ms cubic-bezier(0.22, 1, 0.36, 1)';
+                    introContainer.style.transition = 'background 3s';
                 }},
-
-                // Phase 3: METHEELEGEND Reveal
-                { time: timing.phase3Start, action: () => {
+                
+                // Phase 3: METHEELEGEND Reveal (6-9s)
+                { time: 6000, action: () => {
                     soundSystem.play('bassDrop');
-
-                    const proSamking = document.getElementById('proSamking');
-                    proSamking.style.opacity = '0';
-                    proSamking.style.transition = 'opacity 350ms linear';
-
+                    
+                    // Hide PRO SAMKING
+                    document.getElementById('proSamking').style.opacity = '0';
+                    document.getElementById('proSamking').style.transition = 'opacity 0.5s';
+                    
+                    // Show avatar and activate it
                     const avatar = document.getElementById('legendaryAvatar');
-                    avatar.classList.add('active', 'spin-boost');
+                    avatar.classList.add('active');
                     avatar.style.opacity = '1';
-                    avatar.style.willChange = 'transform, opacity';
-
+                    
+                    // Show METHEELEGEND text
                     const metheelegend = document.getElementById('metheelegendText');
                     metheelegend.classList.add('active');
-
+                    
+                    // Activate nebula background
                     const nebula = document.getElementById('nebulaBg');
                     nebula.classList.add('active');
-
+                    
+                    // Update particles to orbit
                     particlePhase = 3;
                     particles.forEach(p => {
                         p.phase = 3;
                         p.reset();
                     });
                 }},
-
-                { time: timing.spinSurge, action: () => {
-                    const avatar = document.getElementById('legendaryAvatar');
-                    avatar.style.transition = 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)';
-                    avatar.style.transform = 'scale(1.07)';
-                    setTimeout(() => {
-                        avatar.style.transform = 'scale(1)';
-                    }, 260);
-                }},
-
-                { time: timing.spinSurgeFollowThrough, action: () => {
-                    const avatar = document.getElementById('legendaryAvatar');
-                    avatar.style.transition = 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)';
-                    avatar.style.transform = 'scale(1.04)';
-                    setTimeout(() => {
-                        avatar.style.transform = 'scale(1)';
-                    }, 220);
-                }},
-
-                // Phase 4: Portal Activation
-                { time: timing.phase4Start, action: () => {
+                
+                // Phase 4: Portal Activation (9-11s)
+                { time: 9000, action: () => {
                     soundSystem.play('portalCharge');
-
-                    const avatar = document.getElementById('legendaryAvatar');
-                    avatar.style.transition = 'opacity 260ms linear, transform 260ms cubic-bezier(0.22, 1, 0.36, 1)';
-                    avatar.style.transform = 'scale(0.98)';
-                    avatar.style.opacity = '0';
-                    setTimeout(() => {
-                        avatar.classList.remove('spin-boost');
-                    }, 280);
+                    
+                    // Hide avatar and text
+                    document.getElementById('legendaryAvatar').style.opacity = '0';
                     document.getElementById('metheelegendText').style.opacity = '0';
                     document.getElementById('nebulaBg').style.opacity = '0';
-
+                    
+                    // Show portal
                     const portal = document.getElementById('hexagonalPortal');
                     portal.classList.add('active');
-
+                    
+                    // Reality tear effect
                     const tear = document.getElementById('realityTear');
                     tear.classList.add('active');
                 }},
-
-                // Phase 5: Dimensional Entry
-                { time: timing.phase5Start, action: () => {
+                
+                // Phase 5: Dimensional Entry (11-13s)
+                { time: 11000, action: () => {
+                    // Show ENTER THE LEGEND
                     const enterText = document.getElementById('enterLegendText');
                     enterText.classList.add('active');
                 }},
-
-                { time: timing.fadeStart, action: () => {
+                
+                { time: 12000, action: () => {
+                    // Begin transition
                     introContainer.style.opacity = '0';
                 }},
-
-                { time: timing.complete, action: () => {
+                
+                { time: 13000, action: () => {
                     soundSystem.play('successChime');
                     completeIntro();
                 }}
@@ -497,13 +404,6 @@
             timeline.forEach(event => {
                 setTimeout(event.action, event.time);
             });
-
-            // Failsafe: never allow intro overlay to block the site indefinitely
-            introFailsafeTimer = setTimeout(() => {
-                if (!introHasCompleted) {
-                    skipToPortfolio();
-                }
-            }, config.introDuration + 3000);
             
             // Skip button functionality
             skipBtn.addEventListener('click', () => {
@@ -512,15 +412,6 @@
             });
             
             function skipToPortfolio() {
-                if (introHasCompleted) {
-                    return;
-                }
-                introHasCompleted = true;
-                stopIntroRuntime();
-                if (introFailsafeTimer) {
-                    clearTimeout(introFailsafeTimer);
-                    introFailsafeTimer = null;
-                }
                 introContainer.classList.add('hidden');
                 skipBtn.style.display = 'none';
                 document.body.style.overflow = '';
@@ -557,54 +448,50 @@
         let cursorX = 0, cursorY = 0;
         let dotX = 0, dotY = 0;
 
-        if (cursor && cursorDot) {
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-            function animateCursor() {
-                const diffX = mouseX - cursorX;
-                const diffY = mouseY - cursorY;
-                cursorX += diffX * 0.1;
-                cursorY += diffY * 0.1;
+        function animateCursor() {
+            const diffX = mouseX - cursorX;
+            const diffY = mouseY - cursorY;
+            cursorX += diffX * 0.1;
+            cursorY += diffY * 0.1;
 
-                const diffDotX = mouseX - dotX;
-                const diffDotY = mouseY - dotY;
-                dotX += diffDotX * 0.2;
-                dotY += diffDotY * 0.2;
+            const diffDotX = mouseX - dotX;
+            const diffDotY = mouseY - dotY;
+            dotX += diffDotX * 0.2;
+            dotY += diffDotY * 0.2;
 
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                cursorDot.style.left = dotX + 'px';
-                cursorDot.style.top = dotY + 'px';
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            cursorDot.style.left = dotX + 'px';
+            cursorDot.style.top = dotY + 'px';
 
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-
-            // Cursor hover effects
-            const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'scale(2)';
-                    cursor.style.borderColor = 'var(--neon-pink)';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'scale(1)';
-                    cursor.style.borderColor = 'var(--neon-blue)';
-                });
-            });
+            requestAnimationFrame(animateCursor);
         }
+        animateCursor();
+
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                cursor.style.borderColor = 'var(--neon-pink)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = 'var(--neon-blue)';
+            });
+        });
 
         // Scroll Progress
         window.addEventListener('scroll', () => {
             const scrollProgress = document.querySelector('.scroll-progress');
             const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercentage = (window.pageYOffset / scrollTotal) * 100;
-            if (scrollProgress) {
-                scrollProgress.style.width = scrollPercentage + '%';
-            }
+            scrollProgress.style.width = scrollPercentage + '%';
         });
 
         // Navigation Active State
@@ -680,7 +567,7 @@
 
         window.addEventListener('scroll', () => {
             const aboutSection = document.querySelector('#about');
-            if (aboutSection && !hasAnimated && elementInView(aboutSection, 70)) {
+            if (!hasAnimated && elementInView(aboutSection, 70)) {
                 animateCounters();
                 hasAnimated = true;
             }
@@ -690,7 +577,6 @@
         const backToTop = document.getElementById('backToTop');
 
         window.addEventListener('scroll', () => {
-            if (!backToTop) return;
             if (window.pageYOffset > 300) {
                 backToTop.classList.add('show');
             } else {
@@ -698,14 +584,12 @@
             }
         });
 
-        if (backToTop) {
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-        }
+        });
 
         // Ripple Effect on Buttons
         document.querySelectorAll('.neon-btn').forEach(button => {
@@ -729,120 +613,115 @@
 
         // Enhanced Particle System
         const canvas = document.getElementById('particles-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-                window.addEventListener('resize', () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                });
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
-                        this.size = Math.random() * 3 + 1;
-                        this.speedX = Math.random() * 1 - 0.5;
-                        this.speedY = Math.random() * 1 - 0.5;
-                        this.color = this.randomColor();
-                    }
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = this.randomColor();
+            }
 
-                    randomColor() {
-                        const colors = ['#00f3ff', '#ff006e', '#8b00ff', '#39ff14', '#ff6600'];
-                        return colors[Math.floor(Math.random() * colors.length)];
-                    }
+            randomColor() {
+                const colors = ['#00f3ff', '#ff006e', '#8b00ff', '#39ff14', '#ff6600'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
 
-                    update() {
-                        this.x += this.speedX;
-                        this.y += this.speedY;
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
 
-                        if (this.x > canvas.width) this.x = 0;
-                        if (this.x < 0) this.x = canvas.width;
-                        if (this.y > canvas.height) this.y = 0;
-                        if (this.y < 0) this.y = canvas.height;
-                    }
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
 
-                    draw() {
-                        ctx.fillStyle = this.color;
-                        ctx.shadowBlur = 10;
-                        ctx.shadowColor = this.color;
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-
-                const particles = [];
-                const particleCount = window.innerWidth < 768 ? 30 : 60;
-
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-
-                let mouseParticleX = 0;
-                let mouseParticleY = 0;
-
-                canvas.addEventListener('mousemove', (e) => {
-                    mouseParticleX = e.clientX;
-                    mouseParticleY = e.clientY;
-                });
-
-                function connectParticles() {
-                    for (let i = 0; i < particles.length; i++) {
-                        for (let j = i + 1; j < particles.length; j++) {
-                            const dx = particles[i].x - particles[j].x;
-                            const dy = particles[i].y - particles[j].y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-
-                            if (distance < 150) {
-                                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 150})`;
-                                ctx.lineWidth = 0.5;
-                                ctx.beginPath();
-                                ctx.moveTo(particles[i].x, particles[i].y);
-                                ctx.lineTo(particles[j].x, particles[j].y);
-                                ctx.stroke();
-                            }
-                        }
-
-                        // Connect to mouse
-                        const dxMouse = particles[i].x - mouseParticleX;
-                        const dyMouse = particles[i].y - mouseParticleY;
-                        const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
-                        if (distanceMouse < 150) {
-                            ctx.strokeStyle = `rgba(255, 0, 110, ${1 - distanceMouse / 150})`;
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(mouseParticleX, mouseParticleY);
-                            ctx.stroke();
-                        }
-                    }
-                }
-
-                function animateParticles() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    particles.forEach(particle => {
-                        particle.update();
-                        particle.draw();
-                    });
-
-                    connectParticles();
-                    requestAnimationFrame(animateParticles);
-                }
-
-                animateParticles();
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
+        const particles = [];
+        const particleCount = window.innerWidth < 768 ? 30 : 60;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        let mouseParticleX = 0;
+        let mouseParticleY = 0;
+
+        canvas.addEventListener('mousemove', (e) => {
+            mouseParticleX = e.clientX;
+            mouseParticleY = e.clientY;
+        });
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 150})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect to mouse
+                const dxMouse = particles[i].x - mouseParticleX;
+                const dyMouse = particles[i].y - mouseParticleY;
+                const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+
+                if (distanceMouse < 150) {
+                    ctx.strokeStyle = `rgba(255, 0, 110, ${1 - distanceMouse / 150})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(mouseParticleX, mouseParticleY);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
         // Form Submission Handler
-        const contactForm = document.querySelector('.contact-form');
-        if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const submitBtn = document.querySelector('.submit-btn');
@@ -862,20 +741,17 @@
                 }, 2000);
             }, 1500);
         });
-        }
 
         // Add glitch effect randomly to title
         const heroTitle = document.querySelector('.hero-title');
-        if (heroTitle) {
-            setInterval(() => {
-                if (Math.random() > 0.95) {
-                    heroTitle.style.animation = 'none';
-                    setTimeout(() => {
-                        heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
-                    }, 10);
-                }
-            }, 3000);
-        }
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                heroTitle.style.animation = 'none';
+                setTimeout(() => {
+                    heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
+                }, 10);
+            }
+        }, 3000);
 
         // ========================================
         // SYNTHESIZED MUSIC ENGINE (FALLBACK)
@@ -1489,35 +1365,33 @@
             icon.addEventListener('click', () => interactiveSounds.play('pop'));
         });
         
-        // Mute button functionality (legacy markup support)
+        // Mute button functionality
         const muteBtn = document.getElementById('muteBtn');
-        if (muteBtn) {
-            const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
-            const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
-
-            // Set initial state
-            if (musicSystem.isMuted) {
-                muteBtn.classList.add('muted');
-                if (unmutedIcon) unmutedIcon.style.display = 'none';
-                if (mutedIcon) mutedIcon.style.display = 'block';
-            }
-
-            muteBtn.addEventListener('click', () => {
-                const isMuted = musicSystem.toggleMute();
-
-                if (isMuted) {
-                    muteBtn.classList.add('muted');
-                    if (unmutedIcon) unmutedIcon.style.display = 'none';
-                    if (mutedIcon) mutedIcon.style.display = 'block';
-                } else {
-                    muteBtn.classList.remove('muted');
-                    if (unmutedIcon) unmutedIcon.style.display = 'block';
-                    if (mutedIcon) mutedIcon.style.display = 'none';
-                }
-
-                interactiveSounds.play('toggleOn');
-            });
+        const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
+        const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
+        
+        // Set initial state
+        if (musicSystem.isMuted) {
+            muteBtn.classList.add('muted');
+            unmutedIcon.style.display = 'none';
+            mutedIcon.style.display = 'block';
         }
+        
+        muteBtn.addEventListener('click', () => {
+            const isMuted = musicSystem.toggleMute();
+            
+            if (isMuted) {
+                muteBtn.classList.add('muted');
+                unmutedIcon.style.display = 'none';
+                mutedIcon.style.display = 'block';
+            } else {
+                muteBtn.classList.remove('muted');
+                unmutedIcon.style.display = 'block';
+                mutedIcon.style.display = 'none';
+            }
+            
+            interactiveSounds.play('toggleOn');
+        });
 
         // ========================================
         // ANIMATED CREDITS SYSTEM

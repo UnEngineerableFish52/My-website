@@ -3223,10 +3223,10 @@
                         // Matrix rain is also initialized there if enabled
                     }, 11000);
 
-                    // Bring center emblem in after intro (within 9-13s request window)
+                    // Bring center emblem in right as the loading veil clears.
                     setTimeout(() => {
                         centerEmblem?.classList.add('active');
-                    }, 13000);
+                    }, 11000);
 
                     // Start recurring site effects after intro sequence completes
                     setTimeout(() => {
@@ -3235,7 +3235,7 @@
                         }
                     }, 12500);
 
-                    // Recursive aura burst every 6s on top of 4s idle pulse
+                    // Recursive aura burst every 6s on top of 4s idle pulse for a stronger periodic haki-like surge.
                     const auraPulseIntervalId = setInterval(() => {
                         if (!centerAura) return;
                         centerAura.classList.remove('aura-recursive');
@@ -3312,7 +3312,7 @@
         const triggerNavSidewaysAnimation = () => {
             if (!navSidewaysWave) return;
             navSidewaysWave.classList.remove('run');
-            // Force reflow so the same animation class can replay immediately.
+            // Force reflow so the same animation class can replay immediately, even during rapid section changes.
             void navSidewaysWave.offsetWidth;
             navSidewaysWave.classList.add('run');
         };
@@ -3325,7 +3325,7 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - 200) {
+                if (window.scrollY >= sectionTop - 200) {
                     current = section.getAttribute('id');
                 }
             });

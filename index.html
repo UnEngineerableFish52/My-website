@@ -3202,6 +3202,7 @@
                     const avatar = document.querySelector('.avatar-container');
                     const centerEmblem = document.getElementById('centerLegendaryEmblem');
                     const centerAura = document.getElementById('centerLegendaryAura');
+                    // 11s aligns with the extended intro timeline; recurring effects start 1.5s later to keep spawn events in the requested 9–13s window.
                     const introCompleteDelay = 11000;
                     const recurringSpawnDelay = 12500;
                     
@@ -3241,7 +3242,7 @@
                     const auraPulseIntervalId = setInterval(() => {
                         if (!centerAura) return;
                         centerAura.classList.remove('aura-recursive');
-                        // Force reflow so the CSS animation can restart on each cycle.
+                        // Force browser reflow so the CSS animation can restart on each cycle.
                         void centerAura.offsetWidth;
                         centerAura.classList.add('aura-recursive');
                     }, 6000);
@@ -3329,7 +3330,8 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (window.scrollY >= sectionTop - 200) {
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
                     current = section.getAttribute('id');
                 }
             });

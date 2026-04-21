@@ -3202,9 +3202,10 @@
                     const avatar = document.querySelector('.avatar-container');
                     const centerEmblem = document.getElementById('centerLegendaryEmblem');
                     const centerAura = document.getElementById('centerLegendaryAura');
-                    // 11s aligns with the extended intro timeline; recurring effects start 1.5s later to keep spawn events in the requested 9–13s window.
+                    // 11s aligns with the extended intro timeline; recurring effects start 1.5s later so visual spawns begin immediately after intro completion.
                     const introCompleteDelay = 11000;
                     const recurringSpawnDelay = 12500;
+                    const auraPulseInterval = 6000;
                     
                     // Hide loading after delay
                     setTimeout(() => {
@@ -3245,7 +3246,7 @@
                         // Force browser reflow so the CSS animation can restart on each cycle.
                         void centerAura.offsetWidth;
                         centerAura.classList.add('aura-recursive');
-                    }, 6000);
+                    }, auraPulseInterval);
                     window.addEventListener('beforeunload', () => clearInterval(auraPulseIntervalId), { once: true });
                     window.addEventListener('pagehide', () => clearInterval(auraPulseIntervalId), { once: true });
                 } catch (error) {
@@ -3311,6 +3312,8 @@
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
         const navSidewaysWave = document.getElementById('navSidewaysWave');
+        const SECTION_SCROLL_THRESHOLD = 200;
+        const NAV_SWEEP_INTERVAL_MS = 6000;
         let activeSectionId = 'hero';
 
         const triggerNavSidewaysAnimation = () => {
@@ -3322,7 +3325,7 @@
         };
 
         triggerNavSidewaysAnimation();
-        const navSweepIntervalId = setInterval(triggerNavSidewaysAnimation, 6000);
+        const navSweepIntervalId = setInterval(triggerNavSidewaysAnimation, NAV_SWEEP_INTERVAL_MS);
         window.addEventListener('beforeunload', () => clearInterval(navSweepIntervalId), { once: true });
         window.addEventListener('pagehide', () => clearInterval(navSweepIntervalId), { once: true });
 
@@ -3331,7 +3334,10 @@
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+                if (
+                    window.scrollY >= sectionTop - SECTION_SCROLL_THRESHOLD &&
+                    window.scrollY < sectionTop + sectionHeight - SECTION_SCROLL_THRESHOLD
+                ) {
                     current = section.getAttribute('id');
                 }
             });

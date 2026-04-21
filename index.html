@@ -3202,6 +3202,8 @@
                     const avatar = document.querySelector('.avatar-container');
                     const centerEmblem = document.getElementById('centerLegendaryEmblem');
                     const centerAura = document.getElementById('centerLegendaryAura');
+                    const introCompleteDelay = 11000;
+                    const recurringSpawnDelay = 12500;
                     
                     // Hide loading after delay
                     setTimeout(() => {
@@ -3221,19 +3223,19 @@
                         
                         // Note: Floating bubbles are initialized in main init()
                         // Matrix rain is also initialized there if enabled
-                    }, 11000);
+                    }, introCompleteDelay);
 
                     // Bring center emblem in right as the loading veil clears.
                     setTimeout(() => {
                         centerEmblem?.classList.add('active');
-                    }, 11000);
+                    }, introCompleteDelay);
 
                     // Start recurring site effects after intro sequence completes
                     setTimeout(() => {
                         if (this.state.recurringEffects && !this.state.prefersReducedMotion) {
                             this.startAllEffects();
                         }
-                    }, 12500);
+                    }, recurringSpawnDelay);
 
                     // Recursive aura burst every 6s on top of 4s idle pulse for a stronger periodic haki-like surge.
                     const auraPulseIntervalId = setInterval(() => {
@@ -3244,6 +3246,7 @@
                         centerAura.classList.add('aura-recursive');
                     }, 6000);
                     window.addEventListener('beforeunload', () => clearInterval(auraPulseIntervalId), { once: true });
+                    window.addEventListener('pagehide', () => clearInterval(auraPulseIntervalId), { once: true });
                 } catch (error) {
                     console.warn('Loading sequence error:', error);
                 }
@@ -3320,6 +3323,7 @@
         triggerNavSidewaysAnimation();
         const navSweepIntervalId = setInterval(triggerNavSidewaysAnimation, 6000);
         window.addEventListener('beforeunload', () => clearInterval(navSweepIntervalId), { once: true });
+        window.addEventListener('pagehide', () => clearInterval(navSweepIntervalId), { once: true });
 
         window.addEventListener('scroll', () => {
             let current = '';

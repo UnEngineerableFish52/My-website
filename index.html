@@ -3244,7 +3244,7 @@
                         if (!centerAura) return;
                         centerAura.classList.remove('aura-recursive');
                         // Force browser reflow so the CSS animation can restart on each cycle.
-                        void centerAura.offsetWidth;
+                        void centerAura.offsetWidth; // `void` intentionally discards value while triggering reflow.
                         centerAura.classList.add('aura-recursive');
                     }, auraPulseInterval);
                     window.addEventListener('beforeunload', () => clearInterval(auraPulseIntervalId), { once: true });
@@ -3320,7 +3320,7 @@
             if (!navSidewaysWave) return;
             navSidewaysWave.classList.remove('run');
             // Force reflow so the same animation class can replay immediately, even during rapid section changes.
-            void navSidewaysWave.offsetWidth;
+            void navSidewaysWave.offsetWidth; // `void` intentionally discards value while triggering reflow.
             navSidewaysWave.classList.add('run');
         };
 
@@ -3336,7 +3336,7 @@
                 const sectionHeight = section.clientHeight;
                 if (
                     window.scrollY >= sectionTop - SECTION_SCROLL_THRESHOLD &&
-                    window.scrollY < sectionTop + sectionHeight - SECTION_SCROLL_THRESHOLD
+                    window.scrollY <= sectionTop + sectionHeight - SECTION_SCROLL_THRESHOLD
                 ) {
                     current = section.getAttribute('id');
                 }

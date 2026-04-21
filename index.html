@@ -3244,11 +3244,12 @@
                         if (!centerAura) return;
                         centerAura.classList.remove('aura-recursive');
                         // Force browser reflow so the CSS animation can restart on each cycle.
-                        void centerAura.offsetWidth; // `void` intentionally discards value while triggering reflow.
+                        centerAura.offsetWidth; // Intentionally read to trigger reflow before re-adding class.
                         centerAura.classList.add('aura-recursive');
                     }, auraPulseInterval);
-                    window.addEventListener('beforeunload', () => clearInterval(auraPulseIntervalId), { once: true });
-                    window.addEventListener('pagehide', () => clearInterval(auraPulseIntervalId), { once: true });
+                    const cleanupAuraPulse = () => clearInterval(auraPulseIntervalId);
+                    window.addEventListener('beforeunload', cleanupAuraPulse, { once: true });
+                    window.addEventListener('pagehide', cleanupAuraPulse, { once: true });
                 } catch (error) {
                     console.warn('Loading sequence error:', error);
                 }
@@ -3320,24 +3321,21 @@
             if (!navSidewaysWave) return;
             navSidewaysWave.classList.remove('run');
             // Force reflow so the same animation class can replay immediately, even during rapid section changes.
-            void navSidewaysWave.offsetWidth; // `void` intentionally discards value while triggering reflow.
+            navSidewaysWave.offsetWidth; // Intentionally read to trigger reflow before re-adding class.
             navSidewaysWave.classList.add('run');
         };
 
         triggerNavSidewaysAnimation();
         const navSweepIntervalId = setInterval(triggerNavSidewaysAnimation, NAV_SWEEP_INTERVAL_MS);
-        window.addEventListener('beforeunload', () => clearInterval(navSweepIntervalId), { once: true });
-        window.addEventListener('pagehide', () => clearInterval(navSweepIntervalId), { once: true });
+        const cleanupNavSweep = () => clearInterval(navSweepIntervalId);
+        window.addEventListener('beforeunload', cleanupNavSweep, { once: true });
+        window.addEventListener('pagehide', cleanupNavSweep, { once: true });
 
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (
-                    window.scrollY >= sectionTop - SECTION_SCROLL_THRESHOLD &&
-                    window.scrollY <= sectionTop + sectionHeight - SECTION_SCROLL_THRESHOLD
-                ) {
+                if (window.scrollY >= sectionTop - SECTION_SCROLL_THRESHOLD) {
                     current = section.getAttribute('id');
                 }
             });

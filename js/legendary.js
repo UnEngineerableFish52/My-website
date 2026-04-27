@@ -918,7 +918,7 @@
                         this.wasPlayingBeforeHidden = !this.isMuted && (
                             (!this.introTrack.paused && this.introTrack.currentTime > 0) ||
                             (!this.backgroundTrack.paused && this.backgroundTrack.currentTime > 0) ||
-                            this.synthEngine.isPlaying
+                            (this.synthEngine && this.synthEngine.isPlaying)
                         );
                         this.pauseAllMedia();
                         return;
@@ -997,7 +997,7 @@
                     if (reset) this.backgroundTrack.currentTime = 0;
                 }
 
-                if (this.synthEngine) {
+                if (this.synthEngine && typeof this.synthEngine.stop === 'function') {
                     this.synthEngine.stop();
                 }
             }
@@ -1073,6 +1073,9 @@
             
             toggleMute() {
                 this.isMuted = !this.isMuted;
+                if (this.isMuted) {
+                    this.wasPlayingBeforeHidden = false;
+                }
                 
                 if (this.initialized) {
                     if (this.introTrack) this.introTrack.muted = this.isMuted;

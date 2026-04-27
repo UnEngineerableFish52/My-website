@@ -2298,6 +2298,39 @@ footer p {
             }
         }
 
-        /* ========================================
-           END SCROLL-FOLLOWING AVATAR
-           ======================================== */
+        .legendary-avatar {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .m-logo-center {
+            transform-style: preserve-3d;
+            transform-origin: center center;
+            animation: mCoinSpin 5s linear infinite;
+            text-shadow: 0 0 26px rgba(0, 243, 255, 0.85), 0 0 56px rgba(255, 0, 110, 0.45);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+            will-change: transform;
+        }
+
+        @keyframes mCoinSpin {
+            0% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(180deg) scale(1.05); }
+            100% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(360deg) scale(1); }
+        }
+
+        .project-card:hover h3,
+        .project-card:focus-within h3,
+        .project-card:hover .project-description,
+        .project-card:focus-within .project-description,
+        .project-card:hover p,
+        .project-card:focus-within p {
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(0, 243, 255, 0.35);
+        }
+
+        .project-card:hover .tech-badge,
+        .project-card:focus-within .tech-badge {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.4);
+        }

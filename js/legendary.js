@@ -1647,9 +1647,6 @@
             });
         });
 
-        console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
-        console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
-        console.log('%c🎵 Music System Ready!', 'color: #39ff14; font-size: 12px;');
 
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');

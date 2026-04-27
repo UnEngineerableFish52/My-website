@@ -125,20 +125,10 @@
     </style>
 </head>
 <body>
-    <!-- ========================================
-         LEGENDARY INTRO SEQUENCE
-         ======================================== -->
     <div class="legendary-intro" id="legendaryIntro">
-        <!-- Intro Canvas for Particles and Effects -->
         <canvas id="intro-canvas"></canvas>
-        
-        <!-- Matrix Rain Background -->
         <canvas class="matrix-rain" id="matrix-rain"></canvas>
-        
-        <!-- Nebula Background -->
         <div class="nebula-bg" id="nebulaBg"></div>
-        
-        <!-- Hexagonal Grid Overlay -->
         <svg class="hex-grid" id="hexGrid" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="hexPattern" patternUnits="userSpaceOnUse" width="80" height="69.28">
@@ -148,26 +138,18 @@
             <rect width="100%" height="100%" fill="url(#hexPattern)" />
         </svg>
         
-        <!-- Intro Content -->
         <div class="intro-content" id="introContent">
-            <!-- Phase 1: Floating Text -->
             <div class="floating-text top-left" id="text1">INITIATING...</div>
             <div class="floating-text center" id="text2">LOADING LEGENDARY CORE...</div>
             <div class="floating-text bottom-right" id="text3">CALIBRATING...</div>
-            
-            <!-- Phase 1: Favicon Center -->
             <div class="favicon-center" id="faviconCenter">
                 <img src="favicon.svg" alt="METHEELEGEND Logo">
             </div>
-            
-            <!-- Phase 2: PRO SAMKING Text -->
             <div class="pro-samking" id="proSamking">
                 <span>P</span><span>R</span><span>O</span>
                 <span> </span>
                 <span>S</span><span>A</span><span>M</span><span>K</span><span>I</span><span>N</span><span>G</span>
             </div>
-            
-            <!-- Phase 3: M Logo Avatar -->
             <div class="legendary-avatar" id="legendaryAvatar">
                 <div class="hexagonal-rings">
                     <div class="hex-ring ring-outer"></div>
@@ -176,34 +158,21 @@
                 </div>
                 <div class="m-logo-center"></div>
             </div>
-            
-            <!-- Phase 3: METHEELEGEND Text -->
             <div class="metheelegend-text" id="metheelegendText">METHEELEGEND</div>
-            
-            <!-- Phase 4: Hexagonal Portal -->
             <div class="hexagonal-portal" id="hexagonalPortal">
                 <div class="portal-inner"></div>
             </div>
-            
-            <!-- Phase 4: Reality Tear Effect -->
             <div class="reality-tear" id="realityTear"></div>
-            
-            <!-- Phase 5: Enter Legend Text -->
-            <div class="enter-legend-text" id="enterLegendText"><i><b>Hi!!, There Hello </b></i>
+            <button class="legendary-skip-btn" id="skipIntroBtn" type="button" aria-label="Skip introduction sequence">Skip Intro</button>
+            <div class="enter-legend-text" id="enterLegendText"><i><b>Hi! There, Hello</b></i></div>
         </div>
     </div>
-    
- ----   <!-- ========================================
-         SCROLL-FOLLOWING AVATAR
-         ======================================== -->
+
     <div class="legendary-avatar-container" id="scrollAvatar">
         <div class="hexagonal-vessel">
-            <!-- 3 Rotating Rings -->
             <div class="hex-ring ring-outer"></div>
             <div class="hex-ring ring-middle"></div>
             <div class="hex-ring ring-inner"></div>
-            
-            <!-- Avatar Image/GIF -->
             <div class="avatar-image-wrapper" aria-label="Animated avatar">
                 <img src="images/avatar.gif" alt="METHEELEGEND Avatar" class="avatar-gif" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -212,24 +181,10 @@
         </div>
     </div>
 
-    <!-- ========================================
-         AUDIO CONTROL PANEL
-         ======================================== -->
-    <div class="audio-controls" id="audioControls">
-        <button class="audio-btn" id="musicToggle" aria-label="Toggle music" title="Toggle Music">
-            <span class="audio-icon">🔊</span>
-        </button>
-    </div>
-
-    <!-- ========================================
-         MAIN PORTFOLIO videos    ======================================== -->
-  <audio controls autoplay loop>
-    <source src ="Past-lives-Instrumental).mp3" type="audio/mpeg">
-  </audio>
-        
-        <div class="video-background">
+    <div class="video-background">
         <video autoplay muted loop playsinline class="bg-video">
-            <source src="cyberspace.mp4" type="video/mp4">
+            <source src="videos/scifi-background.mp4" type="video/mp4">
+            <source src="videos/scifi-background.webm" type="video/webm">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -273,7 +228,8 @@
                 
                 <div class="project-card reveal-element">
                     <h3>AI Chat Application</h3>
-                    <p>Real-time chat application powered with strong zeal and enthusiasm              <div class="project-tech">
+                    <p>Real-time chat application powered with strong zeal and enthusiasm.</p>
+                    <div class="project-tech">
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">TensorFlow</span>
                         <span class="tech-badge">WebSocket</span>

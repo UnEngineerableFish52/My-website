@@ -308,7 +308,9 @@
                 // Phase 2: Identity Formation (3-6s)
                 { time: 3000, action: () => {
                     // Show skip button
-                    skipBtn.classList.add('show');
+                    if (skipBtn) {
+                        skipBtn.classList.add('show');
+                    }
                     
                     // Hide phase 1 elements
                     document.getElementById('faviconCenter').style.display = 'none';
@@ -406,14 +408,18 @@
             });
             
             // Skip button functionality
-            skipBtn.addEventListener('click', () => {
-                soundSystem.play('successChime');
-                skipToPortfolio();
-            });
+            if (skipBtn) {
+                skipBtn.addEventListener('click', () => {
+                    soundSystem.play('successChime');
+                    skipToPortfolio();
+                });
+            }
             
             function skipToPortfolio() {
                 introContainer.classList.add('hidden');
-                skipBtn.style.display = 'none';
+                if (skipBtn) {
+                    skipBtn.style.display = 'none';
+                }
                 document.body.style.overflow = '';
                 localStorage.setItem('legendaryIntroSeen', 'true');
                 
@@ -429,7 +435,7 @@
             // Keyboard accessibility for skip button
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
-                    if (skipBtn.classList.contains('show')) {
+                    if (skipBtn && skipBtn.classList.contains('show')) {
                         skipToPortfolio();
                     }
                 }
@@ -448,47 +454,49 @@
         let cursorX = 0, cursorY = 0;
         let dotX = 0, dotY = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        if (cursor && cursorDot) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
 
-        function animateCursor() {
-            const diffX = mouseX - cursorX;
-            const diffY = mouseY - cursorY;
-            cursorX += diffX * 0.1;
-            cursorY += diffY * 0.1;
+            function animateCursor() {
+                const diffX = mouseX - cursorX;
+                const diffY = mouseY - cursorY;
+                cursorX += diffX * 0.1;
+                cursorY += diffY * 0.1;
 
-            const diffDotX = mouseX - dotX;
-            const diffDotY = mouseY - dotY;
-            dotX += diffDotX * 0.2;
-            dotY += diffDotY * 0.2;
+                const diffDotX = mouseX - dotX;
+                const diffDotY = mouseY - dotY;
+                dotX += diffDotX * 0.2;
+                dotY += diffDotY * 0.2;
 
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            cursorDot.style.left = dotX + 'px';
-            cursorDot.style.top = dotY + 'px';
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                cursorDot.style.left = dotX + 'px';
+                cursorDot.style.top = dotY + 'px';
 
-            requestAnimationFrame(animateCursor);
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.borderColor = 'var(--neon-pink)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.borderColor = 'var(--neon-blue)';
+                });
+            });
         }
-        animateCursor();
-
-        // Cursor hover effects
-        const hoverElements = document.querySelectorAll('a, button, .neon-btn, .project-card, .skill-card');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                cursor.style.borderColor = 'var(--neon-pink)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = 'var(--neon-blue)';
-            });
-        });
 
         // Scroll Progress
         window.addEventListener('scroll', () => {
             const scrollProgress = document.querySelector('.scroll-progress');
+            if (!scrollProgress) return;
             const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercentage = (window.pageYOffset / scrollTotal) * 100;
             scrollProgress.style.width = scrollPercentage + '%';
@@ -520,6 +528,7 @@
         const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
         
         const elementInView = (el, percentageScroll = 100) => {
+            if (!el) return false;
             const elementTop = el.getBoundingClientRect().top;
             return (
                 elementTop <= 
@@ -575,21 +584,22 @@
 
         // Back to Top Button
         const backToTop = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
             });
-        });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
 
         // Ripple Effect on Buttons
         document.querySelectorAll('.neon-btn').forEach(button => {
@@ -613,6 +623,7 @@
 
         // Enhanced Particle System
         const canvas = document.getElementById('particles-canvas');
+        if (canvas) {
         const ctx = canvas.getContext('2d');
         
         canvas.width = window.innerWidth;
@@ -719,9 +730,11 @@
         }
 
         animateParticles();
+        }
 
-        // Form Submission Handler
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
             const submitBtn = document.querySelector('.submit-btn');
@@ -741,17 +754,19 @@
                 }, 2000);
             }, 1500);
         });
+        }
 
-        // Add glitch effect randomly to title
         const heroTitle = document.querySelector('.hero-title');
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                heroTitle.style.animation = 'none';
-                setTimeout(() => {
-                    heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
-                }, 10);
-            }
-        }, 3000);
+        if (heroTitle) {
+            setInterval(() => {
+                if (Math.random() > 0.95) {
+                    heroTitle.style.animation = 'none';
+                    setTimeout(() => {
+                        heroTitle.style.animation = 'gradientFlow 5s linear infinite, glitch 3s infinite';
+                    }, 10);
+                }
+            }, 3000);
+        }
 
         // ========================================
         // SYNTHESIZED MUSIC ENGINE (FALLBACK)
@@ -879,6 +894,7 @@
                 this.isMuted = localStorage.getItem('musicMuted') === 'true';
                 this.hasStarted = false;
                 this.initialized = true;
+                this.wasPlayingBeforeHidden = false;
                 
                 // Mute if previously muted
                 if (this.isMuted) {
@@ -895,6 +911,26 @@
                 this.backgroundTrack.addEventListener('error', () => {
                     console.log('Background track not found. Using synthesized audio fallback.');
                     this.isUsingFiles = false;
+                });
+
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.wasPlayingBeforeHidden = !this.isMuted && (
+                            (!this.introTrack.paused && this.introTrack.currentTime > 0) ||
+                            (!this.backgroundTrack.paused && this.backgroundTrack.currentTime > 0) ||
+                            (this.synthEngine && this.synthEngine.isPlaying)
+                        );
+                        this.pauseAllMedia();
+                        return;
+                    }
+
+                    if (this.wasPlayingBeforeHidden && !this.isMuted) {
+                        this.resumeMedia();
+                    }
+                });
+
+                window.addEventListener('pagehide', () => {
+                    this.pauseAllMedia(true);
                 });
             }
             
@@ -948,6 +984,40 @@
                     this.isUsingFiles = false;
                     this.synthEngine.playBackgroundLoop();
                 });
+            }
+
+            pauseAllMedia(reset = false) {
+                if (this.introTrack && !this.introTrack.paused) {
+                    this.introTrack.pause();
+                    if (reset) this.introTrack.currentTime = 0;
+                }
+
+                if (this.backgroundTrack && !this.backgroundTrack.paused) {
+                    this.backgroundTrack.pause();
+                    if (reset) this.backgroundTrack.currentTime = 0;
+                }
+
+                if (this.synthEngine && typeof this.synthEngine.stop === 'function') {
+                    this.synthEngine.stop();
+                }
+            }
+
+            resumeMedia() {
+                if (this.isUsingFiles) {
+                    if (this.backgroundTrack && this.backgroundTrack.currentTime > 0) {
+                        this.backgroundTrack.play().catch(() => {});
+                        return;
+                    }
+
+                    if (this.introTrack && this.introTrack.currentTime > 0) {
+                        this.introTrack.play().catch(() => {});
+                        return;
+                    }
+                }
+
+                if (this.synthEngine && !this.synthEngine.isPlaying) {
+                    this.synthEngine.playBackgroundLoop();
+                }
             }
             
             crossfade() {
@@ -1003,6 +1073,9 @@
             
             toggleMute() {
                 this.isMuted = !this.isMuted;
+                if (this.isMuted) {
+                    this.wasPlayingBeforeHidden = false;
+                }
                 
                 if (this.initialized) {
                     if (this.introTrack) this.introTrack.muted = this.isMuted;
@@ -1367,31 +1440,33 @@
         
         // Mute button functionality
         const muteBtn = document.getElementById('muteBtn');
-        const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
-        const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
-        
-        // Set initial state
-        if (musicSystem.isMuted) {
-            muteBtn.classList.add('muted');
-            unmutedIcon.style.display = 'none';
-            mutedIcon.style.display = 'block';
-        }
-        
-        muteBtn.addEventListener('click', () => {
-            const isMuted = musicSystem.toggleMute();
-            
-            if (isMuted) {
+        if (muteBtn) {
+            const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
+            const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
+
+            // Set initial state
+            if (musicSystem.isMuted) {
                 muteBtn.classList.add('muted');
-                unmutedIcon.style.display = 'none';
-                mutedIcon.style.display = 'block';
-            } else {
-                muteBtn.classList.remove('muted');
-                unmutedIcon.style.display = 'block';
-                mutedIcon.style.display = 'none';
+                if (unmutedIcon) unmutedIcon.style.display = 'none';
+                if (mutedIcon) mutedIcon.style.display = 'block';
             }
-            
-            interactiveSounds.play('toggleOn');
-        });
+
+            muteBtn.addEventListener('click', () => {
+                const isMuted = musicSystem.toggleMute();
+
+                if (isMuted) {
+                    muteBtn.classList.add('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'none';
+                    if (mutedIcon) mutedIcon.style.display = 'block';
+                } else {
+                    muteBtn.classList.remove('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'block';
+                    if (mutedIcon) mutedIcon.style.display = 'none';
+                }
+
+                interactiveSounds.play('toggleOn');
+            });
+        }
 
         // ========================================
         // ANIMATED CREDITS SYSTEM
@@ -1645,39 +1720,7 @@
             });
         });
 
-        console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
-        console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
-        console.log('%c🎵 Music System Ready! Toggle sound with the button in bottom-right corner.', 'color: #39ff14; font-size: 12px;');
-
-        // ========================================
-        // AUDIO CONTROL PANEL INTEGRATION
-        // ========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            const musicToggle = document.getElementById('musicToggle');
-            const audioIcon = musicToggle?.querySelector('.audio-icon');
-            
-            if (musicToggle && window.musicSystem) {
-                // Set initial state
-                if (musicSystem.isMuted) {
-                    musicToggle.classList.add('muted');
-                    if (audioIcon) audioIcon.textContent = '🔇';
-                }
-                
-                // Toggle music on click
-                musicToggle.addEventListener('click', () => {
-                    const isMuted = musicSystem.toggleMute();
-                    
-                    if (isMuted) {
-                        musicToggle.classList.add('muted');
-                        if (audioIcon) audioIcon.textContent = '🔇';
-                    } else {
-                        musicToggle.classList.remove('muted');
-                        if (audioIcon) audioIcon.textContent = '🔊';
-                    }
-                });
-            }
-        });
 
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
-        console.log('%c🎵 Music System Ready! Toggle sound with the button in bottom-right corner.', 'color: #39ff14; font-size: 12px;');
+        console.log('%c🎵 Music System Ready!', 'color: #39ff14; font-size: 12px;');

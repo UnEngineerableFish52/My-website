@@ -53,3 +53,31 @@ document.querySelectorAll('.main-nav a').forEach(link => {
         link.classList.add('active');
     }
 });
+
+const bgVideos = Array.from(document.querySelectorAll('.bg-video'));
+
+const syncBackgroundVideos = () => {
+    bgVideos.forEach(video => {
+        if (!video) return;
+        video.loop = true;
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {});
+        }
+    });
+};
+
+if (bgVideos.length > 0) {
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) return;
+        syncBackgroundVideos();
+    });
+
+    window.addEventListener('pageshow', syncBackgroundVideos);
+    bgVideos.forEach(video => {
+        video.addEventListener('ended', () => {
+            video.currentTime = 0;
+            syncBackgroundVideos();
+        });
+    });
+}

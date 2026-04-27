@@ -1367,31 +1367,33 @@
         
         // Mute button functionality
         const muteBtn = document.getElementById('muteBtn');
-        const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
-        const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
-        
-        // Set initial state
-        if (musicSystem.isMuted) {
-            muteBtn.classList.add('muted');
-            unmutedIcon.style.display = 'none';
-            mutedIcon.style.display = 'block';
-        }
-        
-        muteBtn.addEventListener('click', () => {
-            const isMuted = musicSystem.toggleMute();
-            
-            if (isMuted) {
+        if (muteBtn) {
+            const unmutedIcon = muteBtn.querySelector('.audio-icon-unmuted');
+            const mutedIcon = muteBtn.querySelector('.audio-icon-muted');
+
+            // Set initial state
+            if (musicSystem.isMuted) {
                 muteBtn.classList.add('muted');
-                unmutedIcon.style.display = 'none';
-                mutedIcon.style.display = 'block';
-            } else {
-                muteBtn.classList.remove('muted');
-                unmutedIcon.style.display = 'block';
-                mutedIcon.style.display = 'none';
+                if (unmutedIcon) unmutedIcon.style.display = 'none';
+                if (mutedIcon) mutedIcon.style.display = 'block';
             }
-            
-            interactiveSounds.play('toggleOn');
-        });
+
+            muteBtn.addEventListener('click', () => {
+                const isMuted = musicSystem.toggleMute();
+
+                if (isMuted) {
+                    muteBtn.classList.add('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'none';
+                    if (mutedIcon) mutedIcon.style.display = 'block';
+                } else {
+                    muteBtn.classList.remove('muted');
+                    if (unmutedIcon) unmutedIcon.style.display = 'block';
+                    if (mutedIcon) mutedIcon.style.display = 'none';
+                }
+
+                interactiveSounds.play('toggleOn');
+            });
+        }
 
         // ========================================
         // ANIMATED CREDITS SYSTEM
@@ -1647,37 +1649,8 @@
 
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
-        console.log('%c🎵 Music System Ready! Toggle sound with the button in bottom-right corner.', 'color: #39ff14; font-size: 12px;');
-
-        // ========================================
-        // AUDIO CONTROL PANEL INTEGRATION
-        // ========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            const musicToggle = document.getElementById('musicToggle');
-            const audioIcon = musicToggle?.querySelector('.audio-icon');
-            
-            if (musicToggle && window.musicSystem) {
-                // Set initial state
-                if (musicSystem.isMuted) {
-                    musicToggle.classList.add('muted');
-                    if (audioIcon) audioIcon.textContent = '🔇';
-                }
-                
-                // Toggle music on click
-                musicToggle.addEventListener('click', () => {
-                    const isMuted = musicSystem.toggleMute();
-                    
-                    if (isMuted) {
-                        musicToggle.classList.add('muted');
-                        if (audioIcon) audioIcon.textContent = '🔇';
-                    } else {
-                        musicToggle.classList.remove('muted');
-                        if (audioIcon) audioIcon.textContent = '🔊';
-                    }
-                });
-            }
-        });
+        console.log('%c🎵 Music System Ready!', 'color: #39ff14; font-size: 12px;');
 
         console.log('%c🔥 LEGENDARY PORTFOLIO LOADED 🔥', 'color: #00f3ff; font-size: 20px; font-weight: bold;');
         console.log('%cWelcome to the cyberpunk dimension!', 'color: #ff006e; font-size: 14px;');
-        console.log('%c🎵 Music System Ready! Toggle sound with the button in bottom-right corner.', 'color: #39ff14; font-size: 12px;');
+        console.log('%c🎵 Music System Ready!', 'color: #39ff14; font-size: 12px;');

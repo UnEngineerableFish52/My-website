@@ -7,7 +7,7 @@
             // Check if intro has been seen
             const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
             const introContainer = document.getElementById('legendaryIntro');
-            const skipBtn = document.getElementById('skipIntroBtn');
+            
             
             // Configuration
             const config = {

@@ -64,7 +64,7 @@
                 }
                 
                 // Synthesize simple beep sounds
-                play(type, time = 0) {
+                play(type, time = 5) {
                     if (!this.initialized || this.isMuted || !this.context) return;
                     
                     try {

@@ -767,13 +767,44 @@ footer p {
             75% { filter: drop-shadow(0 2px 0 red) drop-shadow(0 -2px 0 cyan); }
         }
 
-        /* Phase 5: Shatter Effect */
-        .enter-legend-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Orbitron', sans-serif;
+     .enter-legend-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    background: linear-gradient(90deg, #00f3ff, #ff006e, #8b00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0,243,255,0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255,0,110,0.9));
+    }
+}
+    
+    background: linear-gradient(90deg, #00f3ff, #ff006e, #8b00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0,243,255,0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255,0,110,0.9));
+    }
+}
         /* ========================================
            SCROLL-FOLLOWING AVATAR
            ======================================== */

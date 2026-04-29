@@ -492,7 +492,47 @@ footer p {
             opacity: 0.2;
             pointer-events: none;
         }
+.logo-circle{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:radial-gradient(circle,var(--neon-blue),transparent);
+    box-shadow:0 0 40px var(--neon-blue);
+    animation:spin 6s linear infinite, pulse 2s ease-in-out infinite;
+    transition:transform 0.2s;
+}
 
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes pulse{
+    0%,100%{box-shadow:0 0 20px var(--neon-blue);}
+    50%{box-shadow:0 0 60px var(--neon-pink);}
+            }
+.enter-legend-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    background: linear-gradient(90deg, #00f3ff, #ff006e, #8b00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0,243,255,0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255,0,110,0.9));
+    }
+}
         /* Phase 2: Identity Formation */
         .pro-samking {
             position: absolute;

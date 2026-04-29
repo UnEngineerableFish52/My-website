@@ -442,6 +442,11 @@
             });
             
         })();
+.legendary-intro.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
         
         // ========================================
         // PORTFOLIO ANIMATIONS (Original Code)

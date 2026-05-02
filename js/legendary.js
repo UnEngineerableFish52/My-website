@@ -882,8 +882,8 @@
                 this.FADE_STEPS = 20;
                 this.FADE_INTERVAL = 100; // ms
                 
-                this.introTrack = new Audio('sounds/Past-Lives-.mp3');
-                this.backgroundTrack = new Audio('sounds/Past-Lives-.mp3');
+                this.introTrack = new Audio('sounds/Past-Lives-(Instrumental).mp3');
+                this.backgroundTrack = new Audio('sounds/Past-Lives-(Instrumental).mp3');
                 this.synthEngine = new SynthMusicEngine();
                 this.isUsingFiles = true;
                 

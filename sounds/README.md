@@ -2,11 +2,10 @@
 
 ## Music Track
 
-### Required File:
+### Files in this directory:
 
-1. **Past-Lives-.mp3**
-   - Place the `Past-Lives-.mp3` file in this directory
-   - It is used for both the intro sequence and the looping background music
+1. **Past-Lives-(Instrumental).mp3** — used for the intro sequence and as the looping background track
+2. **past lives (piano instrumental).mp3** — alternate piano version (available but not currently used)
 
 ## Interactive Sounds
 

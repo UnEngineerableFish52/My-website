@@ -887,8 +887,8 @@
                 this.FADE_STEPS = 20;
                 this.FADE_INTERVAL = 100; // ms
                 
-                this.introTrack = new Audio('sounds/deaf-kev-invincible-pt2.mp3');
-                this.backgroundTrack = new Audio('sounds/elektronomia-sky-high.mp3');
+                this.introTrack = new Audio('sounds/Past-Lives-(Instrumental).mp3');
+                this.backgroundTrack = new Audio('sounds/Past-Lives-(Instrumental).mp3');
                 this.synthEngine = new SynthMusicEngine();
                 this.isUsingFiles = true;
                 
@@ -1139,6 +1139,9 @@
             }
             
             init() {
+                // If avatar element doesn't exist, skip
+                if (!this.avatar) return;
+                
                 // Wait for intro to complete before showing avatar
                 setTimeout(() => this.dropAvatar(), this.INTRO_DURATION);
                 

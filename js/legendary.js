@@ -7,7 +7,7 @@
             // Check if intro has been seen
             const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
             const introContainer = document.getElementById('legendaryIntro');
-            const skipBtn = document.getElementById('skipIntroBtn');
+            
             
             // Configuration
             const config = {
@@ -64,7 +64,7 @@
                 }
                 
                 // Synthesize simple beep sounds
-                play(type, time = 0) {
+                play(type, time = 5) {
                     if (!this.initialized || this.isMuted || !this.context) return;
                     
                     try {
@@ -442,6 +442,11 @@
             });
             
         })();
+.legendary-intro.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
         
         // ========================================
         // PORTFOLIO ANIMATIONS (Original Code)

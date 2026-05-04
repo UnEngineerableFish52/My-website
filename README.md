@@ -1,4 +1,4 @@
-ffff 🚀 METHEELEGEND - Professional Portfolio
+# 🚀 METHEELEGEND - Professional Portfolio
 
 > A modern, multi-page portfolio website featuring stunning visual effects, smooth animations, and professional design.
 
@@ -130,7 +130,7 @@ My-website/
 
 ## 🎯 Performance
 
-- **Lighthouse Score**: Compatible for all but very enhanced lacks no quality is everything from the readme.md is seriously taken to do the multi-pagen
+- **Lighthouse Score**: 90+
 - **Optimized animations**: GPU-accelerated transforms
 
 ## 🛠️ Technologies Used
@@ -153,34 +153,40 @@ This project is licensed under the MIT License.
 - **Fonts**: Google Fonts (Orbitron, Poppins)
 - **Icons**: Unicode Emoji
 - **Music** : 
-  - Past-Lives-(Instrumental).Persistent
- ## 🎵 Legendary Features
+  - Past-Lives-(Instrumental).mp3
+
+## 🎵 Legendary Features
 
 The METHEELEGEND portfolio includes special legendary features on the homepage:
 
 ### Epic Intro Sequence (13 seconds)
 - **Phase 1**: System awakening with floating text
 - **Phase 2**: PRO SAMKING text formation
-- **Phase 3**: M logo reveal with 3 rotating hexagonal rings
+- **Phase 3**: M logo reveal with 3 rotating hexagonal rings (blue, pink, purple)
 - **Phase 4**: Portal activation effect
-- **Phase 5**: Hexagonal
-- ** Music SySyst**eem**Intro Music**: Epic 13-second soundtrack
-- **Background Loop**: Continuous music after intro
-- **Smart Fallback**:MP3 files OR synthesized Web
-- **SmoothFollowing Avatar**
-- **Movements** : Gradual visually variable with the tones of the background 
-- **Interactive**: Follows your scroll position
-- **Bounces**: Animation for the M-Logo the hexagonal bordered M in the code will have this animation and the texts appearing in the logo nearby location has to be made there too
-- **Hexagonal VesseAdaptiven rings**
-- **GPU Accelerated**: All animations use transform3d
-- **Optimized**: Intro only on homepage, not on other pages , do not overdo the animation things 
-- **Accessible**: ARIA labels, keyboard navigation, reduced motion pagesrm3d## 📞 Contact
+- **Phase 5**: "ENTER THE LEGEND" reveal, fade to main page
+
+### 🔊 Music System
+- **Intro Music**: Epic 13-second synthesized soundtrack
+- **Background Loop**: Continuous MP3 or synthesized fallback after intro
+- **Smart Fallback**: MP3 files OR Web Audio API synthesized music
+
+### 🎭 Scroll-Following Avatar
+- **Movements**: Physics-based spring following scroll position
+- **Interactive**: Follows scroll with gravity-drop entrance after intro
+- **Bounces**: Landing and deceleration bounce animations
+- **Hexagonal Vessel**: Spinning hex ring with M logo center
+
+### ⚙️ Technical Notes
+- **Intro replay**: Plays once per browser session (sessionStorage — replays on new tab)
+- **Audio**: Requires user interaction to start (browser autoplay policy)
+- **Avatar**: Uses `images/avatar.gif` if present, falls back to "M" logo
+- **GPU Accelerated**: All animations use CSS transforms
+- **Accessible**: ARIA labels, keyboard navigation (Escape/Space skips intro), reduced motion support
+
+## 📞 Contact
 
 - **Website**: https://samrat.tech
 - **GitHub**: [@UnEngineerableFish52](https://github.com/UnEngineerableFish52)
 - **Email**: sharma@samrat.tech
 
-To @Copilot :--You will preserve the codes and modify them as per needed the styles and effects aura thing everything we have already in the code you're going to learn from this file and then you'll remove the things I have given for you to understand and make it just a README one not a prompt to feed AIs to help , I want you to help me revamp the codes and improve them preserving key things and ideas and add additional things that we have in the current code you can see aura and other elements effects which are not in the readme  but you're going to keep them because they are essential parts who have dependencies plus the current code in this repo doesn't have intro animation working make it sure that the intro animation is working properly and the effects audio things etc compiles properly and make sure the three hexagonal rings in the logo are matching up the logo itsef different colors neon blue plus dark effect in the back and sideways should have borderings with coor changing effect the texts pro samking and other stuffs that happen should be positioned in a way that the texts are bit more visible with better transition and whie the intro animation is on there we must not have any thing on screen that appears at home page everything intro vanish after 13s and the logo shown in intro is kept at centre rotating perpetual with other animation described in the md fike you're going to make sure every feature that is not working properly and is yet to be added add them and fix them properly dont comment too much on the codes just write topics for each divisions and purposes describe what elements are those and where are they with what they do in a breif indented lines of explanation after reading these all remove the prompts from the code and you're going to change index.html and CSS and JS and this MD nothing else make sure everything is ok correct and the site is LEGENDARY like you have always told , you're not forgetting to recheck the site and take screenshots analyze , the sound part audiop is given in the repo and background video is not necessary and add additional features from here and popular effects visuals that fits the cyberpunk neon background effects things 
-
-
-- @METHEELEGEND

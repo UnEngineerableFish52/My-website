@@ -1109,6 +1109,7 @@
         
         // CRITICAL: Initialize and start music on page load
         const musicSystem = new LegendaryMusicSystem();
+        window.musicSystem = musicSystem;
         
         // Wait for user interaction to avoid autoplay block
         document.body.addEventListener('click', () => {
@@ -1210,6 +1211,10 @@
                 
                 // Clamp to viewport
                 this.targetY = Math.max(50, Math.min(maxY, this.targetY));
+
+                // Dynamic glow color shifts across the spectrum as user scrolls
+                const hue = scrollProgress * 180;
+                this.avatar.style.filter = `drop-shadow(0 0 10px hsl(${hue + 180}, 100%, 60%))`;
             }
             
             animate() {

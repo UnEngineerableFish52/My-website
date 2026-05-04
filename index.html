@@ -2742,8 +2742,9 @@
                     const centerEmblem = document.getElementById('centerLegendaryEmblem');
                     const centerAura = document.getElementById('centerLegendaryAura');
                     // Loading overlay hides quickly, then the legendary intro plays
-                    const introCompleteDelay = 2000;
-                    const recurringSpawnDelay = 14500;
+                    const LOADING_HIDE_DELAY = 2000;
+                    const INTRO_DURATION = 13500;   // legendary intro runs for ~13.5 s
+                    const recurringSpawnDelay = INTRO_DURATION + 1000; // start effects 1s after intro ends
                     const auraPulseInterval = 6000;
                     
                     // Hide loading after delay
@@ -2764,12 +2765,12 @@
                         
                         // Note: Floating bubbles are initialized in main init()
                         // Matrix rain is also initialized there if enabled
-                    }, introCompleteDelay);
+                    }, LOADING_HIDE_DELAY);
 
-                    // Bring center emblem in after intro completes (13.5 seconds)
+                    // Bring center emblem in after intro completes
                     setTimeout(() => {
                         centerEmblem?.classList.add('active');
-                    }, 13500);
+                    }, INTRO_DURATION);
 
                     // Start recurring site effects after intro sequence completes
                     setTimeout(() => {

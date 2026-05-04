@@ -27,8 +27,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 document.querySelectorAll('.main-nav a').forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
         link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+    } else {
+        link.removeAttribute('aria-current');
     }
 });
 

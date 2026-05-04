@@ -5,8 +5,15 @@
             'use strict';
             
             // Check if intro has been seen
-            const hasSeenIntro = localStorage.getItem('legendaryIntroSeen');
+            const hasSeenIntro = sessionStorage.getItem('legendaryIntroSeen');
             const introContainer = document.getElementById('legendaryIntro');
+            const skipBtn = document.getElementById('skipIntroBtn');
+            
+            // Guard: if no intro container, skip (other pages don't have it)
+            if (!introContainer) {
+                document.body.style.overflow = '';
+                return;
+            }
             
             
             // Configuration
@@ -421,7 +428,7 @@
                     skipBtn.style.display = 'none';
                 }
                 document.body.style.overflow = '';
-                localStorage.setItem('legendaryIntroSeen', 'true');
+                sessionStorage.setItem('legendaryIntroSeen', 'true');
                 
                 setTimeout(() => {
                     introContainer.classList.add('complete');
@@ -442,11 +449,6 @@
             });
             
         })();
-.legendary-intro.fade-out {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
-}
         
         // ========================================
         // PORTFOLIO ANIMATIONS (Original Code)

@@ -1483,9 +1483,99 @@
                 height: 42vmin;
             }
         }
+
+        /* Skip to content */
+        .skip-to-content { position: absolute; top: -40px; left: 0; background: var(--neon-blue); color: #000; padding: 8px; z-index: 100001; transition: top 0.3s; text-decoration: none; font-weight: 600; }
+        .skip-to-content:focus { top: 0; }
+
+        /* ========================================
+           LEGENDARY INTRO OVERLAY
+           Full-viewport overlay shown on first visit per session
+        ======================================== */
+        .legendary-intro {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0a0a0f; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; transition: opacity 1s ease-out;
+        }
+        .legendary-intro.hidden { opacity: 0; pointer-events: none; }
+        .legendary-intro.complete { display: none !important; }
+        #intro-canvas, #matrix-rain { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+        .intro-content { position: relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+        /* Phase 1 floating text */
+        .floating-text { position: absolute; font-family: 'Orbitron', sans-serif; font-size: 1rem; color: rgba(0,243,255,0.7); letter-spacing: 0.3em; animation: textFloat 3s ease-in-out infinite; }
+        @keyframes textFloat { 0%,100%{transform:translateY(0);opacity:0.5} 50%{transform:translateY(-20px);opacity:1} }
+        /* Favicon center M logo - phase 1 */
+        .favicon-center { position: absolute; font-family: 'Orbitron', sans-serif; font-size: 80px; font-weight: 900; color: #fff; text-shadow: 0 0 30px #00f3ff, 0 0 60px #ff006e; animation: faviconMaterialize 2s cubic-bezier(0.68,-0.55,0.265,1.55) forwards; }
+        @keyframes faviconMaterialize { 0%{opacity:0;transform:scale(0) rotate(-180deg);filter:blur(50px)} 60%{transform:scale(1.2) rotate(20deg);filter:blur(5px)} 100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0)} }
+        /* PRO SAMKING text - phase 2 */
+        .pro-samking { position: absolute; font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; letter-spacing: 0.3em; color: #fff; text-align: center; text-shadow: 0 0 30px #00f3ff; }
+        .pro-samking span { display: inline-block; opacity: 0; transform: translateY(-100px) scale(0); }
+        .pro-samking span.materialize { animation: letterDrop 0.5s cubic-bezier(0.68,-0.55,0.265,1.55) forwards; }
+        @keyframes letterDrop { 0%{opacity:0;transform:translateY(-100px) scale(0)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes letterPulse { 0%,100%{text-shadow:0 0 10px #00f3ff} 50%{text-shadow:0 0 30px #00f3ff,0 0 50px #ff006e} }
+        /* Legendary Avatar with hex rings - phase 3 */
+        .legendary-avatar { position: absolute; width: 300px; height: 300px; opacity: 0; }
+        .legendary-avatar.active { animation: avatarIntro 2s cubic-bezier(0.68,-0.55,0.265,1.55) forwards; }
+        @keyframes avatarIntro { 0%{opacity:0;transform:scale(0) rotate(180deg);filter:blur(50px)} 60%{transform:scale(1.3) rotate(-20deg)} 100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0)} }
+        .hexagonal-rings { position: absolute; width: 100%; height: 100%; }
+        .hex-ring { position: absolute; border-radius: 0; }
+        .ring-outer { inset: 0; border: 3px solid #00f3ff; clip-path: polygon(25% 6%,75% 6%,94% 50%,75% 94%,25% 94%,6% 50%); box-shadow: 0 0 20px #00f3ff,inset 0 0 20px rgba(0,243,255,0.3); animation: hexSpin 4s linear infinite; }
+        .ring-middle { inset: 10%; border: 2px solid #ff006e; clip-path: polygon(25% 6%,75% 6%,94% 50%,75% 94%,25% 94%,6% 50%); box-shadow: 0 0 15px #ff006e; animation: hexSpin 3s linear infinite reverse; }
+        .ring-inner { inset: 20%; border: 2px solid #8b00ff; clip-path: polygon(25% 6%,75% 6%,94% 50%,75% 94%,25% 94%,6% 50%); box-shadow: 0 0 10px #8b00ff; animation: hexSpin 2s linear infinite; }
+        @keyframes hexSpin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+        .m-logo-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron',sans-serif; font-size: 100px; font-weight: 900; color: #fff; text-shadow: 0 0 20px #00f3ff,0 0 40px #ff006e,0 0 60px #8b00ff; }
+        /* METHEELEGEND text - phase 3 */
+        .metheelegend-text { position: absolute; bottom: 25%; font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 0.4em; color: #fff; opacity: 0; text-shadow: 0 0 20px #00f3ff; }
+        .metheelegend-text.active { animation: metheelegendReveal 1s ease forwards; }
+        @keyframes metheelegendReveal { 0%{opacity:0;transform:scaleX(0);letter-spacing:1em} 100%{opacity:1;transform:scaleX(1);letter-spacing:0.4em} }
+        /* Nebula background - phase 3 */
+        .nebula-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(139,0,255,0.3) 0%, rgba(0,243,255,0.2) 40%, transparent 70%); opacity: 0; transition: opacity 1s; }
+        .nebula-bg.active { opacity: 1; }
+        /* Hexagonal Portal - phase 4 */
+        .hexagonal-portal { position: absolute; width: 400px; height: 400px; opacity: 0; }
+        .hexagonal-portal.active { animation: portalOpen 2s ease forwards; }
+        @keyframes portalOpen { 0%{opacity:0;transform:scale(0) rotate(-90deg)} 60%{transform:scale(1.1) rotate(10deg)} 100%{opacity:1;transform:scale(1) rotate(0)} }
+        .portal-inner { position: absolute; inset: 10%; border-radius: 50%; background: radial-gradient(circle, rgba(139,0,255,0.8) 0%, rgba(0,243,255,0.4) 50%, transparent 70%); animation: portalPulse 1s ease-in-out infinite; }
+        @keyframes portalPulse { 0%,100%{transform:scale(0.95)} 50%{transform:scale(1.05)} }
+        /* Reality Tear - phase 4 */
+        .reality-tear { position: absolute; width: 4px; height: 0; background: linear-gradient(to bottom, transparent, #fff, #00f3ff, transparent); box-shadow: 0 0 20px #00f3ff; transition: height 2s ease; }
+        .reality-tear.active { height: 100vh; }
+        /* Enter legend text - phase 5 */
+        .enter-legend-text { position: absolute; bottom: 15%; font-family: 'Orbitron', sans-serif; font-size: 2rem; letter-spacing: 0.5em; color: #fff; text-shadow: 0 0 30px #00f3ff,0 0 60px #ff006e; opacity: 0; transform: scale(0.5); }
+        .enter-legend-text.active { animation: enterReveal 1s ease forwards; }
+        @keyframes enterReveal { 0%{opacity:0;transform:scale(0.5)} 100%{opacity:1;transform:scale(1)} }
+        /* Skip intro button */
+        .legendary-skip-btn { position: fixed; top: 20px; right: 20px; padding: 12px 25px; background: rgba(0,243,255,0.1); border: 2px solid #00f3ff; border-radius: 30px; color: #00f3ff; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; cursor: pointer; opacity: 0; transform: translateY(-20px); transition: all 0.3s; z-index: 10001; letter-spacing: 0.1em; }
+        .legendary-skip-btn.show { opacity: 1; transform: translateY(0); }
+        .legendary-skip-btn:hover { background: #00f3ff; color: #0a0a0f; box-shadow: 0 0 20px #00f3ff; }
+        .legendary-skip-btn:focus { outline: 2px solid #00f3ff; outline-offset: 3px; }
+        /* Sideways border utility */
+        .sideways-border { border-left: 3px solid var(--accent-gold); padding-left: 15px; position: relative; overflow: hidden; }
+        .sideways-border::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(to bottom, transparent, var(--accent-gold), var(--neon-blue), transparent); animation: borderGlow 3s ease-in-out infinite; }
+        @keyframes borderGlow { 0%,100% { opacity: 0.3; filter: brightness(0.8); } 50% { opacity: 1; filter: brightness(1.5); } }
+        /* Mute button */
+        .mute-btn { position: fixed; bottom: 100px; right: 40px; width: 50px; height: 50px; background: var(--glass-bg); backdrop-filter: blur(10px); border: 2px solid var(--neon-blue); border-radius: 50%; color: var(--neon-blue); font-size: 20px; cursor: pointer; z-index: 999; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .mute-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--neon-blue); }
+        .mute-btn.muted { border-color: var(--neon-pink); color: var(--neon-pink); }
+        /* Scroll avatar */
+        .scroll-avatar { position: fixed; right: 20px; top: -300px; width: 80px; height: 80px; z-index: 500; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+        .scroll-avatar.active { opacity: 1; }
+        .avatar-vessel { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+        .avatar-hex-ring { position: absolute; inset: 0; clip-path: polygon(25% 6%,75% 6%,94% 50%,75% 94%,25% 94%,6% 50%); border: 2px solid var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); animation: hexSpin 3s linear infinite; }
+        .avatar-content { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 24px; color: #fff; text-shadow: 0 0 10px var(--neon-blue); z-index: 1; }
+        .avatar-nearby-text { position: absolute; right: 110%; top: 50%; transform: translateY(-50%); font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: var(--neon-blue); white-space: nowrap; opacity: 0; transition: opacity 0.3s; letter-spacing: 0.1em; }
+        .scroll-avatar.active .avatar-nearby-text { opacity: 1; }
+        .scroll-avatar.bouncing { animation: avatarBounce 0.6s ease; }
+        @keyframes avatarBounce { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-15px)} 60%{transform:translateY(-5px)} 80%{transform:translateY(-8px)} }
+        /* Audio enable button */
+        .audio-enable-btn { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 99999; padding: 10px 25px; background: rgba(0,243,255,0.1); border: 2px solid #00f3ff; border-radius: 30px; color: #00f3ff; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; cursor: pointer; animation: pulse 2s infinite; }
+        /* Loading hex 3rd ring */
+        .loading-hex-border::after { content: ''; position: absolute; inset: 25%; clip-path: polygon(25% 6%,75% 6%,94% 50%,75% 94%,25% 94%,6% 50%); border: 1px solid rgba(57,255,20,0.6); box-shadow: 0 0 12px rgba(57,255,20,0.6); animation: hexRingSpin 7s linear infinite; }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -1496,6 +1586,26 @@
         </div>
         <div class="loading-text">LOADING LEGENDARY PORTFOLIO...</div>
         <div class="loading-subtext">ENTERING THE LEGENDARY SITE</div>
+    </div>
+
+    <!-- Audio enable button (shown if autoplay is blocked) -->
+    <button class="audio-enable-btn" id="audioEnableBtn" aria-label="Enable background music" style="display:none">
+        🎵 Enable Music
+    </button>
+
+    <!-- Mute button -->
+    <button class="mute-btn" id="muteBtn" aria-label="Toggle music">
+        <span class="audio-icon-unmuted">🔊</span>
+        <span class="audio-icon-muted" style="display:none">🔇</span>
+    </button>
+
+    <!-- Scroll-following avatar -->
+    <div class="scroll-avatar" id="scrollAvatar" aria-hidden="true">
+        <div class="avatar-vessel">
+            <div class="avatar-hex-ring"></div>
+            <div class="avatar-content">M</div>
+            <div class="avatar-nearby-text">PRO SAMKING</div>
+        </div>
     </div>
 
     <!-- Custom Cursor -->
@@ -1577,36 +1687,51 @@
             <div class="toggle-switch active" data-toggle="magneticZones">
                 <div class="toggle-slider"></div>
             </div>
-            <div class="pro-samking" id="proSamking">
-               <b><i> <span>P</span><span>R</span><span>O</span>
-                <span> </span>
-                <span>S</span><span>A</span><span>M</span><span>K</span><span>I</span><span>N</span><span>G</span></i></b>
+        </div>
+    </div>
+
+    <!-- Legendary Intro Overlay - full viewport, shown once per session -->
+    <div class="legendary-intro" id="legendaryIntro">
+        <canvas id="intro-canvas"></canvas>
+        <canvas id="matrix-rain"></canvas>
+        <div class="intro-content">
+            <!-- Phase 1: System Awakening -->
+            <div id="faviconCenter" class="favicon-center">M</div>
+            <div class="floating-text" id="text1" style="top:20%;left:20%">INITIALIZING...</div>
+            <div class="floating-text" id="text2" style="top:30%;right:20%;animation-delay:0.5s">SYSTEM AWAKENING</div>
+            <div class="floating-text" id="text3" style="bottom:25%;left:25%;animation-delay:1s">LOADING LEGEND...</div>
+            <!-- Phase 2: PRO SAMKING -->
+            <div class="pro-samking" id="proSamking" style="opacity:0">
+                <span>P</span><span>R</span><span>O</span><span>&nbsp;</span><span>S</span><span>A</span><span>M</span><span>K</span><span>I</span><span>N</span><span>G</span>
             </div>
+            <!-- Phase 3: Legendary Avatar -->
             <div class="legendary-avatar" id="legendaryAvatar">
                 <div class="hexagonal-rings">
                     <div class="hex-ring ring-outer"></div>
                     <div class="hex-ring ring-middle"></div>
                     <div class="hex-ring ring-inner"></div>
                 </div>
-                <div class="m-logo-center"></div>
+                <div class="m-logo-center">M</div>
             </div>
-            <div class="metheelegend-text" id="metheelegendText"> <i><b> METHEELEGEND </b></i>        <div class="hexagonal-portal" id="hexagonalPortal">
-                <div class="portal-inner"></div>
-            </div>
+            <div class="metheelegend-text" id="metheelegendText">METHEELEGEND</div>
+            <div class="nebula-bg" id="nebulaBg"></div>
+            <!-- Phase 4: Portal -->
+            <div class="hexagonal-portal" id="hexagonalPortal"><div class="portal-inner"></div></div>
             <div class="reality-tear" id="realityTear"></div>
-            <button class="legendary-skip-btn" id="skipIntroBtn" type="button" aria-label="Skip introduction sequence">Skip Intro</button>
-            <div class="enter-legend-text" id="enterLegendText"><i><b>Hi! There, Hello</b></i></div>
+            <!-- Phase 5: Enter -->
+            <div class="enter-legend-text" id="enterLegendText">ENTER THE LEGEND</div>
         </div>
+        <button class="legendary-skip-btn" id="skipIntroBtn" type="button" aria-label="Skip introduction sequence">Skip Intro ⏭</button>
     </div>
 
     <!-- Navigation -->
-    <nav>
+    <nav class="main-nav">
         <ul>
-            <li><a href="#hero" class="nav-link active">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#skills" class="nav-link">Skills</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="skills.html" class="nav-link">Skills</a></li>
+            <li><a href="projects.html" class="nav-link">Projects</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
         </ul>
     </nav>
     <div class="nav-sideways-strip" aria-hidden="true">
@@ -1627,26 +1752,7 @@
         <div class="video-overlay"></div>
     </div>
 
-  <audio id="bgMusic" loop>
-    < source src="sounds/PastLives-(Instrumental).mp3" type="audio/mpeg">
-  </audio>
-    <audio id="bgmusic">
-        <source src="Past-Lives-(instrumental).mp3" src=audio/mpeg">
-    </audio>
-    <nav class="main-nav">
-        <div style="display: flex; align-items: center; gap: 60px;">
-            <div class="logo">METHEELEGEND</div>
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="skills.html">Skills</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="page-container">
+    <div class="page-container" id="main-content">
         <section class="hero reveal-element">
             <h1 class="hero-title"><b><i>PRO SAMKING </i></b></h1>
             <p class="hero-subtitle">Full-Stack Developer | Creative Technologist</p>
@@ -1713,7 +1819,7 @@
                 <p class="stat-label">Availability</p>
             </div>
         </section>
-    </main>
+    </div><!-- /.page-container -->
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">↑</div>
@@ -2635,9 +2741,9 @@
                     const avatar = document.querySelector('.avatar-container');
                     const centerEmblem = document.getElementById('centerLegendaryEmblem');
                     const centerAura = document.getElementById('centerLegendaryAura');
-                    // 11s aligns with the extended intro timeline; recurring effects start 1.5s later so visual spawns begin immediately after intro completion.
-                    const introCompleteDelay = 11000;
-                    const recurringSpawnDelay = 12500;
+                    // Loading overlay hides quickly, then the legendary intro plays
+                    const introCompleteDelay = 2000;
+                    const recurringSpawnDelay = 14500;
                     const auraPulseInterval = 6000;
                     
                     // Hide loading after delay
@@ -2660,10 +2766,10 @@
                         // Matrix rain is also initialized there if enabled
                     }, introCompleteDelay);
 
-                    // Bring center emblem in right as the loading veil clears.
+                    // Bring center emblem in after intro completes (13.5 seconds)
                     setTimeout(() => {
                         centerEmblem?.classList.add('active');
-                    }, introCompleteDelay);
+                    }, 13500);
 
                     // Start recurring site effects after intro sequence completes
                     setTimeout(() => {
@@ -3012,6 +3118,18 @@
             }, 1500);
         });
 
+        // Audio enable button - shown if autoplay is blocked
+        const audioEnableBtn = document.getElementById('audioEnableBtn');
+        if (audioEnableBtn) {
+            audioEnableBtn.addEventListener('click', () => {
+                if (window.musicSystem) {
+                    window.musicSystem.playIntro().catch(() => {});
+                    window.musicSystem.hasStarted = true;
+                }
+                audioEnableBtn.style.display = 'none';
+            });
+        }
+
         // Add glitch effect randomly to title
         const heroTitle = document.querySelector('.hero-title');
         setInterval(() => {
@@ -3062,7 +3180,7 @@
         
         // Initialize RecurringEffects System
         RecurringEffects.init();
-
+    </script>
     <script src="js/legendary.js"></script>
     <script src="js/main.js"></script>
 </body>

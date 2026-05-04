@@ -492,7 +492,47 @@ footer p {
             opacity: 0.2;
             pointer-events: none;
         }
+.logo-circle{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:radial-gradient(circle,var(--neon-blue),transparent);
+    box-shadow:0 0 40px var(--neon-blue);
+    animation:spin 6s linear infinite, pulse 2s ease-in-out infinite;
+    transition:transform 0.2s;
+}
 
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes pulse{
+    0%,100%{box-shadow:0 0 20px var(--neon-blue);}
+    50%{box-shadow:0 0 60px var(--neon-pink);}
+            }
+.enter-legend-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    
+    background: linear-gradient(90deg, #00f3ff, #ff006e, #8b00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0,243,255,0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255,0,110,0.9));
+    }
+}
         /* Phase 2: Identity Formation */
         .pro-samking {
             position: absolute;
@@ -767,29 +807,43 @@ footer p {
             75% { filter: drop-shadow(0 2px 0 red) drop-shadow(0 -2px 0 cyan); }
         }
 
-        /* Phase 5: Shatter Effect */
+        /* Phase 5: Enter Legend Text */
         .enter-legend-text {
             position: absolute;
-            top: 50%;
+            bottom: 8%;
+            top: auto;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px var(--neon-blue));
+            opacity: 0;
+            z-index: 100;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .enter-legend-text.active {
+            animation: enterTextRevealBottom 1.2s forwards;
+        }
+
+        @keyframes enterTextRevealBottom {
+            0% { opacity: 0; transform: translateX(-50%) translateY(40px) scale(0.8); }
+            70% { opacity: 1; transform: translateX(-50%) translateY(-5px) scale(1.05); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
         /* ========================================
            SCROLL-FOLLOWING AVATAR
            ======================================== */
+        #scrollAvatar,
         .legendary-avatar-container {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 999;
-            pointer-events: none;
-            transition: none;
-            will-change: top;
-            display: none; /* Hidden until after intro */
-        }
-        
-        .legendary-avatar-container.active {
-            display: block;
+            display: none !important;
         }
 
         .hexagonal-vessel {
@@ -2298,76 +2352,77 @@ footer p {
             }
         }
 
-        /* ========================================
-           END SCROLL-FOLLOWING AVATAR
-           ======================================== */
-
-        /* ========================================
-           AUDIO CONTROL PANEL
-           ======================================== */
-        .audio-controls {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 998;
-            display: flex;
-            gap: 10px;
+        .legendary-avatar {
+            perspective: 1200px;
+            transform-style: preserve-3d;
         }
 
-        .audio-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(0, 243, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--neon-blue);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+        .m-logo-center {
+            transform-style: preserve-3d;
+            transform-origin: center center;
+            animation: mCoinSpin 5s linear infinite;
+            text-shadow: 0 0 26px rgba(0, 243, 255, 0.85), 0 0 56px rgba(255, 0, 110, 0.45);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+            will-change: transform;
         }
 
-        .audio-btn:hover {
-            background: rgba(0, 243, 255, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 243, 255, 0.5);
+        @keyframes mCoinSpin {
+            0% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(180deg) scale(1.05); }
+            100% { transform: translate(-50%, -50%) rotateX(66deg) rotateY(360deg) scale(1); }
         }
 
-        .audio-btn:active {
-            transform: scale(0.95);
+        .project-card:hover h3,
+        .project-card:focus-within h3,
+        .project-card:hover .project-description,
+        .project-card:focus-within .project-description,
+        .project-card:hover p,
+        .project-card:focus-within p {
+            color: #ffffff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7), 0 0 18px rgba(0, 243, 255, 0.35);
         }
 
-        .audio-btn.muted {
-            border-color: var(--neon-pink);
-            box-shadow: 0 4px 15px rgba(255, 0, 110, 0.3);
+        .project-card:hover .tech-badge,
+        .project-card:focus-within .tech-badge {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.4);
         }
 
-        .audio-btn.muted:hover {
-            box-shadow: 0 6px 20px rgba(255, 0, 110, 0.5);
-        }
+/* ========================================
+   MASTER OVERRIDES – applied last so they win
+   ======================================== */
 
-        .audio-icon {
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
+/* Move the intro greeting text to bottom-center of intro screen */
+.enter-legend-text {
+    position: absolute !important;
+    bottom: 8% !important;
+    top: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    font-size: clamp(1.4rem, 4vw, 3.5rem) !important;
+    background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--cyber-purple)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    filter: drop-shadow(0 0 25px var(--neon-blue)) !important;
+    z-index: 1000 !important;
+}
 
-        @media (max-width: 768px) {
-            .audio-controls {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            .audio-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-        }
+.enter-legend-text.active {
+    animation: enterTextRevealBottomFinal 1.2s forwards !important;
+}
 
-        /* ========================================
-           END AUDIO CONTROL PANEL
-           ======================================== */
+@keyframes enterTextRevealBottomFinal {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(40px) scale(0.8); }
+    70%  { opacity: 1; transform: translateX(-50%) translateY(-6px) scale(1.06); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);    }
+}
+
+/* Hide the scroll-following avatar (shows raw "M" when avatar.gif is missing) */
+#scrollAvatar,
+.legendary-avatar-container {
+    display: none !important;
+}

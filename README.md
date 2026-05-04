@@ -85,29 +85,6 @@ git clone https://github.com/UnEngineerableFish52/My-website.git
 cd My-website
 ```
 
-2. Download a background video (optional):
-   - Visit https://www.pexels.com/videos/
-   - Search for "sci-fi digital" or "particles space"
-   - Download a video (1920x1080, ~2-5MB recommended)
-   - Rename to `scifi-background.mp4`
-   - Place in `videos/` directory
-
-3. Download music files (optional - synthesized fallback works without these):
-   - **Intro**: "Invincible Pt. II" by DEAF KEV from NCS
-     - Download: https://ncs.io/Invincible2
-     - Rename to: `deaf-kev-invincible-pt2.mp3`
-   - **Background**: "Sky High" by Elektronomia from NCS
-     - Download: https://ncs.io/SkyHigh
-     - Rename to: `elektronomia-sky-high.mp3`
-   - Place both files in `sounds/` directory
-   - **Note**: If files are missing, the site will use Web Audio API to generate music
-
-4. Add avatar GIF (optional - fallback "M" logo works without this):
-   - Create or find an animated GIF (recommended: 160x160px)
-   - Rename to `avatar.gif`
-   - Place in `images/` directory
-
-5. Open `index.html` in your browser or deploy to any static hosting service.
 
 ### Customization
 
@@ -129,30 +106,24 @@ Edit CSS variables in `css/styles.css`:
 - Update skills and percentages
 - Add your social media links
 
-#### Background Video
-- Replace `videos/scifi-background.mp4` with your video
-- Adjust opacity in CSS (currently 0.3)
-- Can be disabled by removing video element
-
 ## 📁 Project Structure
 
 ```
 My-website/
 ├── css/
-│   └── styles.css          # Main stylesheet (2,373 lines - includes legendary styles)
+│   └── styles.css          # Main stylesheet ( - includes legendary styles)
 ├── js/
-│   ├── legendary.js        # Legendary intro & music systems (1,683 lines)
+│   ├── legendary.js        # Legendary intro & music systems 
 │   └── main.js             # Main JavaScript file
 ├── images/
 │   ├── avatar.gif          # Optional: Scroll-following avatar
 │   └── README.md           # Avatar instructions
 ├── sounds/
 │   ├── *.mp3               # Optional: NCS music files
-│   └── README.md           # Music download instructions
-├── videos/
-│   └── scifi-background.mp4  # Background video
-├── index.html              # Home page (with legendary intro)
-├── about.html              # About page
+│   └── README.md           # Music download
+
+                             #home lines
+                             # About page
 ├── projects.html           # Projects page
 ├── skills.html             # Skills page
 ├── contact.html            # Contact page
@@ -163,8 +134,7 @@ My-website/
 ## 🎯 Performance
 
 - **Lighthouse Score**: 95+ (target)
-- **First Contentful Paint**: <1.5s
-- **Total JavaScript**: <5KB minified
+- **First Contentful Paint**: 3.5s
 - **No external dependencies**: Vanilla JavaScript only
 - **Optimized animations**: GPU-accelerated transforms
 
@@ -176,7 +146,7 @@ My-website/
 - **Web Audio API** - Click sounds & synthesized music fallback
 - **Intersection Observer** - Scroll reveal animations
 - **Canvas API** - Particle effects and matrix rain
-- **localStorage** - Mute state persistence
+- **Sideways border** - Recurrsive plus attractive bordering with yellow highlights and visuals brightening and fading
 
 ## 📝 License
 
@@ -187,12 +157,9 @@ This project is licensed under the MIT License.
 - **Design & Development**: METHEELEGEND (PRO SAMKING)
 - **Fonts**: Google Fonts (Orbitron, Poppins)
 - **Icons**: Unicode Emoji
-- **Music** (optional): 
-  - "Invincible Pt. II" by DEAF KEV (NCS Release)
-  - "Sky High" by Elektronomia (NCS Release)
-  - Web Audio API synthesized fallback
-
-## 🎵 Legendary Features
+- **Music** : 
+  - Past-Lives-(Instrumental).Persistent
+ ## 🎵 Legendary Features
 
 The METHEELEGEND portfolio includes special legendary features on the homepage:
 
@@ -201,25 +168,15 @@ The METHEELEGEND portfolio includes special legendary features on the homepage:
 - **Phase 2**: PRO SAMKING text formation
 - **Phase 3**: M logo reveal with 3 rotating hexagonal rings
 - **Phase 4**: Portal activation effect
-- **Phase 5**: Hexagonal shatter transition
-- **Skippable**: Press the skip button to jump to content
-
-### Music System
-- **Intro Music**: Epic 13-second soundtrack
+- **Phase 5**: Hexagonal
+- ** Music SySyst**eem**Intro Music**: Epic 13-second soundtrack
 - **Background Loop**: Continuous music after intro
-- **Smart Fallback**: Works with MP3 files OR synthesized Web Audio
-- **Audio Control**: Click button (bottom-right) to toggle music on/off
-- **Persistent State**: Your mute preference is saved
-
-### Scroll-Following Avatar
-- **Physics-Based**: Smooth spring physics movement
+- **Smart Fallback**:MP3 files OR synthesized Web
+- **SmoothFollowing Avatar**
+- **Movements** : Gradual visually variable with the tones of the background 
 - **Interactive**: Follows your scroll position
 - **Bounces**: Animation when you stop scrolling
-- **Hexagonal Vessel**: 3 rotating neon rings
-- **Customizable**: Use your own avatar.gif or fallback "M" logo
-
-### Performance
-- **Adaptive**: Reduces particle count on mobile/low-end devices (50/100/200)
+- **Hexagonal VesseAdaptiven rings**
 - **GPU Accelerated**: All animations use transform3d
 - **Optimized**: Intro only on homepage, not on other pages
 - **Accessible**: ARIA labels, keyboard navigation, reduced motion support
@@ -229,8 +186,8 @@ The METHEELEGEND portfolio includes special legendary features on the homepage:
 
 - **Website**: https://samrat.tech
 - **GitHub**: [@UnEngineerableFish52](https://github.com/UnEngineerableFish52)
-- **Email**: contact@metheelegend.com
+- **Email**: sharma@samrat.tech
 
 ---
 
-Made with 💙 by METHEELEGEND
+@METHEELEGEND
